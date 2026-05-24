@@ -1,0 +1,5198 @@
+﻿
+Practical System Design in Bangla
+Scalable Software Architecture, Microservices, Database Scaling,Caching, DevOps ও Real Production Experience
+
+Copyright
+© 2026 Md. Sajidur RahmanAll rights reserved.No part of this publication may be reproduced, stored, or transmitted in any form or by any means without prior written permission from the author.First EditionPublished in Bangladesh
+
+Preface
+এই বইটি বাংলাভাষী সফটওয়্যার ইঞ্জিনিয়ার, টিম লিড, সল্যুশন আর্কিটেক্ট এবং সিস্টেম ডিজাইন শিখতে আগ্রহী ডেভেলপারদের জন্য তৈরি করা হয়েছে।বইটিতে শুধুমাত্র থিওরি নয়, বরং বাস্তব প্রজেক্ট, production issue, scalability challenge, distributed system design, database optimization, microservices এবং enterprise architecture নিয়ে practical আলোচনা থাকবে।
+
+Table of Contents
+Section 1 — Foundation
+Chapter 1 — System Design Introduction
+Chapter 2 — Requirement Analysis
+Chapter 3 — Core Architecture Concepts
+Section 2 — Database &amp; Storage
+Chapter 4 — Database Design
+Chapter 5 — Query Optimization
+Chapter 6 — Caching
+Section 3 — Backend Scaling
+Chapter 7 — API Design
+Chapter 8 — Authentication &amp; Security
+Chapter 9 — Load Balancing
+Chapter 10 — Background Processing
+Section 4 — Modern Architecture
+Chapter 11 — Microservices
+Chapter 12 — Docker &amp; Kubernetes
+Chapter 13 — CI/CD
+Section 5 — Enterprise Systems
+Chapter 14 — ERP System Design
+Chapter 15 — Fintech System Design
+Chapter 16 — Monitoring &amp; Logging
+Section 6 — Real Case Studies
+Chapter 17 — Facebook News Feed
+Chapter 18 — WhatsApp Chat System
+Chapter 19 — YouTube Architecture
+Chapter 20 — Ride Sharing System
+Chapter 21 — Large Scale ERP Architecture
+Section 7 — Interview &amp; Career
+Chapter 22 — System Design Interview
+
+Standard Chapter Template
+1. Introduction
+2. Problem Statement
+বাস্তব সমস্যার description.
+3. Requirements
+Functional ও Non-functional requirement.
+4. High Level Design
+Architecture overview ও diagram.
+5. Detailed Design
+Database, API, service flow.
+6. Scalability Consideration
+Scaling strategy.
+7. Security Consideration
+Security, authentication, authorization.
+8. Real Production Experience
+Production issue ও troubleshooting.
+9. Common Mistakes
+যেসব ভুল সাধারণত হয়.
+10. Interview Questions
+Interview preparation section.
+11. Summary
+Chapter summary.
+
+Sample Chapter Layout — Caching
+What is Caching?
+Caching হলো frequently accessed data temporary storage এ রাখা যাতে system faster response দিতে পারে।
+Why Caching is Important?
+Database load কমানো, response time improve করা এবং scalability increase করার জন্য caching গুরুত্বপূর্ণ।
+Real Production Story
+একটি ERP report API প্রতি মিনিটে হাজারবার hit হচ্ছিল। Redis implement করার পর response time dramatically improve হয়।
+Technologies
+Redis, MemoryCache, Distributed Cache, CDN
+Architecture Diagram
+[Insert architecture diagram here]
+Interview Questions
+Cache Invalidation কী? Redis কেন fast?
+
+Appendix
+Recommended Tools:- Draw.io- Figma- Lucidchart- Docker- Kubernetes- RedisInsight- SQL Server Profiler
+Chapter 1 — System Design Introduction
+Practical System Design in Bangla
+
+1.1 System Design কী?
+System Design হলো এমন একটি process যেখানে একটি software system কীভাবে কাজ করবে, কীভাবে scale করবে, কীভাবে secure থাকবে এবং future growth handle করবে — সেই architecture ও infrastructure পরিকল্পনা করা হয়।
+সহজ ভাষায়:
+“একটা software শুধু code না, পুরো system কীভাবে efficiently চলবে সেটাই System Design।”
+
+ধরুন আপনি একটি ছোট ERP software তৈরি করলেন।
+প্রথমে:
+১০ জন user
+একটি server
+একটি database
+সবকিছু ভালো চলছিল।
+কিন্তু ২ বছর পর:
+৫০,০০০ user
+হাজার হাজার transaction
+Mobile app
+API integration
+Multiple branch
+Real-time reporting
+এখন system slow হতে শুরু করল।
+এখান থেকেই শুরু হয় “System Design” এর আসল প্রয়োজন।
+
+1.2 কেন System Design গুরুত্বপূর্ণ?
+অনেক developer মনে করে:
+“ভালো code লিখলেই system ভালো হবে।”
+কিন্তু বাস্তবে:
+ভালো code ≠ scalable system
+ভালো database ≠ high availability
+ভালো API ≠ production stability
+একটা system এর success নির্ভর করে:
+architecture
+scalability
+infrastructure
+database design
+caching
+monitoring
+deployment strategy
+এর উপর।
+
+1.3 Real World Example
+একটি company প্রথমে একটি monolithic ERP তৈরি করেছিল।
+Initial Setup
+ASP.NET application
+Single SQL Server
+IIS hosting
+২০ user
+System খুব fast ছিল।
+
+৩ বছর পরে
+System এ:
+৩০০+ branch
+১০,০০০ concurrent user
+Mobile app
+Payment integration
+Reporting server
+SMS integration
+সমস্যা শুরু হলো:
+API timeout
+Database deadlock
+CPU 100%
+Server crash
+Login slow
+Report generation ৫ মিনিট
+কারণ?
+কারণ system শুরুতে “small scale” ভেবে design করা হয়েছিল।
+
+1.4 Software Development vs System Design
+অনেকেই programming আর system design কে একই জিনিস মনে করে।
+কিন্তু তারা সম্পূর্ণ আলাদা skill।
+Programming
+System Design
+Function লেখা
+পুরো architecture design
+Small logic
+Large scale thinking
+Algorithm
+Scalability
+Class design
+Infrastructure
+Feature implementation
+Reliability
+
+1.5 একজন System Designer কী চিন্তা করে?
+একজন senior engineer বা architect সাধারণত এসব চিন্তা করে:
+১ লাখ user এ system চলবে?
+Database fail হলে কী হবে?
+Server crash হলে recovery কীভাবে হবে?
+API slow হলে কীভাবে optimize করব?
+Future scale কীভাবে handle করব?
+Security breach হলে impact কী?
+
+1.6 System Design এর Core Goals
+একটি ভালো system design এর মূল লক্ষ্যগুলো হলো:
+
+Scalability
+System future growth handle করতে পারবে।
+যেমন:
+১০ user → ১ মিলিয়ন user
+
+Reliability
+System consistent ভাবে কাজ করবে।
+
+Availability
+System সবসময় accessible থাকবে।
+Availability = \frac{Uptime}{Uptime + Downtime}
+উদাহরণ:
+99.9% uptime
+99.99% uptime
+
+Performance
+System fast response দিবে।
+যেমন:
+API response &lt; 200ms
+
+Security
+System data protect করবে।
+যেমন:
+JWT
+Encryption
+RBAC
+HTTPS
+
+Maintainability
+Future এ system modify করা সহজ হবে।
+
+1.7 Monolith vs Distributed System
+Monolithic Architecture
+সবকিছু একটি application এর ভিতরে থাকে।
+Example:
+Authentication
+Inventory
+Billing
+HRM
+সব একই project এ।
+
+সুবিধা
+Simple
+Easy deployment
+Fast development
+
+সমস্যা
+Scale difficult
+Huge codebase
+Slow deployment
+Team conflict
+Single point of failure
+
+Distributed System / Microservices
+System কে ছোট ছোট independent service এ ভাগ করা হয়।
+যেমন:
+Auth Service
+Payment Service
+Notification Service
+Reporting Service
+
+সুবিধা
+Independent scaling
+Better maintainability
+Team independence
+Fault isolation
+
+সমস্যা
+Complex
+Monitoring difficult
+Distributed transaction issue
+Network latency
+
+1.8 Small Scale vs Enterprise Thinking
+Junior developers সাধারণত feature based চিন্তা করে।
+Example:
+“Login feature complete হয়েছে।”
+কিন্তু architect চিন্তা করে:
+১ লাখ login request handle হবে?
+Brute force attack?
+Redis cache লাগবে?
+Session storage কোথায়?
+JWT expiration strategy কী?
+
+1.9 Real Production Story
+একটি ERP system এ login API প্রথমে perfectly কাজ করছিল।
+User ছিল মাত্র ৫০ জন।
+পরে user হয় ৮০০০+।
+Problem:
+Login API slow
+SQL Server CPU 95%
+Deadlock
+Session timeout
+Investigation এ দেখা গেল:
+প্রতি login এ database থেকে full permission tree load হচ্ছিল।
+কোনো cache ছিল না।
+Solution:
+Redis cache implement
+JWT optimize
+Permission snapshot
+Async audit log
+Result:
+Login time ৮ second → ২০০ms
+এটাই practical system design।
+
+1.10 System Design কোথায় ব্যবহার হয়?
+সব বড় software system এ।
+যেমন:
+System
+Design Complexity
+Facebook
+Extremely High
+YouTube
+Very High
+ERP
+High
+Banking
+Very High
+E-commerce
+High
+Ride Sharing
+Very High
+Chat Application
+High
+
+1.11 Common Beginner Mistakes
+Mistake 1 — Premature Microservice
+ছোট project এ unnecessary microservice।
+
+Mistake 2 — No Caching
+সব request database এ পাঠানো।
+
+Mistake 3 — Poor Database Index
+Result:
+Slow query
+CPU spike
+
+Mistake 4 — No Monitoring
+Production issue detect করা যায় না।
+
+Mistake 5 — Single Server Dependency
+এক server crash = পুরো system down।
+
+1.12 System Design শেখার Roadmap
+Step 1
+Programming fundamentals
+Step 2
+Database fundamentals
+Step 3
+API &amp; backend
+Step 4
+Caching
+Step 5
+Scalability
+Step 6
+Distributed systems
+Step 7
+Cloud &amp; DevOps
+Step 8
+Real production troubleshooting
+
+1.13 Interview Perspective
+Interview এ সাধারণত এসব প্রশ্ন আসে:
+Design URL shortener
+Design chat system
+Design notification service
+Design YouTube
+Design payment system
+Interviewer দেখতে চায়:
+scalability thinking
+trade-off understanding
+practical experience
+communication skill
+
+1.14 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+System Design কী
+কেন গুরুত্বপূর্ণ
+Monolith vs Distributed System
+Scalability
+Reliability
+Real production thinking
+Enterprise architecture mindset
+
+Chapter 2 — Requirement Analysis &amp; Capacity Planning
+Practical System Design in Bangla
+
+2.1 কেন Requirement Analysis গুরুত্বপূর্ণ?
+অনেক software project fail হয় coding এর কারণে না, বরং requirement ভুল বোঝার কারণে।
+বাস্তবে সবচেয়ে dangerous situation হলো:
+“Developer যা build করেছে, business সেটা চায়নি।”
+System Design এর প্রথম ধাপ হলো requirement ঠিকভাবে বোঝা।
+
+2.2 Functional vs Non-Functional Requirement
+Requirement সাধারণত দুই ধরনের হয়।
+Type
+Meaning
+Functional Requirement
+System কী করবে
+Non-Functional Requirement
+System কত ভালোভাবে করবে
+
+2.3 Functional Requirement
+এগুলো feature related।
+Example:
+User registration
+Login
+Product search
+Payment processing
+Report generation
+
+Example — Food Delivery App
+Functional Requirements:
+User order করতে পারবে
+Restaurant menu দেখতে পারবে
+Rider tracking থাকবে
+Online payment support থাকবে
+
+2.4 Non-Functional Requirement
+এগুলো system quality define করে।
+যেমন:
+Scalability
+Availability
+Performance
+Security
+Reliability
+
+Example
+“System must support 1 million users.”
+এটা functional না।
+এটা scalability requirement।
+
+2.5 Real World Problem
+একটি ERP software এ requirement ছিল:
+“Inventory report generate করতে হবে।”
+Developer report বানিয়ে দিল।
+কিন্তু production এ:
+report generate হতে ৪ মিনিট লাগছিল
+৫০০ user একসাথে run করলে database hang
+কারণ শুরুতে non-functional requirement define করা হয়নি।
+সঠিক requirement হওয়া উচিত ছিল:
+report generation &lt; 10 second
+100 concurrent report support
+export to Excel/PDF
+async processing
+
+2.6 Requirement Gathering Techniques
+একজন architect শুধু coding জানলেই হয় না।
+Requirement extraction skill খুব গুরুত্বপূর্ণ।
+
+Techniques
+Client Interview
+Business process বুঝা
+
+Existing System Analysis
+পুরনো system analyze করা
+
+User Workflow Observation
+User কিভাবে কাজ করে সেটা দেখা
+
+Use Case Discussion
+Different scenario discuss করা
+
+2.7 Example — Banking System Requirement
+
+Functional Requirement
+Account create
+Deposit
+Withdraw
+Fund transfer
+Statement generation
+
+Non-Functional Requirement
+99.99% uptime
+Transaction consistency
+High security
+Audit log
+Disaster recovery
+
+2.8 Capacity Planning কী?
+Capacity Planning হলো:
+ভবিষ্যতে system কত load handle করবে সেটা estimate করা।
+এটা ছাড়া scalable architecture সম্ভব না।
+
+2.9 কেন Capacity Planning গুরুত্বপূর্ণ?
+কারণ:
+under-estimation = server crash
+over-estimation = unnecessary cost
+
+2.10 Basic Capacity Estimation
+ধরুন:
+একটি application এ:
+১ লাখ user
+Daily active user = ২০%
+প্রতি user দিনে ৫০ request
+তাহলে:
+Daily Request:
+100000 \times 0.2 \times 50 = 1000000
+Daily request = 1 million
+
+Requests Per Second (RPS)
+ধরি peak traffic daily traffic এর ১০% এক ঘণ্টায় আসে।
+তাহলে:
+RPS = \frac{100000}{3600} \approx 28
+Approx 28 request/sec
+এটাই system design এর ভিত্তি।
+
+2.11 Storage Estimation
+ধরি:
+প্রতি transaction = 5 KB
+Daily transaction = 2 million
+তাহলে:
+2000000 \times 5KB = 10GB/day
+১ বছরে:
+10GB \times 365 = 3650GB
+≈ 3.6 TB/year
+এখন architect বুঝতে পারবে:
+partition লাগবে?
+archive লাগবে?
+sharding লাগবে?
+
+2.12 Peak Traffic Thinking
+সব traffic average হয় না।
+Peak hour এ:
+Eid sale
+Campaign
+Salary day
+Admission time
+load অনেক increase করে।
+
+Real Example
+একটি payment gateway এ:
+normal RPS = ২০০
+Eid campaign এ RPS = ৮০০০+
+System crash করেছিল কারণ:
+load test হয়নি
+queue architecture ছিল না
+database bottleneck ছিল
+
+2.13 Latency Requirement
+Latency মানে response delay।
+Example:
+System
+Expected Response
+Login API
+&lt; 500ms
+Payment API
+&lt; 2 sec
+Search
+&lt; 300ms
+Chat Message
+realtime
+
+2.14 Availability Requirement
+একটি system কত সময় available থাকবে।
+Availability
+Downtime/year
+99%
+~3.65 days
+99.9%
+~8.7 hours
+99.99%
+~52 minutes
+
+2.15 Scalability Requirement
+প্রশ্ন:
+কত user support করবে?
+future growth rate কত?
+concurrent user কত?
+
+Example
+বর্তমান:
+১০,০০০ user
+Future:
+৫ লাখ user
+এখন থেকেই scalable architecture দরকার।
+
+2.16 Security Requirement
+সব system এর security need একই না।
+
+Example — Banking
+Need:
+Encryption
+Audit log
+MFA
+Fraud detection
+
+Example — Blog Site
+কম security requirement।
+
+2.17 Real Production Story
+একটি HRM software এ initially:
+২০০ employee
+পরে:
+১ লাখ employee
+biometric sync
+mobile app
+attendance device integration
+Problem:
+attendance API timeout
+database locking
+huge report delay
+কারণ:capacity planning করা হয়নি।
+
+2.18 Estimation Mindset
+একজন architect estimate করে:
+requests/sec
+storage growth
+bandwidth
+cache memory
+CPU usage
+database connection
+
+2.19 Common Mistakes
+
+Mistake 1 — Only Functional Thinking
+“Feature আছে মানেই complete।”
+না।
+Scale চিন্তা করতে হবে।
+
+Mistake 2 — No Peak Traffic Planning
+Campaign day এ system crash।
+
+Mistake 3 — No Future Growth Planning
+১ বছর পর redesign করতে হয়।
+
+Mistake 4 — Wrong Storage Estimation
+Database suddenly huge হয়ে যায়।
+
+2.20 System Design Requirement Checklist
+একজন architect সাধারণত এই checklist follow করে:
+
+Business
+System purpose?
+Target user?
+
+Traffic
+Daily user?
+Concurrent user?
+Peak load?
+
+Data
+Data size?
+Growth rate?
+Retention period?
+
+Performance
+Response time?
+SLA?
+
+Security
+Authentication?
+Encryption?
+Audit?
+
+Reliability
+Backup?
+Failover?
+DR plan?
+
+2.21 Interview Perspective
+Interview এ requirement gathering সবচেয়ে গুরুত্বপূর্ণ step।
+ভুল approach:
+“আমি system design শুরু করছি…”
+সঠিক approach:
+প্রথমে প্রশ্ন:
+কত user?
+read/write ratio?
+latency requirement?
+consistency requirement?
+availability priority?
+
+2.22 Mini Exercise
+Design:
+“University Management System”
+Think:
+student count
+concurrent exam traffic
+result processing
+attendance
+notification
+mobile app
+
+2.23 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Functional Requirement
+Non-functional Requirement
+Capacity Planning
+Storage Estimation
+RPS Calculation
+Availability
+Latency
+Scalability Thinking
+Real-world requirement analysis
+Chapter 3 — Core Architecture Concepts
+Scalability, Reliability, Availability &amp; CAP Theorem
+Practical System Design in Bangla
+
+3.1 Introduction
+একটি software system শুরুতে ছোট থাকে।
+ধরুন:
+১০ user
+একটি server
+একটি database
+সবকিছু খুব smooth চলে।
+কিন্তু কয়েক বছর পর:
+লাখ লাখ user
+multiple API
+mobile app
+third-party integration
+real-time processing
+reporting engine
+analytics
+notification service
+এখন system design এর আসল challenge শুরু হয়।
+কারণ enterprise system শুধু “feature” দিয়ে survive করে না।
+একে survive করতে হয়:
+heavy traffic
+server failure
+database crash
+network issue
+security attack
+sudden growth
+hardware limitation
+এই chapter এ আমরা সেই core architecture concepts শিখব যেগুলো ছাড়া বড় system design করা সম্ভব না।
+
+3.2 Scalability কী?
+Scalability হলো:
+একটি system future growth efficiently handle করতে পারার capability।
+
+সহজ ভাষায়:
+আজ system ১০০ user handle করছে।
+আগামী বছর:
+১ লাখ user
+১০ লাখ request
+massive data
+এসব handle করতে পারলে system scalable।
+
+3.3 Scalability কেন গুরুত্বপূর্ণ?
+অনেক system প্রথমে fast থাকে।
+কারণ:
+কম data
+কম traffic
+ছোট user base
+কিন্তু scale increase হওয়ার সাথে সাথে:
+response slow
+database lock
+timeout
+memory overflow
+CPU spike
+crash
+শুরু হয়।
+
+Real Example — ERP System
+একটি garments ERP শুরু হয়েছিল:
+৩০ user
+single branch
+single server
+৩ বছর পর:
+২০০+ factory
+২০,০০০ employee
+biometric device
+mobile app
+live reporting
+সমস্যা:
+login delay
+report timeout
+deadlock
+IIS crash
+কারণ:system scalable architecture দিয়ে তৈরি ছিল না।
+
+3.4 Types of Scalability
+System design এ scalability দুইভাবে করা হয়।
+Type
+Meaning
+Vertical Scaling
+Server বড় করা
+Horizontal Scaling
+Server সংখ্যা বাড়ানো
+
+3.5 Vertical Scaling (Scale Up)
+এখানে existing server এর resource increase করা হয়।
+যেমন:
+RAM increase
+CPU upgrade
+SSD upgrade
+
+Example
+Before:
+8 GB RAM
+4 Core CPU
+After:
+64 GB RAM
+32 Core CPU
+
+সুবিধা
+সহজ
+deployment change কম
+configuration simple
+
+সমস্যা
+expensive
+hardware limitation
+single point of failure
+
+3.6 Horizontal Scaling (Scale Out)
+এখানে multiple server add করা হয়।
+Example:
+Before:
+1 application server
+After:
+10 application server
+
+Architecture
+Client Request → Load Balancer → Multiple Servers
+
+সুবিধা
+highly scalable
+fault tolerant
+enterprise friendly
+
+সমস্যা
+complex
+distributed session issue
+monitoring difficult
+
+3.7 Real Production Story — Vertical Scaling Failure
+একটি fintech system এ:
+CPU usage 95%
+API timeout
+Team বারবার server upgrade করছিল।
+শেষে:
+64 Core CPU
+256 GB RAM
+তারপরও problem solve হয়নি।
+Investigation এ দেখা গেল:
+poor query
+no cache
+blocking transaction
+অর্থাৎ:“Hardware দিয়ে bad architecture fix করা যায় না।”
+
+3.8 Reliability কী?
+Reliability হলো:
+System consistently correct result দিতে পারবে কিনা।
+
+Example:
+Payment system এ:
+টাকা কাটা গেছে
+কিন্তু transaction save হয়নি
+এই system reliable না।
+
+Reliable System এর বৈশিষ্ট্য
+consistent
+predictable
+fault resistant
+accurate
+
+3.9 Real Example — Unreliable System
+একটি inventory system এ:
+API timeout হলে duplicate order তৈরি হচ্ছিল।
+কারণ:
+idempotency ছিল না
+retry handling ছিল না
+Result:
+stock mismatch
+financial issue
+
+3.10 Availability কী?
+Availability হলো:
+System কত সময় accessible থাকে।
+
+যদি system সবসময় usable থাকে তাহলে availability বেশি।
+
+Availability Formula
+Availability = \frac{Uptime}{Uptime + Downtime}
+
+Example
+যদি:
+uptime = 364 days
+downtime = 1 day
+তাহলে:
+Availability = \frac{364}{365} \approx 99.7%
+
+3.11 Availability Levels
+Availability
+Downtime Per Year
+99%
+~3.65 days
+99.9%
+~8.7 hours
+99.99%
+~52 minutes
+99.999%
+~5 minutes
+
+3.12 High Availability Architecture
+High availability achieve করতে সাধারণত ব্যবহার হয়:
+Load balancer
+Multiple app server
+Database replication
+Auto failover
+Backup system
+
+Example Architecture
+User → Load Balancer → App Server 1→ App Server 2→ App Server 3
+
+যদি App Server 1 crash করে:
+traffic automatically অন্য server এ যাবে।
+
+3.13 Fault Tolerance কী?
+Fault tolerance হলো:
+কোনো component fail করলেও পুরো system কাজ চালিয়ে যেতে পারা।
+
+Example
+একটি microservice down হলেও:
+পুরো application down না হওয়া।
+
+Real Example
+Notification service crash করেছে।
+কিন্তু:
+payment চলছে
+order চলছে
+এটাই fault tolerance।
+
+3.14 Single Point of Failure (SPOF)
+যেখানে একটি component fail করলে পুরো system down হয়।
+
+Example
+single database server
+single application server
+single Redis node
+
+Real Production Incident
+একটি company তে:
+single SQL Server ছিল
+Disk failure হওয়ার পর:
+পুরো ERP down
+operation বন্ধ
+৮ ঘণ্টা downtime
+কারণ:
+replication ছিল না
+backup strategy weak ছিল
+
+3.15 Redundancy
+Critical component এর backup রাখা।
+
+Example
+Primary
+Secondary
+App Server
+Another App Server
+Database
+Replica DB
+Internet
+Secondary ISP
+
+3.16 Performance vs Scalability
+অনেকে confuse করে।
+
+Performance
+একটি request কত fast process হয়।
+
+Scalability
+Load increase হলে system কত efficiently scale করে।
+
+Example
+একটি API:
+50ms response দেয়
+কিন্তু:
+5000 concurrent user এ crash করে
+তাহলে:
+performance ভালো
+scalability খারাপ
+
+3.17 Latency vs Throughput
+
+Latency
+একটি request complete হতে কত সময় লাগে।
+
+Throughput
+এক সেকেন্ডে কত request process হয়।
+
+Example
+Metric
+Value
+Latency
+200ms
+Throughput
+5000 req/sec
+
+3.18 CAP Theorem
+Distributed system এর সবচেয়ে গুরুত্বপূর্ণ concept।
+CAP theorem বলে:
+একটি distributed system একই সাথে ৩টি guarantee পুরোপুরি দিতে পারে না।
+
+C = Consistency
+সব node একই data দেখবে।
+
+A = Availability
+সবসময় response দিবে।
+
+P = Partition Tolerance
+Network failure হলেও system চলবে।
+
+3.19 CAP Theorem Reality
+Distributed system এ network issue inevitable।
+তাই practically:
+Partition tolerance mandatory
+ফলে choice হয়:
+CPঅথবা
+AP
+
+3.20 CP System
+Consistency + Partition Tolerance
+
+Example
+Banking system
+সব node এ same balance দরকার।
+
+Problem
+Network issue হলে system temporarily unavailable হতে পারে।
+
+3.21 AP System
+Availability + Partition Tolerance
+
+Example
+Social media
+কিছু delay acceptable।
+
+Benefit
+সবসময় response পাওয়া যায়।
+
+3.22 Eventual Consistency
+সব node eventually same state এ আসবে।
+
+Example
+Facebook post immediately সব user না দেখলেও পরে synchronize হয়।
+
+3.23 Strong Consistency
+সবসময় latest data পাওয়া যাবে।
+
+Example
+Bank balance।
+
+3.24 Real Production Story — CAP Problem
+একটি distributed inventory system এ:
+multiple warehouse node ছিল।
+Network issue এর সময়:
+same product দুই warehouse এ sold হয়ে যায়।
+কারণ:
+eventual consistency
+delayed synchronization
+Result:
+stock mismatch
+Solution:
+distributed locking
+central reservation service
+
+3.25 Trade-off Thinking
+System design এ সবকিছু একসাথে perfect হয় না।
+সবসময় trade-off থাকে।
+
+Example
+Goal
+Sacrifice
+High consistency
+Lower availability
+High performance
+Complex cache issue
+Fast development
+Technical debt
+Microservice
+Operational complexity
+
+3.26 Enterprise Thinking
+Junior developer:
+“Feature works.”
+Architect:
+scale হবে?
+fail হলে কী হবে?
+backup আছে?
+retry strategy?
+monitoring?
+observability?
+disaster recovery?
+
+3.27 Monitoring Importance
+Large system এ monitoring mandatory।
+
+Monitor করতে হয়
+CPU
+Memory
+Disk
+API latency
+Error rate
+Queue backlog
+DB connection
+
+Real Example
+একটি API:
+normal latency = 100ms
+Suddenly:
+8 second হয়ে যায়
+Grafana monitoring এ detect হয়:
+Redis memory full
+cache miss
+database overloaded
+
+3.28 Common Beginner Mistakes
+
+Mistake 1 — Premature Scaling
+১০ user এর project এ Kubernetes।
+
+Mistake 2 — No Monitoring
+Problem detect করা যায় না।
+
+Mistake 3 — No Redundancy
+Single server dependency।
+
+Mistake 4 — Ignoring Failure
+“Server কখনও crash করবে না।”
+Production এ সবকিছু crash করতে পারে।
+
+3.29 Interview Perspective
+System design interview এ interviewer দেখতে চায়:
+scalability understanding
+trade-off thinking
+real-world knowledge
+failure handling
+architecture maturity
+
+Example Interview Question
+Design:
+“WhatsApp Messaging System”
+Interviewer expect করবে:
+message queue
+websocket
+scaling
+consistency
+availability
+retry mechanism
+
+3.30 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Scalability
+Vertical vs Horizontal Scaling
+Reliability
+Availability
+Fault Tolerance
+SPOF
+Redundancy
+CAP Theorem
+Consistency Models
+Trade-off Thinking
+Enterprise Architecture Mindset
+পরবর্তী chapter:
+“Database Design Fundamentals — SQL, NoSQL, Indexing &amp; Transactions”
+Chapter 4 — Database Design Fundamentals
+SQL, NoSQL, Indexing, Transactions &amp; Enterprise Database Thinking
+Practical System Design in Bangla
+
+4.1 Introduction
+একটি software system এর heart হলো database।
+Application code change করা relatively সহজ।
+কিন্তু ভুল database design এর impact ভয়ংকর হতে পারে।
+কারণ database handle করে:
+business data
+transaction
+reporting
+analytics
+audit
+integration
+consistency
+
+অনেক junior developer মনে করে:
+“Table তৈরি করলেই database design complete।”
+কিন্তু enterprise level এ database design মানে:
+scalability
+performance
+concurrency
+consistency
+indexing
+partitioning
+backup
+recovery
+disaster handling
+সবকিছু একসাথে চিন্তা করা।
+
+4.2 Real Production Story — Bad Database Design
+একটি ERP system এ প্রথমে:
+২০ user
+single branch
+সব fast ছিল।
+Database structure:
+no indexing
+huge table
+improper relation
+varchar everywhere
+no archive strategy
+৩ বছর পর:
+১৫০০ branch
+কোটি কোটি transaction
+API timeout
+report stuck
+deadlock
+CPU 100%
+শেষে:পুরো database redesign করতে হয়।
+
+4.3 Database কী?
+Database হলো structured data store করার system।
+যেখানে:
+insert
+update
+delete
+search
+relationship
+transaction
+handle করা হয়।
+
+4.4 Types of Database
+Majorly দুই ধরনের:
+Type
+Example
+Relational Database (SQL)
+SQL Server, PostgreSQL, MySQL
+Non-Relational Database (NoSQL)
+MongoDB, Cassandra, Redis
+
+4.5 SQL Database কী?
+SQL database table-based structure follow করে।
+
+Example
+Users Table
+Id
+Name
+Email
+1
+Sajid
+test@mail.com
+
+Features
+Structured schema
+ACID transaction
+Relationship support
+Strong consistency
+
+Popular SQL Databases
+Microsoft SQL Server
+PostgreSQL
+MySQL
+Oracle
+
+4.6 SQL Database কেন জনপ্রিয়?
+কারণ enterprise system এ:
+consistency গুরুত্বপূর্ণ
+transaction গুরুত্বপূর্ণ
+reporting গুরুত্বপূর্ণ
+
+Example Systems
+System
+SQL Preferred
+Banking
+Yes
+ERP
+Yes
+Accounting
+Yes
+HRM
+Yes
+
+4.7 NoSQL Database কী?
+NoSQL database schema flexible।
+
+Example MongoDB Document
+{
+  "name": "Sajid",
+  "email": "test@mail.com",
+  "skills": ["C#", ".NET", "SQL"]
+}
+
+Features
+flexible schema
+horizontally scalable
+high write throughput
+distributed architecture
+
+Popular NoSQL Database
+MongoDB
+Cassandra
+DynamoDB
+Redis
+
+4.8 SQL vs NoSQL
+Feature
+SQL
+NoSQL
+Schema
+Fixed
+Flexible
+Transaction
+Strong
+Limited
+Scaling
+Harder
+Easier
+Relationship
+Strong
+Weak
+Consistency
+Strong
+Eventual
+
+4.9 কখন SQL ব্যবহার করবেন?
+যখন দরকার:
+transaction
+reporting
+relationship
+consistency
+
+Example
+Banking
+ERP
+Accounting
+Payroll
+
+4.10 কখন NoSQL ব্যবহার করবেন?
+যখন দরকার:
+huge scale
+flexible schema
+high write volume
+distributed data
+
+Example
+Social media
+Analytics
+IoT
+Real-time event processing
+
+4.11 Hybrid Database Architecture
+বড় system এ একাধিক database একসাথে ব্যবহার হয়।
+
+Example
+Purpose
+Database
+Transaction
+SQL Server
+Cache
+Redis
+Logging
+Elasticsearch
+Analytics
+MongoDB
+
+Real Example
+একটি fintech system এ:
+SQL Server → transaction
+Redis → session/cache
+MongoDB → activity log
+
+4.12 Database Normalization
+Normalization হলো:data duplication reduce করা।
+
+Example — Bad Design
+OrderId
+CustomerName
+Product
+1
+Rahim
+Mouse
+2
+Rahim
+Keyboard
+Customer বারবার repeat হচ্ছে।
+
+Better Design
+Customer Table
+Id
+Name
+1
+Rahim
+
+Order Table
+OrderId
+CustomerId
+1
+1
+
+Benefits
+less duplication
+consistency
+maintainability
+
+4.13 Types of Normalization
+
+1NF
+Atomic value।
+
+2NF
+Partial dependency remove।
+
+3NF
+Transitive dependency remove।
+
+বাস্তবে:সাধারণত 3NF পর্যন্ত যথেষ্ট।
+
+4.14 Over-Normalization Problem
+অনেক বেশি normalization করলে:
+excessive join
+slow query
+complexity
+increase হয়।
+
+Real Example
+একটি report generate করতে:
+১৫টা table join হচ্ছিল।
+Result:
+৪৫ second query
+Solution:
+partial denormalization
+
+4.15 Denormalization
+Performance improve করার জন্য intentionally duplicate data রাখা।
+
+Example
+Order table এ customer name store করা।
+
+Benefit
+fast reporting
+less join
+
+Problem
+data inconsistency risk
+
+4.16 Primary Key
+Table এর unique identifier।
+
+Example
+Id
+Name
+1
+Sajid
+
+Good Primary Key Characteristics
+unique
+immutable
+small size
+indexed
+
+4.17 GUID vs INT
+
+INT
+Benefits:
+fast
+small storage
+clustered index friendly
+Problem:
+distributed generation difficult
+
+GUID
+Benefits:
+globally unique
+distributed system friendly
+Problem:
+fragmentation
+larger storage
+
+Real Enterprise Practice
+অনেক enterprise system:
+internal INT ID
+public GUID
+একসাথে ব্যবহার করে।
+
+4.18 Foreign Key
+Relationship maintain করে।
+
+Example
+Order → Customer
+
+Benefits
+data integrity
+relationship validation
+
+Problem
+Heavy insert system এ:
+performance issue হতে পারে।
+
+4.19 Transactions কী?
+Transaction হলো:multiple operation কে single unit হিসেবে execute করা।
+
+Example
+Bank transfer:
+sender balance কমবে
+receiver balance বাড়বে
+একটা fail হলে পুরো transaction rollback হবে।
+
+4.20 ACID Properties
+Database transaction এর foundation।
+
+A = Atomicity
+সব হবে অথবা কিছুই হবে না।
+
+C = Consistency
+Data valid থাকবে।
+
+I = Isolation
+Concurrent transaction conflict করবে না।
+
+D = Durability
+Commit হওয়ার পর data safe থাকবে।
+
+4.21 Transaction Example
+Rahim → Karim 1000 টাকা transfer।
+
+Steps
+Rahim balance -1000
+Karim balance +1000
+Transaction commit
+
+যদি step 2 fail করে:
+পুরো transaction rollback হবে।
+
+4.22 Isolation Levels
+Concurrent transaction handling।
+
+Types
+Level
+Description
+Read Uncommitted
+Dirty read possible
+Read Committed
+Common default
+Repeatable Read
+Same read guarantee
+Serializable
+Highest isolation
+
+4.23 Deadlock কী?
+দুই transaction একে অপরের resource wait করলে deadlock হয়।
+
+Example
+Transaction A:
+Table X lock করেছে
+Table Y wait করছে
+Transaction B:
+Table Y lock করেছে
+Table X wait করছে
+Result:
+deadlock
+
+Real Production Story
+একটি payroll system এ:
+salary processing
+attendance sync
+একসাথে চলছিল।
+Result:
+frequent deadlock
+API timeout
+Solution:
+proper indexing
+transaction scope reduce
+consistent locking order
+
+4.24 Index কী?
+Index database search fast করে।
+Book এর index page এর মতো।
+
+Example
+Without index:
+full table scan
+With index:
+direct lookup
+
+4.25 Clustered Index
+Physical data order maintain করে।
+একটি table এ সাধারণত ১টা clustered index থাকে।
+
+4.26 Non-Clustered Index
+Separate lookup structure।
+Multiple non-clustered index থাকতে পারে।
+
+4.27 Real Example — Index Impact
+Before Index:
+query time = 18 second
+After Index:
+query time = 120ms
+
+4.28 Over Indexing Problem
+অতিরিক্ত index করলে:
+insert slow
+update slow
+storage increase
+
+Enterprise Rule
+“Every index has a cost.”
+
+4.29 Query Optimization
+Enterprise system এ slow query dangerous।
+
+Common Problems
+SELECT *
+missing index
+huge join
+no pagination
+subquery misuse
+
+Bad Query Example
+SELECT * FROM Transactions
+
+Better
+SELECT Id, Amount, Date
+FROM Transactions
+
+4.30 Pagination
+সব data একসাথে load dangerous।
+
+Bad
+SELECT * FROM Orders
+
+Better
+OFFSET 0 ROWS FETCH NEXT 50 ROWS ONLY
+
+4.31 Soft Delete vs Hard Delete
+
+Hard Delete
+Data permanently delete।
+
+Soft Delete
+Data hidden কিন্তু database এ থাকে।
+
+Example
+IsDeleted = 1
+
+Enterprise Preference
+অধিকাংশ ERP:
+soft delete ব্যবহার করে।
+কারণ:
+audit
+recovery
+compliance
+
+4.32 Audit Logging
+Enterprise system এ track করা হয়:
+কে change করল
+কখন করল
+কী change করল
+
+Example
+User
+Action
+Time
+Admin
+Salary Updated
+10:30 PM
+
+4.33 Database Backup Strategy
+সব production database এ backup mandatory।
+
+Types
+Type
+Description
+Full Backup
+Entire DB
+Differential
+Changes only
+Transaction Log
+Incremental log
+
+Real Incident
+একটি company ransomware attack এর কারণে:
+database হারিয়ে ফেলে।
+কিন্তু:
+proper backup থাকার কারণে recovery সম্ভব হয়।
+
+4.34 Replication
+Database copy multiple server এ রাখা।
+
+Benefits
+high availability
+read scaling
+disaster recovery
+
+Example
+Primary DB → Replica DB
+
+4.35 Read Replica
+Heavy reporting system এ read replica ব্যবহার হয়।
+
+Example
+Operation
+Database
+Insert
+Primary
+Reporting
+Replica
+
+4.36 Database Partitioning
+Huge table ছোট ছোট partition এ ভাগ করা।
+
+Example
+Transaction Table:
+January Partition
+February Partition
+March Partition
+
+Benefit
+fast query
+easier archive
+better maintenance
+
+4.37 Sharding
+Data multiple database এ distribute করা।
+
+Example
+User Range
+Database
+1–1M
+DB1
+1M–2M
+DB2
+
+Problem
+complex query
+distributed transaction issue
+
+4.38 Real Enterprise Database Architecture
+Large fintech system:
+Purpose
+Technology
+Transaction
+SQL Server
+Cache
+Redis
+Search
+Elasticsearch
+Logging
+MongoDB
+
+4.39 Database Security
+Critical topics:
+encryption
+backup security
+SQL injection prevention
+RBAC
+audit trail
+
+SQL Injection Example
+Bad:
+"SELECT * FROM Users WHERE Name='" + name + "'"
+
+Safe
+Parameterized Query
+
+4.40 Common Beginner Mistakes
+
+Mistake 1 — No Index
+সব query slow।
+
+Mistake 2 — SELECT *
+Unnecessary data load।
+
+Mistake 3 — Huge Transaction Scope
+Deadlock increase।
+
+Mistake 4 — No Backup Testing
+Backup আছে কিন্তু restore হয় না।
+
+Mistake 5 — Premature NoSQL
+সব project এ MongoDB।
+
+4.41 Interview Perspective
+Interview Questions:
+SQL vs NoSQL
+Clustered vs Non-clustered index
+Deadlock কী?
+Isolation level explain করুন
+Sharding কী?
+Replication কী?
+
+4.42 Mini Exercise
+Design:
+“E-Commerce Database”
+Think:
+product
+inventory
+order
+payment
+cart
+audit
+scaling
+
+4.43 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+SQL vs NoSQL
+Normalization
+Denormalization
+ACID
+Transactions
+Indexing
+Query Optimization
+Deadlock
+Replication
+Partitioning
+Sharding
+Backup Strategy
+Enterprise Database Thinking
+Chapter 5 — Advanced Database Scaling &amp; High Performance Architecture
+Partitioning, Sharding, Replication, CQRS &amp; Billion Scale Data Systems
+Practical System Design in Bangla
+
+5.1 Introduction
+Database design জানা এক জিনিস, কিন্তু database scale করা সম্পূর্ণ আলাদা skill।
+ছোট system এ:
+১টা database
+১০টা table
+১০০ user
+সব ঠিকভাবে চলে।
+কিন্তু যখন system বড় হয়:
+লাখো user
+কোটি transaction
+real-time analytics
+reporting engine
+mobile API
+distributed services
+তখন database হয়ে যায় সবচেয়ে বড় bottleneck।
+এই chapter এ আমরা শিখব:
+কিভাবে enterprise level এ database scale করা হয়।
+
+5.2 Real Production Problem — Database Bottleneck
+একটি microfinance system:
+৫০ লাখ customer
+daily loan transaction
+branch-based operations
+Initially:
+single SQL Server
+Problem:
+CPU 100%
+query timeout
+report 5–10 minutes delay
+deadlock increase
+
+Cause:
+no partitioning
+no sharding
+heavy joins
+no caching layer
+
+Solution:
+database redesign
+partitioning
+read replica
+CQRS separation
+
+5.3 Why Database Scaling is Hard?
+Database scaling hard কারণ:
+data consistency maintain করতে হয়
+transaction safe রাখতে হয়
+concurrency handle করতে হয়
+real-time requirement থাকে
+
+5.4 Vertical vs Horizontal Database Scaling
+Vertical Scaling (Scale Up)
+Bigger server
+More CPU/RAM/SSD
+Problem:
+limit আছে
+expensive
+single point of failure
+
+Horizontal Scaling (Scale Out)
+multiple database server
+distributed data
+Advantage:
+unlimited scale
+fault tolerant
+Problem:
+complexity
+consistency issue
+
+5.5 Database Partitioning
+Partitioning মানে:
+এক table কে ছোট logical parts এ ভাগ করা
+
+Example
+Transaction Table:
+Partition
+Data
+2024_Q1
+Jan–Mar
+2024_Q2
+Apr–Jun
+
+Types of Partitioning
+1. Range Partitioning
+Date বা ID range অনুযায়ী ভাগ করা
+
+2. List Partitioning
+Region বা category অনুযায়ী ভাগ করা
+
+3. Hash Partitioning
+Hash function দিয়ে distribute করা
+
+5.6 Real Example — Report Optimization
+একটি ERP system এ:
+10 million transaction table
+monthly report query
+Before:
+query time = 45 sec
+After partition:
+query time = 2.5 sec
+
+5.7 Database Sharding
+Sharding হলো:
+Data multiple independent database এ ভাগ করা
+
+Example
+Shard
+Data
+DB1
+User 1–1M
+DB2
+User 1M–2M
+DB3
+User 2M–3M
+
+Sharding Key
+UserId
+Region
+BranchId
+
+5.8 Why Sharding is Needed?
+যখন:
+single DB handle করতে পারে না
+storage limit
+performance bottleneck
+concurrent load high
+
+5.9 Real Production Story — Microfinance System
+একটি microfinance system:
+30 million customers
+daily 5 million transactions
+Problem:
+single DB slow
+report crash
+API timeout
+Solution:
+branch-based sharding
+each region = separate DB
+Result:
+70% performance improvement
+zero downtime scaling
+
+5.10 Sharding Challenges
+cross-shard query difficult
+transaction complexity
+data migration hard
+monitoring complex
+
+5.11 Replication
+Replication মানে:
+data multiple database server এ copy রাখা
+
+Types of Replication
+1. Master-Slave
+write → master
+read → slave
+
+2. Master-Master
+both can read/write
+
+3. Multi-Region Replication
+global system support
+
+5.12 Real Use Case
+E-commerce system:
+write → primary DB
+read → replica DB
+Result:
+read performance 5x faster
+primary DB load reduced
+
+5.13 Read Replica Strategy
+Common architecture:
+User → API → Primary DB (write)→ Replica DB (read)
+
+Benefit
+reporting fast
+scaling read traffic
+reduced load
+
+5.14 CQRS (Command Query Responsibility Segregation)
+CQRS মানে:
+Write operation এবং Read operation আলাদা করা
+
+Architecture
+Command DB → Write
+Query DB → Read optimized
+
+Example
+Operation
+System
+Insert Order
+Write DB
+View Order
+Read DB
+
+5.15 Why CQRS?
+Because:
+read-heavy system
+reporting heavy system
+performance requirement
+
+Real Example
+ERP system:
+90% traffic = report
+10% = transaction
+Solution:
+separate reporting DB
+
+Result:
+system 3x faster
+no locking issue
+
+5.16 Eventual Consistency in CQRS
+Write → Event → Sync → Read DB
+
+Delay issue:
+data update immediate না-ও হতে পারে
+
+5.17 Database Caching Layer
+Between app &amp; DB:
+Redis cache
+in-memory cache
+
+Example
+Before:
+DB query every time
+After:
+cache hit → DB load reduce
+
+5.18 Cache + DB Architecture
+User → API → Cache → DB
+
+5.19 Real Production Issue — Cache Failure
+Problem:
+cache expired
+DB suddenly overloaded
+system slow
+Solution:
+cache warming
+fallback strategy
+TTL tuning
+
+5.20 Index Strategy at Scale
+At large scale:
+every index matters
+write performance impacted
+storage increase
+
+Rule:
+“Index improves read, but slows write”
+
+5.21 Composite Index
+Example:
+INDEX(UserId, CreatedDate)
+
+Benefit:
+faster filtering
+optimized query plan
+
+5.22 Query Execution Plan
+Database internally:
+scan
+seek
+join strategy
+
+Real Problem
+Bad query:
+full table scan
+Fix:
+index + rewrite query
+
+5.23 Connection Pooling
+Too many DB connection = crash risk
+Solution:
+connection pool
+
+Example
+Instead of:
+1000 connections
+Use:
+50 pooled connections
+
+5.24 Deadlock at Scale
+High concurrency system এ deadlock common।
+
+Example
+multiple transaction same row access
+Solution:
+consistent locking order
+reduce transaction scope
+
+5.25 High Volume Data Strategy
+For billion scale system:
+partition
+shard
+replica
+cache
+CQRS
+async processing
+
+5.26 Real Enterprise Architecture
+Banking system:
+Layer
+Technology
+Transaction DB
+SQL Server
+Cache
+Redis
+Queue
+RabbitMQ
+Reporting DB
+PostgreSQL
+Logs
+Elasticsearch
+
+5.27 Data Archiving Strategy
+Old data move:
+hot data → DB
+cold data → archive storage
+
+Example
+last 1 year → active DB
+older → archive DB
+
+Benefit
+faster queries
+lower cost
+optimized storage
+
+5.28 Disaster Scenario
+Real incident:
+DB disk full
+no archiving
+system stuck
+Lesson:
+scaling = storage planning + architecture
+
+5.29 Common Mistakes
+Mistake 1 — No Sharding Plan
+Future scaling impossible
+
+Mistake 2 — No Read Replica
+Report system overload
+
+Mistake 3 — Everything in Single DB
+Single point of failure
+
+Mistake 4 — Ignoring Cache Layer
+Database overloaded
+
+Mistake 5 — No Data Archiving
+Storage explosion
+
+5.30 Interview Perspective
+Expected questions:
+Sharding কী?
+Partitioning vs Sharding
+CQRS কী?
+Replication কী?
+How to scale database?
+Read vs Write optimization?
+
+5.31 Mini Design Exercise
+Design:
+“Banking Transaction System”
+Consider:
+high concurrency
+consistency
+audit log
+reporting
+fraud detection
+scaling strategy
+
+5.32 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Database Partitioning
+Sharding Architecture
+Replication Strategy
+Read Replica
+CQRS Pattern
+Cache + DB Design
+Connection Pooling
+Index Optimization
+Archiving Strategy
+High Scale Database Design
+
+Chapter 6 — Caching Architecture &amp; Performance Engineering
+Redis, Distributed Cache, CDN, Cache Invalidation &amp; Real Production Scaling
+Practical System Design in Bangla
+
+6.1 Introduction
+একটা system slow হওয়ার সবচেয়ে common কারণ হলো:
+“সব request সরাসরি database এ যাচ্ছে।”
+ছোট system এ এটা সমস্যা না।
+কিন্তু বড় system এ:
+database overload
+CPU spike
+response slow
+timeout
+user frustration
+revenue loss
+
+Caching হলো সেই technique যেটা system কে 10x–100x faster করতে পারে।
+
+6.2 Real Production Story — Cache না থাকায় Disaster
+একটি ERP system:
+5000 concurrent user
+daily report generation
+heavy SQL queries
+Problem:
+প্রতি request DB hit হচ্ছিল
+same report বারবার generate হচ্ছিল
+CPU 95%+
+Result:
+system hang
+report 8–12 second delay
+
+Solution:
+Redis cache implement
+report caching strategy
+TTL tuning
+
+Result:
+12 sec → 200ms
+
+6.3 Cache কী?
+Cache হলো:
+frequently used data দ্রুত access করার জন্য temporary storage
+
+Simple idea:
+database = slow but permanent
+cache = fast but temporary
+
+6.4 Why Cache is Important?
+Caching দেয়:
+faster response
+reduced DB load
+better scalability
+lower infrastructure cost
+improved user experience
+
+6.5 Cache Types
+Type
+Description
+In-memory cache
+RAM based
+Distributed cache
+Shared cache (Redis)
+Browser cache
+Client side
+CDN cache
+Edge location cache
+
+6.6 In-Memory Cache
+Application server এর ভিতরে cache থাকে।
+Example (.NET):
+MemoryCache
+Dictionary cache
+
+Benefit
+ultra fast (nanoseconds)
+
+Problem
+single server only
+restart হলে data lost
+
+6.7 Distributed Cache (Redis)
+Redis হলো most popular distributed cache system।
+
+Architecture
+App Server → Redis → Database
+
+Benefits
+multiple server share cache
+persistent optional
+extremely fast
+supports TTL, eviction
+
+Real Use Case
+session storage
+API caching
+leaderboard
+rate limiting
+
+6.8 Cache Patterns
+
+1. Cache Aside (Lazy Loading)
+Most common pattern.
+Flow:
+check cache
+if miss → DB query
+store in cache
+return result
+
+Example
+User profile API:
+first request → DB hit
+next requests → cache hit
+
+2. Write Through Cache
+Write → Cache + DB simultaneously
+
+Benefit
+always consistent cache
+
+3. Write Back Cache
+Write → cache first → DB later async
+
+Risk
+data loss if crash
+
+6.9 Cache Invalidation Problem
+Cache invalidation হলো সবচেয়ে difficult problem in CS.
+
+Problem Example
+user updated profile
+cache still old data
+
+Result
+wrong data shown
+
+Solutions
+TTL based expiration
+manual invalidation
+event-based invalidation
+
+6.10 TTL (Time To Live)
+Cache data expire করে automatically।
+
+Example
+UserProfile → TTL = 5 minutes
+
+Benefit
+auto cleanup
+reduced stale data risk
+
+6.11 Cache Stampede Problem
+When cache expires:
+thousands of request go to DB at once
+
+Result:
+DB overload
+system crash
+
+Solution:
+cache locking
+pre-warming
+random TTL
+
+6.12 Real Production Issue — Cache Stampede
+E-commerce flash sale:
+product cache expired
+20,000 requests hit DB simultaneously
+DB CPU 100%
+Fix:
+distributed lock
+cache pre-warm
+
+6.13 Cache Eviction Policies
+Redis decides what to remove when memory full.
+
+Policies
+Policy
+Meaning
+LRU
+Least recently used
+LFU
+Least frequently used
+FIFO
+First in first out
+
+6.14 CDN (Content Delivery Network)
+CDN হলো:
+global edge servers that cache static content
+
+Example
+User Bangladesh → nearest CDN node
+
+Use Cases
+images
+videos
+JS/CSS files
+static assets
+
+Benefit
+low latency
+reduced server load
+global performance
+
+6.15 Cache Layer Architecture
+Typical enterprise system:
+User → CDN → API → Cache → DB
+
+6.16 Multi-Level Cache
+Large system এ multiple cache layer থাকে:
+L1: in-memory
+L2: Redis
+L3: database
+
+6.17 Cache Strategy for ERP System
+ERP system এ:
+Data
+Cache Strategy
+User profile
+Redis
+Reports
+Redis (TTL)
+Permissions
+Long TTL cache
+Dashboard
+Precomputed cache
+
+6.18 Real Production Story — ERP Optimization
+Problem:
+dashboard 10 sec load
+SQL heavy join
+Solution:
+precomputed cache table
+Redis caching layer
+Result:
+10 sec → 300ms
+
+6.19 Read Through vs Write Through
+
+Read Through
+Cache automatically DB থেকে fetch করে
+
+Write Through
+Write → DB + Cache
+
+6.20 Cache Consistency Problem
+Distributed system এ:
+DB updated
+cache not updated
+
+Solution
+event-driven invalidation
+message queue
+versioning
+
+6.21 Cache Warming
+System start হওয়ার আগে cache load করা।
+
+Example
+top products
+frequent queries
+dashboard data
+
+Benefit
+no cold start issue
+
+6.22 Rate Limiting with Cache
+Redis ব্যবহার করে API limit করা হয়।
+
+Example
+User → 100 request/min allowed
+
+6.23 Session Management
+Traditional:
+DB session (slow)
+Modern:
+Redis session (fast)
+
+Benefit
+stateless API
+scalable system
+
+6.24 Real-Time Systems &amp; Cache
+Chat system / notification system:
+Redis pub/sub
+in-memory state
+
+6.25 Cache vs Database
+Feature
+Cache
+Database
+Speed
+Fast
+Slow
+Persistence
+Temporary
+Permanent
+Cost
+High RAM
+Disk
+Consistency
+Eventual
+Strong
+
+6.26 Performance Engineering Mindset
+Senior engineer ভাবে:
+what to cache?
+how long?
+when to invalidate?
+what happens on failure?
+
+6.27 Common Mistakes
+
+Mistake 1 — Cache Everything
+Unnecessary memory waste
+
+Mistake 2 — No Invalidation Strategy
+Stale data issue
+
+Mistake 3 — No TTL
+Cache never updated
+
+Mistake 4 — Over-reliance on Cache
+System fragile
+
+Mistake 5 — No Monitoring
+Cache miss rate unknown
+
+6.28 Monitoring Cache Performance
+Track:
+hit ratio
+miss ratio
+memory usage
+eviction rate
+
+Ideal Cache Hit Ratio
+80%+
+
+6.29 Interview Perspective
+Expected questions:
+Cache কী?
+Cache Aside pattern কী?
+Redis কেন fast?
+Cache invalidation problem কী?
+CDN কীভাবে কাজ করে?
+TTL কী?
+
+6.30 Mini Design Exercise
+Design:
+“High Traffic News Portal”
+Consider:
+trending news caching
+CDN usage
+API caching
+homepage precompute
+comment caching
+
+6.31 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Cache concept
+Redis architecture
+Cache patterns
+Cache invalidation problem
+TTL strategy
+Cache stampede
+CDN
+Multi-level caching
+Session management
+Rate limiting
+Performance engineering mindset
+
+Chapter 7 — API Design &amp; Backend Architecture
+REST, GraphQL, gRPC, Versioning, Rate Limiting &amp; Scalable Backend Systems
+Practical System Design in Bangla
+
+7.1 Introduction
+একটি system যতই বড় হয়, সবকিছুর কেন্দ্র হয়ে দাঁড়ায় API।
+কারণ:
+frontend API call করে
+mobile app API call করে
+third-party integration API ব্যবহার করে
+microservices একে অপরের সাথে API দিয়ে communicate করে
+
+তাই বলা যায়:
+“API হলো পুরো system এর nervous system।”
+
+একটি দুর্বল API design পুরো system কে slow, unstable এবং unscalable করে দিতে পারে।
+
+7.2 Real Production Story — Bad API Design
+একটি ERP system এ শুরুতে API ছিল:
+single endpoint
+heavy response
+no pagination
+no caching
+no versioning
+
+Problem:
+report API 10–15 second নিচ্ছিল
+mobile app crash করছিল
+network payload huge ছিল
+database overload হচ্ছিল
+
+Root cause:
+API design proper system thinking ছাড়া করা হয়েছিল
+
+Solution:
+RESTful redesign
+pagination
+caching
+DTO optimization
+versioning
+
+Result:
+12 sec → 250ms
+70% bandwidth reduction
+
+7.3 API কী?
+API (Application Programming Interface) হলো:
+দুই system এর মধ্যে communication bridge
+
+Example:
+Frontend → API → Backend → Database
+
+7.4 REST API কী?
+REST (Representational State Transfer) হলো সবচেয়ে common API architecture style।
+
+REST Principles
+stateless
+resource-based
+HTTP methods use
+standardized structure
+
+7.5 REST Methods
+Method
+Use
+GET
+data read
+POST
+create
+PUT
+full update
+PATCH
+partial update
+DELETE
+remove
+
+Example
+GET /users/1
+POST /users
+PUT /users/1
+DELETE /users/1
+
+7.6 REST Best Practices
+proper naming
+consistent structure
+versioning
+pagination
+filtering
+error handling
+
+Bad API Example
+GET /getUserDataByIdAndType
+
+Good API Example
+GET /users/{id}
+
+7.7 API Versioning
+System evolve করলে API change হয়।
+
+Why Versioning Needed?
+backward compatibility
+mobile app stability
+gradual migration
+
+Example
+GET /api/v1/users
+GET /api/v2/users
+
+7.8 API Response Design
+Good API response always structured:
+{
+  "success": true,
+  "data": {},
+  "error": null
+}
+
+Bad Response
+{ "name": "Sajid" }
+
+7.9 Pagination
+Large dataset একসাথে load করা dangerous।
+
+Example
+GET /orders?page=1&amp;size=50
+
+Benefit
+faster response
+reduced memory usage
+better UX
+
+7.10 Filtering &amp; Sorting
+Enterprise API supports:
+GET /products?category=mobile&amp;sort=price_desc
+
+7.11 GraphQL
+GraphQL হলো:
+client driven query API
+
+Example
+Client decides কী data লাগবে।
+
+{
+  user(id: 1) {
+    name
+    email
+    orders {
+      id
+      total
+    }
+  }
+}
+
+GraphQL Benefits
+over-fetching কম
+under-fetching কম
+flexible query
+
+Problem
+caching difficult
+complexity high
+learning curve steep
+
+7.12 gRPC
+gRPC হলো high-performance binary API protocol।
+
+Features
+very fast
+binary communication
+HTTP/2 based
+strongly typed
+
+Use Case
+microservices communication
+internal system calls
+
+Example Flow
+Auth Service → User Service → Order Service
+
+7.13 REST vs GraphQL vs gRPC
+Type
+Use Case
+REST
+public APIs
+GraphQL
+frontend flexible queries
+gRPC
+internal microservices
+
+7.14 API Gateway
+API Gateway হলো:
+single entry point for all APIs
+
+Responsibilities
+routing
+authentication
+rate limiting
+logging
+load balancing
+
+Architecture
+Client → API Gateway → Microservices
+
+7.15 Rate Limiting
+API abuse prevent করার জন্য rate limiting ব্যবহার হয়।
+
+Example
+100 requests / minute per user
+
+Techniques
+token bucket
+leaky bucket
+fixed window
+
+Real Use Case
+Login API protect against brute force attack
+
+7.16 Authentication &amp; Authorization
+
+Authentication
+User কে verify করা
+
+Authorization
+User কী করতে পারবে সেটা control করা
+
+Example
+Admin → full access
+User → limited access
+
+7.17 JWT (JSON Web Token)
+JWT হলো stateless authentication method।
+
+Flow
+login
+token generate
+API call with token
+
+Benefits
+scalable
+no session storage needed
+
+7.18 API Security
+Important protections:
+HTTPS
+JWT validation
+input validation
+SQL injection prevention
+CORS policy
+
+7.19 Input Validation
+Bad input → system crash বা attack
+
+Example
+null check
+length validation
+type validation
+
+7.20 Error Handling
+Good API always consistent error return করে।
+
+Example
+{
+  "success": false,
+  "error": {
+    "code": "5001",
+    "message": "Invalid input"
+  }
+}
+
+7.21 Idempotency
+Idempotency মানে:
+same request multiple times call করলেও result same থাকবে
+
+Example
+Payment API:
+duplicate request → double payment হবে না
+
+7.22 Async API Design
+Heavy operation async করা উচিত।
+
+Example
+report generation
+email sending
+file processing
+
+Flow
+API → Queue → Worker → Result
+
+7.23 API Performance Optimization
+Techniques:
+caching
+pagination
+compression
+async processing
+connection pooling
+
+7.24 Compression
+API response compress করা হয় (gzip)
+
+Benefit
+bandwidth reduce
+faster response
+
+7.25 Real Production Story — API Bottleneck
+Problem:
+5000 concurrent user
+API slow 8 sec
+Cause:
+heavy join
+no cache
+no pagination
+Solution:
+DTO optimize
+Redis cache
+split API
+Result:
+8 sec → 180ms
+
+7.26 Logging &amp; Observability
+API level monitoring খুব গুরুত্বপূর্ণ।
+
+Track:
+latency
+error rate
+request count
+response time
+
+7.27 Common Mistakes
+
+Mistake 1 — Chatty API
+Too many small calls
+
+Mistake 2 — Overfetching Data
+Unnecessary data load
+
+Mistake 3 — No Versioning
+Breaking production app
+
+Mistake 4 — No Rate Limiting
+System abuse
+
+Mistake 5 — No Timeout Handling
+API hang issue
+
+7.28 Timeout Strategy
+Every API must have timeout:
+database timeout
+service timeout
+external API timeout
+
+7.29 Interview Perspective
+Common questions:
+REST vs GraphQL
+API versioning
+JWT কী?
+Rate limiting কী?
+Idempotency কী?
+gRPC কেন use করা হয়?
+
+7.30 Mini Design Exercise
+Design:
+“Food Delivery API System”
+Think:
+order API
+restaurant API
+rider tracking
+payment API
+caching strategy
+rate limiting
+scalability
+
+7.31 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+REST API design
+API best practices
+GraphQL concept
+gRPC architecture
+API Gateway
+Rate limiting
+Authentication &amp; JWT
+Security practices
+Idempotency
+Async API design
+Performance optimization
+Real production API issues
+
+Chapter 8 — Authentication, Security &amp; Distributed System Protection
+JWT, OAuth, RBAC, Encryption, Attack Prevention &amp; Enterprise Security Architecture
+Practical System Design in Bangla
+
+8.1 Introduction
+একটা system যত বড় হয়, তত বেশি গুরুত্বপূর্ণ হয়ে যায় Security।
+কারণ:
+শুধু feature কাজ করলেই হবে না
+system কে safe, trusted, tamper-proof হতে হবে
+
+একটি insecure system মানে:
+“পুরো system ঠিক আছে, কিন্তু যে কেউ ঢুকে data বদলে দিতে পারে”
+
+8.2 Real Production Story — Security Failure
+একটি enterprise ERP system এ:
+API endpoint ছিল public
+proper authentication ছিল না
+token validation weak ছিল
+
+Problem:
+unauthorized user salary data access করছিল
+invoice modify করা যাচ্ছিল
+audit log mismatch হচ্ছিল
+
+Root Cause:
+authentication + authorization properly design করা হয়নি
+
+Fix:
+JWT implementation
+RBAC system
+API gateway security
+encryption
+
+Result:
+system secured
+audit control restored
+access controlled properly
+
+8.3 Authentication vs Authorization
+এই দুইটা সবচেয়ে important concept।
+
+Authentication (Who are you?)
+User identity verify করা।
+Example:
+login
+password check
+OTP verification
+
+Authorization (What can you do?)
+User permission control করা।
+Example:
+admin can delete user
+normal user cannot
+
+8.4 Authentication Flow
+User login
+credentials verify
+token generate
+token store/use
+API call with token
+
+8.5 JWT (JSON Web Token)
+JWT হলো stateless authentication system।
+
+Structure
+JWT consists of:
+Header
+Payload
+Signature
+
+Example Payload
+{
+  "userId": 101,
+  "role": "Admin",
+  "exp": 1710000000
+}
+
+8.6 JWT Flow in System Design
+User → Login API → JWT Token → API Request → Validate Token
+
+Benefits
+stateless system
+scalable
+no session DB needed
+microservice friendly
+
+Problem
+token leak হলে security risk
+revoke করা hard
+
+8.7 Refresh Token Strategy
+JWT short-lived হয়।
+Refresh token ব্যবহার হয় long session maintain করতে।
+
+Flow
+Access Token (short)
+Refresh Token (long)
+
+Example
+Access token: 15 min
+Refresh token: 7 days
+
+8.8 OAuth2
+OAuth হলো third-party authentication system।
+
+Example
+Login with Google
+Login with Facebook
+
+Flow
+redirect to provider
+user login
+token receive
+access API
+
+8.9 Role-Based Access Control (RBAC)
+RBAC হলো:
+user role অনুযায়ী permission control system
+
+Example
+Role
+Permission
+Admin
+Full access
+Manager
+Limited access
+User
+Read-only
+
+Real ERP Example
+HR can view salary
+Employee cannot
+
+8.10 Permission System Design
+Enterprise system এ permission dynamic হয়।
+
+Structure
+User
+Role
+Permission
+Module
+
+Problem
+Complex hierarchy handling difficult
+
+8.11 Encryption
+Encryption হলো data protect করার technique।
+
+Types
+1. Symmetric Encryption
+Same key used
+2. Asymmetric Encryption
+Public + Private key
+
+Example
+HTTPS uses encryption
+password stored hashed
+
+8.12 Hashing vs Encryption
+Type
+Purpose
+Hashing
+irreversible
+Encryption
+reversible
+
+Example
+Password:
+Stored as hash (not plain text)
+
+8.13 Password Security
+Never store plain password.
+
+Good Practice
+bcrypt
+salt
+strong hashing
+
+8.14 API Security Layers
+Enterprise system usually has multiple layers:
+
+Client → API Gateway → Auth Service → Microservice → DB
+
+8.15 API Gateway Security
+API Gateway handles:
+authentication
+rate limiting
+IP filtering
+logging
+
+8.16 Rate Limiting for Security
+Prevent attack:
+brute force
+DDoS
+
+Example
+100 requests/min per user
+
+8.17 CORS Security
+CORS controls:
+which domain API access করতে পারবে
+
+8.18 SQL Injection Attack
+Most dangerous attack.
+
+Bad Example
+SELECT * FROM Users WHERE Name = 'input'
+
+Attack
+User input:
+' OR 1=1 --
+
+Fix
+parameterized query
+ORM use
+
+8.19 XSS Attack
+Frontend security issue।
+
+Example
+User input injects script:
+&lt;script&gt;alert('hack')&lt;/script&gt;
+
+Fix
+input sanitization
+output encoding
+
+8.20 CSRF Attack
+User session misuse করে unauthorized action।
+
+Fix
+CSRF token
+secure cookies
+
+8.21 Distributed System Security
+Microservice architecture এ security আরও complex।
+
+Challenges
+multiple services
+network communication
+token propagation
+
+Solution
+centralized auth service
+API gateway validation
+service-to-service authentication
+
+8.22 Zero Trust Architecture
+Modern system design concept:
+“Never trust, always verify”
+
+Principle
+every request validate করতে হবে
+internal serviceও trusted না
+
+8.23 Secure Communication
+Use:
+HTTPS
+TLS
+encrypted channels
+
+8.24 Audit Logging
+Enterprise system এ audit mandatory।
+
+Example
+User
+Action
+Time
+Admin
+Updated salary
+10:05 PM
+
+Benefit
+traceability
+fraud detection
+compliance
+
+8.25 Real Production Story — Unauthorized Access
+Problem:
+employee access level bypass করা হয়েছিল
+Cause:
+missing role validation in API layer
+Fix:
+centralized RBAC middleware
+gateway-level authorization
+
+Result:
+security restored
+access fully controlled
+
+8.26 Security Monitoring
+Track:
+login attempts
+failed login
+API abuse
+unusual traffic
+
+8.27 Common Mistakes
+
+Mistake 1 — Only Frontend Security
+Backend bypass possible
+
+Mistake 2 — Weak Password Policy
+Easy brute force
+
+Mistake 3 — No Token Expiry
+Stolen token forever valid
+
+Mistake 4 — No Role Validation
+Unauthorized access
+
+Mistake 5 — No Audit Logs
+No traceability
+
+8.28 Enterprise Security Checklist
+JWT/OAuth
+RBAC
+HTTPS
+Encryption
+Rate limiting
+Input validation
+Logging
+Monitoring
+API Gateway security
+
+8.29 Interview Perspective
+Common questions:
+Authentication vs Authorization
+JWT কী?
+OAuth কীভাবে কাজ করে?
+RBAC কী?
+SQL injection কী?
+XSS কী?
+CSRF কী?
+
+8.30 Mini Design Exercise
+Design:
+“Banking Security System”
+Consider:
+login security
+transaction security
+audit logs
+fraud detection
+multi-factor authentication
+encryption strategy
+
+8.31 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Authentication vs Authorization
+JWT architecture
+OAuth system
+RBAC design
+Encryption &amp; hashing
+API security layers
+SQL injection prevention
+XSS &amp; CSRF protection
+Distributed system security
+Zero trust architecture
+Audit logging
+Enterprise security mindset
+
+Chapter 9 — Load Balancing, High Availability &amp; Fault Tolerant System Design
+NGINX, HAProxy, Failover, Redundancy &amp; Enterprise Scale Architecture
+Practical System Design in Bangla
+
+9.1 Introduction
+একটা system যখন বড় হয়, তখন সবচেয়ে বড় সমস্যা হয়:
+“একটা server এর উপর সব traffic চলে আসে”
+Result:
+server overload
+API slow
+crash
+downtime
+business loss
+
+এই problem solve করার জন্য আমরা ব্যবহার করি:
+Load Balancing + High Availability + Fault Tolerance
+
+9.2 Real Production Story — Single Server Disaster
+একটি ERP system শুরু হয়েছিল:
+1 application server
+1 database server
+
+Initially:
+smooth
+fast
+stable
+
+After growth:
+10,000 concurrent user
+heavy report generation
+API traffic increase
+
+Problem:
+CPU 100%
+IIS crash
+system down 3 hours
+users cannot login
+
+Root Cause:
+single server architecture (no load balancing)
+
+9.3 Load Balancing কী?
+Load balancing হলো:
+incoming traffic multiple server এ distribute করা
+
+Simple idea:
+Instead of:
+1 server handles everything
+We use:
+multiple servers share load
+
+9.4 Load Balancer Architecture
+User → Load Balancer → App Server 1→ App Server 2→ App Server 3
+
+9.5 Why Load Balancing is Important?
+performance improve
+high availability
+fault tolerance
+scalable system
+
+9.6 Load Balancer Types
+
+1. Hardware Load Balancer
+physical device
+expensive
+enterprise level
+
+2. Software Load Balancer
+NGINX
+HAProxy
+Apache
+
+3. Cloud Load Balancer
+AWS ELB
+Azure Load Balancer
+
+9.7 Load Balancing Algorithms
+
+1. Round Robin
+Requests distribute sequentially
+
+Example
+Server1 → Server2 → Server3 → repeat
+
+2. Least Connection
+যে server least busy, সেখানে request যাবে
+
+3. IP Hash
+Same user → same server
+
+4. Weighted Round Robin
+Powerful server বেশি load পাবে
+
+9.8 Real Production Example
+E-commerce system:
+product browsing
+order processing
+
+Problem:
+Server 1 overloaded
+Server 2 idle
+
+Solution:
+least connection algorithm
+proper load balancing
+
+Result:
+balanced traffic
+stable system
+
+9.9 High Availability (HA)
+High availability মানে:
+system always available থাকবে
+
+Formula
+Availability = \frac{Uptime}{Uptime + Downtime}
+
+9.10 Availability Levels
+Level
+Downtime
+99%
+3.65 days/year
+99.9%
+8.7 hours/year
+99.99%
+52 minutes/year
+
+9.11 High Availability Architecture
+Core idea:
+multiple servers
+redundancy
+failover system
+
+Example
+User → Load Balancer → Server A→ Server B (backup)
+
+9.12 Failover System
+Failover মানে:
+primary system fail হলে automatically backup system activate হবে
+
+Types
+1. Active-Passive
+one active
+one standby
+
+2. Active-Active
+both active
+both serve traffic
+
+9.13 Real Example — Server Crash Recovery
+Banking system এ:
+primary server crash
+secondary server auto activate
+
+Result:
+zero downtime
+user not affected
+
+9.14 Fault Tolerance কী?
+Fault tolerance মানে:
+system partial failure হলেও continue চলবে
+
+Example
+notification service down
+but payment system still works
+
+9.15 Redundancy
+Redundancy মানে:
+same component multiple copy রাখা
+
+Types
+server redundancy
+database redundancy
+network redundancy
+
+9.16 Database Failover
+Database architecture:
+Primary DB → Replica DB
+
+Scenario
+Primary fail → Replica takes over
+
+9.17 Real Production Story — Database Failure
+An ERP system:
+single SQL Server
+disk failure
+
+Result:
+system down 6 hours
+no replication
+
+Lesson:
+redundancy is not optional
+
+9.18 Health Check System
+Load balancer continuously checks:
+server alive?
+response time?
+error rate?
+
+If failed:
+remove from pool
+
+9.19 Sticky Session Problem
+Problem:
+User session must stay same server
+
+Solution:
+sticky session (IP based)
+Redis session store
+
+9.20 Stateless Architecture
+Modern system prefers:
+stateless servers
+
+Benefit:
+easy scaling
+no session dependency
+better failover
+
+9.21 Horizontal Scaling with Load Balancer
+User → LB → multiple stateless servers
+
+9.22 Rate Limiting at Load Balancer
+Protect system from abuse:
+request limit per IP
+DDoS protection
+
+9.23 Load Balancer + Cache + DB Architecture
+User→ Load Balancer→ App Server→ Redis Cache→ Database
+
+9.24 CDN Integration
+Static content serve:
+images
+JS
+CSS
+
+Flow:
+User → CDN → Origin Server
+
+9.25 Network Redundancy
+Enterprise system uses:
+multiple ISP
+backup route
+failover network
+
+9.26 Monitoring Load Balancer
+Track:
+request count
+latency
+server health
+error rate
+
+9.27 Real Production Story — Traffic Spike
+Flash sale event:
+traffic 20x increase
+
+Without LB:
+system crash
+With LB:
+traffic distributed
+system stable
+
+9.28 Common Mistakes
+
+Mistake 1 — Single Load Balancer
+If LB fails → whole system down
+
+Mistake 2 — No Health Check
+Dead server still gets traffic
+
+Mistake 3 — No Failover Strategy
+Manual recovery only
+
+Mistake 4 — Sticky Session Abuse
+Uneven load distribution
+
+Mistake 5 — No Auto Scaling
+Static infrastructure
+
+9.29 Enterprise Best Practices
+multiple load balancer
+auto scaling group
+health check enabled
+stateless services
+distributed caching
+DB replication
+
+9.30 Interview Perspective
+Common questions:
+Load balancing কী?
+Round robin vs least connection
+Failover কী?
+High availability কী?
+Sticky session সমস্যা কী?
+Active-active vs active-passive
+
+9.31 Mini Design Exercise
+Design:
+“Global E-Commerce Platform”
+Consider:
+global traffic
+CDN
+load balancing
+failover system
+database replication
+caching strategy
+disaster recovery
+
+9.32 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Load balancing concept
+NGINX / HAProxy role
+Load balancing algorithms
+High availability design
+Failover system
+Fault tolerance
+Redundancy strategy
+Stateless architecture
+Health checks
+CDN integration
+Real production scaling issues
+
+Chapter 10 — Microservices Architecture
+Service Decomposition, Communication, Event-Driven Systems &amp; Saga Pattern
+Practical System Design in Bangla
+
+10.1 Introduction
+একটা system যখন ছোট থাকে, তখন একটি single application (monolith) যথেষ্ট।
+কিন্তু যখন system বড় হয়:
+multiple team
+multiple feature domain
+high traffic
+complex business logic
+independent deployment needed
+তখন monolith system আর work করে না।
+
+তখন আমরা move করি:
+Microservices Architecture
+
+10.2 Real Production Story — Monolith Breakdown Problem
+একটি ERP system শুরু হয়েছিল:
+single .NET application
+single database
+all modules in one project
+
+Initially:
+fast development
+easy deployment
+
+After 2–3 years:
+HR module change করলে Accounting break
+deployment risky
+team conflict
+build time 40+ minutes
+bug impact huge
+
+Problem:
+“everything tightly coupled”
+
+Solution:
+system split into microservices
+independent deployment
+domain separation
+
+10.3 Microservices কী?
+Microservices হলো:
+একটি বড় system কে ছোট independent services এ ভাগ করা
+
+প্রতিটি service:
+independent deployable
+own database (ideally)
+specific business domain
+loosely coupled
+
+10.4 Monolith vs Microservices
+Feature
+Monolith
+Microservices
+Deployment
+Single
+Independent
+Scaling
+Whole system
+Per service
+Complexity
+Low
+High
+Flexibility
+Low
+High
+Team size
+Small
+Large
+
+10.5 Service Decomposition Strategy
+Microservices design করার সবচেয়ে গুরুত্বপূর্ণ অংশ:
+কিভাবে system কে ভাগ করা হবে
+
+Strategies
+1. Business Domain Based (Best)
+HR Service
+Payroll Service
+Inventory Service
+Payment Service
+
+2. Function Based (Bad for large system)
+User Service
+Email Service
+Report Service
+
+10.6 Real ERP Microservices Example
+Service
+Responsibility
+Auth Service
+login, token
+HR Service
+employee
+Payroll Service
+salary
+Inventory Service
+stock
+Reporting Service
+analytics
+
+10.7 Communication Between Services
+Microservices একে অপরের সাথে communicate করে।
+
+1. Synchronous (REST/gRPC)
+direct API call
+immediate response
+
+2. Asynchronous (Message Queue)
+RabbitMQ
+Kafka
+event-driven
+
+10.8 Synchronous Communication Problem
+Example:
+Order Service → Payment Service → Inventory Service
+
+Problem:
+one service slow → entire flow slow
+cascading failure risk
+
+10.9 Asynchronous Communication
+Instead of direct call:
+Order Created → Event → Queue → Consumer Services
+
+Benefit
+decoupled system
+scalable
+resilient
+
+10.10 Event-Driven Architecture
+System reacts based on events.
+
+Example Event
+OrderCreated
+PaymentCompleted
+StockUpdated
+
+Flow
+Order Service → emits event → Kafka → multiple consumers
+
+10.11 Real Production Example — Event System
+E-commerce system:
+order placed
+inventory update
+email send
+notification push
+
+Without event system:
+tightly coupled
+slow response
+With event system:
+fast API
+async processing
+
+10.12 API Gateway in Microservices
+Microservices direct access না দিয়ে:
+API Gateway ব্যবহার করা হয়
+
+Responsibilities
+routing
+authentication
+rate limiting
+logging
+
+Architecture
+Client → API Gateway → Microservices
+
+10.13 Database per Service
+Best practice:
+each microservice should own its database
+
+Benefit
+independent scaling
+loose coupling
+easier maintenance
+
+Problem
+distributed transactions difficult
+
+10.14 Shared Database Problem
+Bad design:
+all services same DB
+
+Problem:
+tight coupling
+schema conflict
+deployment risk
+
+10.15 Distributed Transactions Problem
+Example:
+Order → Payment → Inventory
+
+Problem:
+one fails → consistency issue
+
+10.16 Saga Pattern
+Saga solves distributed transaction problem.
+
+Types
+1. Choreography
+services communicate via events
+
+2. Orchestration
+central coordinator manages flow
+
+10.17 Saga Example
+Order flow:
+Order created
+Payment success
+Inventory update
+Shipping
+
+If failure:
+rollback compensation actions
+
+Example Compensation
+payment refund
+stock restore
+
+10.18 Real Production Story — Payment Failure
+System:
+order placed
+payment failed mid-way
+Problem:
+stock already reduced
+order inconsistent
+Solution:
+saga compensation implemented
+
+Result:
+data consistency restored
+
+10.19 Service Discovery
+Microservices dynamic system।
+
+Problem:
+services IP change
+Solution:
+service registry
+
+Example tools:
+Consul
+Eureka
+Kubernetes DNS
+
+10.20 Load Balancing in Microservices
+Each service has its own scaling:
+Auth Service → 3 instances
+Order Service → 10 instances
+
+10.21 Fault Isolation
+Microservices advantage:
+one service failure does not break system
+
+Example:
+notification service down
+payment still works
+
+10.22 Circuit Breaker Pattern
+Prevent cascading failure.
+
+States
+Closed
+Open
+Half-open
+
+Benefit
+system stability
+failure isolation
+
+10.23 Retry &amp; Timeout Strategy
+Important in distributed system:
+retry logic
+exponential backoff
+timeout control
+
+10.24 Logging &amp; Observability
+Microservices require:
+centralized logging
+tracing
+metrics
+
+Tools:
+ELK stack
+Prometheus
+Grafana
+Jaeger
+
+10.25 Real Production Story — Microservice Debugging
+Problem:
+payment delayed
+order stuck
+
+Issue:
+no distributed tracing
+logs scattered
+
+Solution:
+centralized logging system
+trace ID implemented
+
+Result:
+issue root cause identified quickly
+
+10.26 Common Mistakes
+
+Mistake 1 — Premature Microservices
+Small system → unnecessary complexity
+
+Mistake 2 — Too Many Services
+100+ microservices → unmanageable
+
+Mistake 3 — Shared Database
+Breaks independence
+
+Mistake 4 — No Observability
+Debug impossible
+
+Mistake 5 — No Event Design
+Tight coupling system
+
+10.27 Enterprise Best Practices
+domain-driven design (DDD)
+event-driven architecture
+API gateway
+service isolation
+circuit breaker
+centralized logging
+database per service
+
+10.28 Interview Perspective
+Common questions:
+Microservices কী?
+Monolith vs Microservices
+Saga pattern কী?
+Event-driven architecture কী?
+Service discovery কী?
+Circuit breaker কী?
+
+10.29 Mini Design Exercise
+Design:
+“Food Delivery Microservices System”
+Consider:
+user service
+restaurant service
+order service
+payment service
+delivery service
+event system
+scaling strategy
+
+10.30 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Microservices architecture
+Service decomposition strategy
+Synchronous vs asynchronous communication
+Event-driven system
+API gateway role
+Database per service
+Saga pattern
+Distributed transaction handling
+Service discovery
+Circuit breaker
+Observability in microservices
+Real production issues
+
+Chapter 11 — Message Queue &amp; Event Streaming
+RabbitMQ, Kafka, Background Processing &amp; Distributed Event Systems
+Practical System Design in Bangla
+
+11.1 Introduction
+একটা large system এ সবচেয়ে common problem হলো:
+“সব কাজ একসাথে synchronousভাবে করা”
+
+Result:
+API slow
+timeout
+user experience খারাপ
+system overload
+
+এই problem solve করার জন্য আমরা ব্যবহার করি:
+Message Queue &amp; Event Streaming
+
+11.2 Real Production Story — Email System Failure
+একটি ERP system এ:
+user registration
+সাথে সাথে email send করা হচ্ছিল
+
+Problem:
+email service slow
+API response delay 6–10 sec
+occasional timeout
+
+Root cause:
+email sending was synchronous
+
+Solution:
+message queue implement
+background worker add
+
+Result:
+API response 200ms
+email async process
+
+11.3 Message Queue কী?
+Message queue হলো:
+system এর মধ্যে asynchronous communication mechanism
+
+Simple idea:
+Producer → Queue → Consumer
+
+11.4 Why Message Queue Needed?
+async processing
+system decoupling
+scalability
+reliability
+retry mechanism
+
+11.5 Queue vs Direct API Call
+Feature
+Direct Call
+Message Queue
+Speed
+Slow
+Fast
+Dependency
+Tight
+Loose
+Failure Impact
+High
+Low
+Scalability
+Limited
+High
+
+11.6 RabbitMQ কী?
+RabbitMQ হলো:
+traditional message broker system
+
+Features:
+queue-based messaging
+reliable delivery
+routing support
+acknowledgements
+
+11.7 RabbitMQ Architecture
+Producer → Exchange → Queue → Consumer
+
+11.8 Kafka কী?
+Kafka হলো:
+distributed event streaming platform
+
+Features:
+high throughput
+massive scale
+persistent log system
+replay capability
+
+11.9 RabbitMQ vs Kafka
+Feature
+RabbitMQ
+Kafka
+Model
+Queue
+Event log
+Speed
+Medium
+Very high
+Use case
+task processing
+event streaming
+Replay
+Limited
+Yes
+
+11.10 When to Use RabbitMQ?
+email sending
+background jobs
+notification system
+task queue
+
+11.11 When to Use Kafka?
+analytics system
+real-time tracking
+log processing
+event sourcing
+
+11.12 Background Processing
+Background processing মানে:
+heavy task API থেকে আলাদা করে worker process এ করা
+
+Example
+User request:
+generate report
+
+Instead of:
+API wait
+We do:
+queue job
+worker process
+async response
+
+11.13 Real Production Example — Report System
+Problem:
+report generation 15 sec
+API timeout
+Solution:
+queue based processing
+
+Flow:
+API → job enqueue
+worker → process
+store result
+user fetch later
+
+Result:
+API fast
+system stable
+
+11.14 Producer &amp; Consumer
+Producer
+message send করে
+Consumer
+message process করে
+
+11.15 Message Acknowledgement
+Consumer must confirm:
+message received
+processed successfully
+
+If not:
+message retry হবে
+
+11.16 Retry Mechanism
+System failure handle করতে retry লাগে:
+temporary failure
+network issue
+service downtime
+
+11.17 Dead Letter Queue (DLQ)
+Failed messages যায়:
+DLQ (Dead Letter Queue)
+
+Purpose:
+error analysis
+manual retry
+debugging
+
+11.18 Real Production Story — Payment Retry Issue
+System:
+payment processing queue
+
+Problem:
+payment gateway timeout
+message lost risk
+
+Solution:
+retry + DLQ
+
+Result:
+zero message loss
+consistent processing
+
+11.19 Event Streaming Concept
+Kafka-based system এ:
+everything is event
+
+Example events:
+UserCreated
+OrderPlaced
+PaymentCompleted
+
+11.20 Event Flow Architecture
+Producer → Kafka Topic → Multiple Consumers
+
+Benefit
+real-time processing
+scalable system
+decoupled architecture
+
+11.21 Event Replay Feature
+Kafka advantage:
+old event আবার process করা যায়
+
+Use case:
+analytics rebuild
+audit system
+debugging
+
+11.22 Topic Partitioning
+Kafka data split করে:
+partition 1
+partition 2
+partition 3
+
+Benefit:
+parallel processing
+high throughput
+
+11.23 Message Ordering Problem
+Important concept:
+ordering guarantee per partition
+
+11.24 Queue Backpressure Problem
+When producer faster than consumer:
+queue overflow
+latency increase
+
+Solution:
+scale consumer
+limit producer
+buffer management
+
+11.25 Real Production Story — Traffic Spike
+E-commerce flash sale:
+100,000 order/min
+
+Without queue:
+system crash
+With queue:
+smooth processing
+controlled load
+
+11.26 Idempotent Consumer
+Important concept:
+same message multiple times process হলেও result same হবে
+
+Example:
+payment event duplicate
+still single transaction
+
+11.27 Monitoring Queue System
+Track:
+queue length
+consumer lag
+processing time
+failure rate
+
+11.28 Common Mistakes
+
+Mistake 1 — No Retry Strategy
+Message lost risk
+
+Mistake 2 — No DLQ
+Error invisible
+
+Mistake 3 — Overloading Consumer
+System crash
+
+Mistake 4 — No Idempotency
+Duplicate data issue
+
+Mistake 5 — Wrong Tool Choice
+Kafka vs RabbitMQ mismatch
+
+11.29 Enterprise Architecture Example
+Banking system:
+Kafka → transaction events
+RabbitMQ → email + notification
+Worker service → report generation
+
+11.30 Interview Perspective
+Common questions:
+Message queue কী?
+RabbitMQ vs Kafka
+Producer vs Consumer
+Event-driven architecture
+DLQ কী?
+Idempotency কী?
+
+11.31 Mini Design Exercise
+Design:
+“Large Scale Notification System”
+Consider:
+email queue
+SMS queue
+push notification
+retry mechanism
+DLQ
+scaling strategy
+
+11.32 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Message Queue concept
+RabbitMQ architecture
+Kafka streaming system
+Producer/Consumer model
+Background processing
+Retry mechanism
+Dead Letter Queue
+Event-driven architecture
+Partitioning &amp; ordering
+Idempotency concept
+Real production queue systems
+
+Chapter 12 — System Observability &amp; Monitoring
+Logging, Metrics, Tracing, Prometheus, Grafana &amp; Production Debugging
+Practical System Design in Bangla
+
+12.1 Introduction
+একটা system live production এ গেলে সবচেয়ে বড় প্রশ্ন হলো:
+“System ভিতরে কী হচ্ছে সেটা আমরা কীভাবে বুঝবো?”
+
+কারণ production এ সমস্যা সবসময় visible না:
+API slow কিন্তু কেন slow বোঝা যাচ্ছে না
+error হচ্ছে কিন্তু কোথায় হচ্ছে unclear
+user complain করছে কিন্তু root cause unknown
+
+এই সমস্যা solve করার জন্য দরকার:
+Observability (পর্যবেক্ষণযোগ্যতা)
+
+12.2 Observability কী?
+Observability হলো:
+system এর ভিতরের state external signals দিয়ে বোঝার capability
+
+Three Pillars of Observability
+Logs
+Metrics
+Traces
+
+12.3 Real Production Story — Unknown Production Issue
+একটি ERP system এ:
+dashboard slow
+but no error in logs
+
+Problem:
+DB query slow ছিল
+but identify করা যাচ্ছিল না
+
+Root cause:
+missing observability system
+
+Fix:
+logging + metrics + tracing implement
+
+Result:
+issue detect time 2 hours → 5 minutes
+
+12.4 Logging কী?
+Logging হলো:
+system এর ঘটনাগুলো record করা
+
+Example Log
+User 101 logged in at 10:05 PM
+
+Types of Logs
+Info log
+Warning log
+Error log
+Debug log
+
+12.5 Structured Logging
+Bad log:
+User error happened
+Good log:
+{
+  "userId": 101,
+  "action": "login",
+  "status": "failed",
+  "reason": "invalid password"
+}
+
+12.6 Centralized Logging
+Microservices system এ logs scattered থাকে।
+
+Solution:
+centralized logging system
+
+Tools:
+ELK Stack (Elasticsearch, Logstash, Kibana)
+
+12.7 Metrics কী?
+Metrics হলো:
+system performance numbers
+
+Example Metrics
+CPU usage
+memory usage
+request per second
+response time
+error rate
+
+12.8 Key System Metrics
+Metric
+Meaning
+Latency
+response time
+Throughput
+requests/sec
+Error Rate
+failed requests
+Availability
+uptime
+
+12.9 Real Production Example — CPU Spike
+Problem:
+API slow
+
+Metrics check:
+CPU 95%
+DB query slow
+
+Solution:
+indexing fix
+caching added
+
+12.10 Monitoring Tools — Prometheus
+Prometheus হলো:
+metrics collection system
+
+Features:
+time series data
+alerting
+query support
+
+12.11 Visualization Tool — Grafana
+Grafana ব্যবহার করা হয়:
+metrics visualize করার জন্য
+
+Example dashboards:
+API latency graph
+CPU usage graph
+error rate chart
+
+12.12 Metrics Flow
+Application → Prometheus → Grafana → Dashboard
+
+12.13 Alerting System
+System problem detect হলে alert যায়:
+email
+SMS
+Slack
+webhook
+
+Example Alert
+API latency &gt; 2 sec
+
+12.14 Distributed Tracing কী?
+Tracing হলো:
+request পুরো system এর ভিতর কোথায় কোথায় যাচ্ছে তা track করা
+
+Example Flow
+User → API Gateway → Service A → Service B → DB
+
+Tracing দেখায়:
+কোথায় delay হচ্ছে
+কোন service slow
+
+12.15 Trace ID Concept
+Every request gets unique ID:
+TRACE-ID: abc123
+
+12.16 Real Production Story — Microservice Debugging
+Problem:
+payment delay
+
+Without tracing:
+guess work
+
+With tracing:
+order service slow identified
+DB query bottleneck found
+
+Result:
+debugging time 3 hours → 10 minutes
+
+12.17 OpenTelemetry
+Modern standard for observability:
+logs
+metrics
+traces
+
+12.18 Logging vs Metrics vs Tracing
+Type
+Purpose
+Logs
+events record
+Metrics
+numbers
+Tracing
+request flow
+
+12.19 Error Tracking
+Production system এ error track করা গুরুত্বপূর্ণ।
+
+Tools:
+Sentry
+ELK stack
+
+12.20 Health Check System
+System health check করে:
+service alive?
+DB connected?
+dependency OK?
+
+Example Endpoint
+GET /health
+
+12.21 Log Retention Strategy
+Logs forever রাখা যাবে না।
+
+Strategy:
+7 days hot logs
+30 days cold logs
+archive storage
+
+12.22 Performance Monitoring
+Track:
+slow queries
+API bottlenecks
+memory leak
+
+12.23 Real Production Story — Memory Leak
+Problem:
+server slow over time
+
+Metrics:
+memory usage increasing
+
+Root cause:
+object not disposed properly
+
+Fix:
+code optimization
+proper memory management
+
+12.24 Distributed System Monitoring Challenges
+Challenges:
+multiple services
+scattered logs
+inconsistent metrics
+
+Solution:
+centralized observability stack
+
+12.25 SLI, SLO, SLA
+
+SLI (Service Level Indicator)
+actual performance metric
+
+SLO (Service Level Objective)
+target performance
+
+SLA (Service Level Agreement)
+business contract
+
+Example
+SLA: 99.9% uptime
+SLO: &lt; 200ms response time
+
+12.26 Incident Response System
+Production incident হলে:
+detect
+alert
+analyze
+fix
+postmortem
+
+12.27 Common Mistakes
+
+Mistake 1 — No Logging Strategy
+Debug impossible
+
+Mistake 2 — No Metrics
+Performance blind
+
+Mistake 3 — No Tracing
+Root cause unknown
+
+Mistake 4 — Too Much Logging
+Storage waste
+
+Mistake 5 — No Alerts
+Problem unnoticed
+
+12.28 Enterprise Observability Architecture
+User → API → Services → DB↓Logs + Metrics + Traces↓ELK + Prometheus + Grafana
+
+12.29 Interview Perspective
+Common questions:
+Logging vs Metrics vs Tracing
+Prometheus কী?
+Grafana কীভাবে কাজ করে?
+Distributed tracing কী?
+SLI/SLO/SLA কী?
+Observability কেন দরকার?
+
+12.30 Mini Design Exercise
+Design:
+“Global Banking Monitoring System”
+Consider:
+transaction monitoring
+fraud detection logs
+latency tracking
+alert system
+distributed tracing
+dashboard system
+
+12.31 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Observability concept
+Logging system design
+Metrics system
+Prometheus &amp; Grafana
+Distributed tracing
+Alerting system
+Health checks
+SLI/SLO/SLA
+Incident management
+Production debugging strategy
+Real enterprise monitoring architecture
+
+Chapter 13 — System Design Case Studies
+Netflix, Amazon, Uber &amp; Real Enterprise Architecture Breakdown
+Practical System Design in Bangla
+
+13.1 Introduction
+এখন পর্যন্ত আমরা শিখেছি:
+database scaling
+caching
+microservices
+queue system
+observability
+load balancing
+
+এখন আমরা দেখব:
+“Real world companies কিভাবে এত বড় system handle করে”
+
+এই chapter এ আমরা breakdown করবো:
+Netflix
+Amazon
+Uber
+
+13.2 Netflix System Design
+Netflix হলো:
+global video streaming platform
+
+Core Challenge
+millions of concurrent users
+high bandwidth video streaming
+global latency problem
+personalization recommendation
+
+13.3 Netflix Architecture Overview
+User → CDN → API Gateway → Microservices → Database
+
+Key Components
+CDN (video delivery)
+Microservices
+Recommendation Engine
+Event streaming (Kafka)
+Monitoring system
+
+13.4 Netflix CDN Strategy
+Netflix heavily relies on:
+CDN (Content Delivery Network)
+
+Why?
+video file huge
+server load reduce
+global speed improve
+
+Flow
+User → nearest CDN → video stream
+
+13.5 Netflix Microservices
+Netflix system divided into:
+User Service
+Movie Catalog Service
+Recommendation Service
+Streaming Service
+
+13.6 Netflix Recommendation System
+Netflix uses:
+machine learning
+user behavior tracking
+event data
+
+Example
+watched action movie → recommend similar movies
+
+13.7 Netflix Event Streaming
+Netflix uses Kafka for:
+watch history
+click tracking
+search logs
+
+13.8 Real Production Insight
+Problem:
+recommendation delay
+Solution:
+event-driven architecture
+Result:
+real-time recommendation
+
+13.9 Amazon System Design
+Amazon হলো:
+world’s largest e-commerce platform
+
+13.10 Amazon Core Challenges
+huge product catalog
+millions of orders
+payment system
+inventory sync
+delivery tracking
+
+13.11 Amazon Architecture
+User → Load Balancer → Microservices → Databases
+
+13.12 Amazon Microservices
+Product Service
+Order Service
+Payment Service
+Inventory Service
+Shipping Service
+
+13.13 Amazon Order Flow
+user places order
+payment process
+inventory update
+shipping trigger
+
+13.14 Amazon Distributed Transactions
+Problem:
+multiple services involved
+Solution:
+Saga pattern
+
+Example
+Order → Payment → Inventory → Shipping
+
+13.15 Amazon Event-Driven System
+Amazon uses:
+event queues
+asynchronous processing
+
+Benefit
+scalable
+decoupled
+resilient
+
+13.16 Amazon Inventory System
+Real-time stock management:
+distributed DB
+caching layer
+eventual consistency
+
+13.17 Uber System Design
+Uber হলো:
+real-time ride matching system
+
+13.18 Uber Core Challenges
+real-time location tracking
+driver matching
+route optimization
+high concurrency
+
+13.19 Uber Architecture
+Rider → API → Matching Service → Driver
+
+13.20 Real-Time Matching System
+Uber uses:
+geo-spatial indexing
+real-time streaming
+in-memory processing
+
+13.21 Uber Location System
+Drivers continuously send:
+GPS data
+speed
+availability
+
+13.22 Matching Algorithm
+System selects:
+nearest driver
+best ETA
+traffic consideration
+
+13.23 Uber Event System
+Events:
+ride requested
+driver accepted
+ride started
+ride completed
+
+13.24 Uber Scaling Strategy
+Problem:
+millions of real-time requests
+Solution:
+horizontal scaling
+load balancing
+caching
+
+13.25 Real Production Insight — Uber Surge
+Problem:
+high demand peak time
+Solution:
+dynamic pricing system
+
+13.26 Comparing Netflix vs Amazon vs Uber
+Company
+Focus
+Key Challenge
+Netflix
+Streaming
+bandwidth &amp; CDN
+Amazon
+E-commerce
+order &amp; inventory
+Uber
+Real-time
+location matching
+
+13.27 Common Architecture Patterns
+All systems use:
+microservices
+caching
+load balancing
+event-driven design
+distributed databases
+
+13.28 Real Enterprise Pattern Summary
+1. Edge Layer
+CDN
+API Gateway
+2. Service Layer
+Microservices
+3. Data Layer
+SQL + NoSQL + Cache
+4. Event Layer
+Kafka / Queue
+
+13.29 Lessons from Big Tech
+always design for scale
+assume failure
+decouple everything
+use async processing
+monitor everything
+
+13.30 Common Mistakes in Real Systems
+
+Mistake 1 — Over engineering early
+Small system → microservices too early
+
+Mistake 2 — No caching strategy
+High DB load
+
+Mistake 3 — No event system
+Tight coupling
+
+Mistake 4 — No observability
+Debug impossible
+
+Mistake 5 — Ignoring latency
+User experience poor
+
+13.31 Interview Perspective
+Common questions:
+Netflix system design
+Amazon order flow
+Uber matching system
+CDN role
+microservices architecture
+scalability strategy
+
+13.32 Mini Design Exercise
+Design:
+“Global Video Streaming Platform”
+Consider:
+CDN strategy
+video encoding pipeline
+recommendation engine
+user tracking
+microservices
+caching
+scaling
+
+13.33 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+Netflix architecture breakdown
+Amazon e-commerce system design
+Uber real-time system design
+CDN usage in production
+microservices at scale
+event-driven systems
+distributed system challenges
+real-world scaling patterns
+big tech engineering mindset
+
+Chapter 14 — System Design Interview Mastery
+End-to-End Problem Solving, Architecture Design &amp; Real Interview Scenarios
+Practical System Design in Bangla
+
+14.1 Introduction
+System Design interview শুধু theory না।
+এটা হলো:
+“একটা ambiguous problem কে structured production architecture এ convert করার skill”
+
+Interview এ সাধারণত কেউ বলে না:
+কোন database ব্যবহার করতে হবে
+কোন exact technology লাগবে
+বরং বলে:
+“Design a scalable system for X”
+
+তোমাকে বের করতে হবে:
+requirements
+constraints
+architecture
+scaling strategy
+trade-offs
+
+14.2 Real Interview Mindset
+একজন senior engineer ভাবে:
+system কিভাবে scale করবে
+কোথায় bottleneck হবে
+failure হলে কী হবে
+cost কেমন হবে
+maintainability কেমন হবে
+
+14.3 Interview Structure
+Step 1 — Requirements Gathering
+functional requirements
+non-functional requirements
+
+Step 2 — High Level Design
+architecture diagram
+components
+
+Step 3 — Deep Dive
+database
+caching
+API
+scaling
+queue
+
+Step 4 — Bottleneck Analysis
+failure points
+performance issues
+
+Step 5 — Final Optimization
+caching
+partitioning
+async processing
+
+14.4 Example Problem — Design URL Shortener
+
+Requirements
+long URL → short URL
+redirect fast
+analytics support
+high traffic
+
+High Level Architecture
+User → API → Service → DB → Cache
+
+Key Components
+URL Service
+Hash Generator
+Database
+Redis Cache
+
+14.5 URL Shortener Deep Design
+Database Design
+Field
+Type
+Id
+bigint
+ShortCode
+string
+LongUrl
+string
+
+Hash Strategy
+base62 encoding
+random unique ID
+
+Cache Strategy
+hot URLs in Redis
+reduce DB load
+
+Scaling
+sharding by hash
+read replicas
+
+14.6 Example Problem — Design Chat System
+
+Requirements
+real-time messaging
+message history
+delivery guarantee
+
+Architecture
+User → WebSocket → Message Service → Queue → DB
+
+Key Components
+WebSocket server
+Kafka/RabbitMQ
+Message store
+
+Challenges
+message ordering
+delivery guarantee
+offline sync
+
+14.7 Example Problem — Design Netflix-like System
+
+Requirements
+video streaming
+recommendation
+global scale
+
+Architecture
+User → CDN → API Gateway → Microservices
+
+Components
+CDN
+video encoding service
+recommendation engine
+event streaming
+
+14.8 Example Problem — Design Uber-like System
+
+Requirements
+real-time ride matching
+location tracking
+driver allocation
+
+Architecture
+Rider → API → Matching Service → Driver Pool
+
+Key Concepts
+geospatial indexing
+real-time streaming
+caching
+
+14.9 Common Interview Mistakes
+
+Mistake 1 — Jumping to solution
+Without requirements understanding
+
+Mistake 2 — No scaling discussion
+Only basic design
+
+Mistake 3 — No trade-offs
+Every design has compromise
+
+Mistake 4 — No failure handling
+Real systems always fail
+
+Mistake 5 — No bottleneck analysis
+System collapse points ignored
+
+14.10 Scalability Thinking
+Always think:
+can this handle 10x traffic?
+can this handle 100x traffic?
+
+14.11 Performance Optimization Checklist
+caching layer
+database indexing
+partitioning
+async processing
+load balancing
+CDN usage
+
+14.12 Trade-Off Thinking
+Decision
+Trade-off
+caching
+consistency risk
+microservices
+complexity increase
+sharding
+query complexity
+async system
+eventual consistency
+
+14.13 Real Production Interview Story
+Candidate problem:
+“Design a file storage system like Google Drive”
+
+Weak answer:
+simple upload/download
+
+Strong answer:
+CDN
+chunking
+metadata DB
+distributed storage
+caching
+versioning
+
+Result:
+Strong system thinking → interview success
+
+14.14 Architecture Drawing Strategy
+Always draw:
+client layer
+API layer
+service layer
+data layer
+cache layer
+event layer
+
+14.15 System Design Template
+Use this template in every interview:
+
+1. Requirements
+2. High Level Architecture
+3. Database Design
+4. API Design
+5. Scaling Strategy
+6. Caching Strategy
+7. Failure Handling
+8. Trade-offs
+
+14.16 Time Management in Interview
+10 min → requirements
+10 min → design
+15 min → deep dive
+5 min → optimization
+
+14.17 Senior Engineer Thinking Pattern
+Senior engineer focuses on:
+reliability
+scalability
+observability
+maintainability
+
+Not just:
+“code will work”
+
+But:
+“system will survive real traffic”
+
+14.18 Common System Design Questions
+Design WhatsApp
+Design URL shortener
+Design YouTube
+Design Uber
+Design Netflix
+Design payment system
+
+14.19 Mini Design Exercise
+Design:
+“Online Exam System”
+Consider:
+real-time submission
+anti-cheating system
+scaling
+result processing
+monitoring
+
+14.20 Final Interview Strategy
+think out loud
+clarify requirements
+draw architecture
+explain trade-offs
+handle scaling scenario
+
+14.21 Chapter Summary
+এই chapter এ আমরা শিখলাম:
+system design interview structure
+requirement analysis technique
+architecture design approach
+real system examples
+scalability thinking
+trade-off analysis
+common mistakes
+interview winning strategy
+real production mindset
+
+🎯 Book Completion Summary
+এই বইতে আমরা cover করেছি:
+System Design fundamentals
+database scaling
+caching architecture
+API design
+security systems
+load balancing
+microservices
+message queue
+observability
+real big tech systems
+interview mastery
+
