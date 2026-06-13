@@ -3,7 +3,7 @@
 End-to-End Problem Solving, Architecture Design &amp; Real Interview Scenarios
 Practical System Design in Bangla
 
-14.1 Introduction
+## 14.1 Introduction
 System Design interview শুধু theory না।
 এটা হলো:
 “একটা ambiguous problem কে structured production architecture এ convert করার skill”
@@ -21,7 +21,7 @@ architecture
 scaling strategy
 trade-offs
 
-14.2 Real Interview Mindset
+## 14.2 Real Interview Mindset
 একজন senior engineer ভাবে:
 system কিভাবে scale করবে
 কোথায় bottleneck হবে
@@ -29,7 +29,7 @@ failure হলে কী হবে
 cost কেমন হবে
 maintainability কেমন হবে
 
-14.3 Interview Structure
+## 14.3 Interview Structure
 Step 1 — Requirements Gathering
 functional requirements
 non-functional requirements
@@ -54,7 +54,36 @@ caching
 partitioning
 async processing
 
-14.4 Example Problem — Design URL Shortener
+## 14.3.1 System Design Interview Framework
+A strong interview answer follows a clear framework:
+- clarify scope and constraints
+- estimate traffic and capacity
+- sketch high-level architecture
+- define major components and data flow
+- discuss scaling and trade-offs
+- identify bottlenecks and failure modes
+- summarize the final choice
+
+## 14.3.2 Back-of-the-Envelope Estimation
+Simple estimation helps choose the right architecture quickly:
+- estimate requests per second
+- estimate payload size and bandwidth
+- estimate storage needs
+- estimate number of servers and caches
+
+Example
+100K users × 5 requests/user/day = 5M requests/day
+5M / 86,400 ≈ 58 req/sec
+
+## 14.3.3 Scale from Zero to Millions
+Good systems start small and grow:
+- design for incremental scalability
+- use simple architecture first
+- add caching, partitioning, and async processing later
+- avoid premature optimization
+- choose patterns that can evolve with traffic
+
+## 14.4 Example Problem — Design URL Shortener
 
 Requirements
 long URL → short URL
@@ -71,7 +100,7 @@ Hash Generator
 Database
 Redis Cache
 
-14.5 URL Shortener Deep Design
+## 14.5 URL Shortener Deep Design
 Database Design
 Field
 Type
@@ -94,7 +123,7 @@ Scaling
 sharding by hash
 read replicas
 
-14.6 Example Problem — Design Chat System
+## 14.6 Example Problem — Design Chat System
 
 Requirements
 real-time messaging
@@ -114,7 +143,7 @@ message ordering
 delivery guarantee
 offline sync
 
-14.7 Example Problem — Design Netflix-like System
+## 14.7 Example Problem — Design Netflix-like System
 
 Requirements
 video streaming
@@ -130,7 +159,7 @@ video encoding service
 recommendation engine
 event streaming
 
-14.8 Example Problem — Design Uber-like System
+## 14.8 Example Problem — Design Uber-like System
 
 Requirements
 real-time ride matching
@@ -145,7 +174,7 @@ geospatial indexing
 real-time streaming
 caching
 
-14.9 Common Interview Mistakes
+## 14.9 Common Interview Mistakes
 
 Mistake 1 — Jumping to solution
 Without requirements understanding
@@ -162,12 +191,12 @@ Real systems always fail
 Mistake 5 — No bottleneck analysis
 System collapse points ignored
 
-14.10 Scalability Thinking
+## 14.10 Scalability Thinking
 Always think:
 can this handle 10x traffic?
 can this handle 100x traffic?
 
-14.11 Performance Optimization Checklist
+## 14.11 Performance Optimization Checklist
 caching layer
 database indexing
 partitioning
@@ -175,7 +204,7 @@ async processing
 load balancing
 CDN usage
 
-14.12 Trade-Off Thinking
+## 14.12 Trade-Off Thinking
 Decision
 Trade-off
 caching
@@ -187,7 +216,7 @@ query complexity
 async system
 eventual consistency
 
-14.13 Real Production Interview Story
+## 14.13 Real Production Interview Story
 Candidate problem:
 “Design a file storage system like Google Drive”
 
@@ -205,7 +234,7 @@ versioning
 Result:
 Strong system thinking → interview success
 
-14.14 Architecture Drawing Strategy
+## 14.14 Architecture Drawing Strategy
 Always draw:
 client layer
 API layer
@@ -214,7 +243,7 @@ data layer
 cache layer
 event layer
 
-14.15 System Design Template
+## 14.15 System Design Template
 Use this template in every interview:
 
 1. Requirements
@@ -226,13 +255,13 @@ Use this template in every interview:
 7. Failure Handling
 8. Trade-offs
 
-14.16 Time Management in Interview
+## 14.16 Time Management in Interview
 10 min → requirements
 10 min → design
 15 min → deep dive
 5 min → optimization
 
-14.17 Senior Engineer Thinking Pattern
+## 14.17 Senior Engineer Thinking Pattern
 Senior engineer focuses on:
 reliability
 scalability
@@ -245,7 +274,7 @@ Not just:
 But:
 “system will survive real traffic”
 
-14.18 Common System Design Questions
+## 14.18 Common System Design Questions
 Design WhatsApp
 Design URL shortener
 Design YouTube
@@ -253,7 +282,7 @@ Design Uber
 Design Netflix
 Design payment system
 
-14.19 Mini Design Exercise
+## 14.19 Mini Design Exercise
 Design:
 “Online Exam System”
 Consider:
@@ -263,14 +292,14 @@ scaling
 result processing
 monitoring
 
-14.20 Final Interview Strategy
+## 14.20 Final Interview Strategy
 think out loud
 clarify requirements
 draw architecture
 explain trade-offs
 handle scaling scenario
 
-14.21 Chapter Summary
+## 14.21 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 system design interview structure
 requirement analysis technique

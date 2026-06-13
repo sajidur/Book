@@ -3,7 +3,7 @@
 Service Decomposition, Communication, Event-Driven Systems &amp; Saga Pattern
 Practical System Design in Bangla
 
-10.1 Introduction
+## 10.1 Introduction
 একটা system যখন ছোট থাকে, তখন একটি single application (monolith) যথেষ্ট।
 কিন্তু যখন system বড় হয়:
 multiple team
@@ -16,7 +16,7 @@ independent deployment needed
 তখন আমরা move করি:
 Microservices Architecture
 
-10.2 Real Production Story — Monolith Breakdown Problem
+## 10.2 Real Production Story — Monolith Breakdown Problem
 একটি ERP system শুরু হয়েছিল:
 single .NET application
 single database
@@ -41,7 +41,7 @@ system split into microservices
 independent deployment
 domain separation
 
-10.3 Microservices কী?
+## 10.3 Microservices কী?
 Microservices হলো:
 একটি বড় system কে ছোট independent services এ ভাগ করা
 
@@ -51,7 +51,7 @@ own database (ideally)
 specific business domain
 loosely coupled
 
-10.4 Monolith vs Microservices
+## 10.4 Monolith vs Microservices
 Feature
 Monolith
 Microservices
@@ -71,7 +71,7 @@ Team size
 Small
 Large
 
-10.5 Service Decomposition Strategy
+## 10.5 Service Decomposition Strategy
 Microservices design করার সবচেয়ে গুরুত্বপূর্ণ অংশ:
 কিভাবে system কে ভাগ করা হবে
 
@@ -87,7 +87,7 @@ User Service
 Email Service
 Report Service
 
-10.6 Real ERP Microservices Example
+## 10.6 Real ERP Microservices Example
 Service
 Responsibility
 Auth Service
@@ -101,7 +101,7 @@ stock
 Reporting Service
 analytics
 
-10.7 Communication Between Services
+## 10.7 Communication Between Services
 Microservices একে অপরের সাথে communicate করে।
 
 1. Synchronous (REST/gRPC)
@@ -113,7 +113,7 @@ RabbitMQ
 Kafka
 event-driven
 
-10.8 Synchronous Communication Problem
+## 10.8 Synchronous Communication Problem
 Example:
 Order Service → Payment Service → Inventory Service
 
@@ -121,7 +121,7 @@ Problem:
 one service slow → entire flow slow
 cascading failure risk
 
-10.9 Asynchronous Communication
+## 10.9 Asynchronous Communication
 Instead of direct call:
 Order Created → Event → Queue → Consumer Services
 
@@ -130,7 +130,7 @@ decoupled system
 scalable
 resilient
 
-10.10 Event-Driven Architecture
+## 10.10 Event-Driven Architecture
 System reacts based on events.
 
 Example Event
@@ -141,7 +141,7 @@ StockUpdated
 Flow
 Order Service → emits event → Kafka → multiple consumers
 
-10.11 Real Production Example — Event System
+## 10.11 Real Production Example — Event System
 E-commerce system:
 order placed
 inventory update
@@ -155,7 +155,7 @@ With event system:
 fast API
 async processing
 
-10.12 API Gateway in Microservices
+## 10.12 API Gateway in Microservices
 Microservices direct access না দিয়ে:
 API Gateway ব্যবহার করা হয়
 
@@ -168,7 +168,7 @@ logging
 Architecture
 Client → API Gateway → Microservices
 
-10.13 Database per Service
+## 10.13 Database per Service
 Best practice:
 each microservice should own its database
 
@@ -180,7 +180,7 @@ easier maintenance
 Problem
 distributed transactions difficult
 
-10.14 Shared Database Problem
+## 10.14 Shared Database Problem
 Bad design:
 all services same DB
 
@@ -189,14 +189,14 @@ tight coupling
 schema conflict
 deployment risk
 
-10.15 Distributed Transactions Problem
+## 10.15 Distributed Transactions Problem
 Example:
 Order → Payment → Inventory
 
 Problem:
 one fails → consistency issue
 
-10.16 Saga Pattern
+## 10.16 Saga Pattern
 Saga solves distributed transaction problem.
 
 Types
@@ -206,7 +206,7 @@ services communicate via events
 2. Orchestration
 central coordinator manages flow
 
-10.17 Saga Example
+## 10.17 Saga Example
 Order flow:
 Order created
 Payment success
@@ -220,7 +220,7 @@ Example Compensation
 payment refund
 stock restore
 
-10.18 Real Production Story — Payment Failure
+## 10.18 Real Production Story — Payment Failure
 System:
 order placed
 payment failed mid-way
@@ -233,7 +233,7 @@ saga compensation implemented
 Result:
 data consistency restored
 
-10.19 Service Discovery
+## 10.19 Service Discovery
 Microservices dynamic system।
 
 Problem:
@@ -246,12 +246,33 @@ Consul
 Eureka
 Kubernetes DNS
 
-10.20 Load Balancing in Microservices
+### Consistent Hashing for Service Partitioning
+Consistent hashing helps when data or sessions are partitioned across many nodes.
+- Servers and keys are placed on a virtual ring
+- A key maps to the next server clockwise
+- Adding/removing nodes moves only a small subset of keys
+- Virtual nodes balance load across uneven servers
+
+Use case:
+cache sharding, session affinity, distributed key-value stores
+
+### CAP Theorem in Distributed Microservices
+Distributed microservices face the CAP trade-off:
+- Consistency: all nodes see the same data at the same time
+- Availability: every request gets a response
+- Partition tolerance: system survives network splits
+
+In practice:
+- choose CP for banking-style systems
+- choose AP for high-traffic caches and notifications
+- most real systems are AP or CP and accept eventual consistency
+
+## 10.20 Load Balancing in Microservices
 Each service has its own scaling:
 Auth Service → 3 instances
 Order Service → 10 instances
 
-10.21 Fault Isolation
+## 10.21 Fault Isolation
 Microservices advantage:
 one service failure does not break system
 
@@ -259,7 +280,7 @@ Example:
 notification service down
 payment still works
 
-10.22 Circuit Breaker Pattern
+## 10.22 Circuit Breaker Pattern
 Prevent cascading failure.
 
 States
@@ -271,13 +292,13 @@ Benefit
 system stability
 failure isolation
 
-10.23 Retry &amp; Timeout Strategy
+## 10.23 Retry &amp; Timeout Strategy
 Important in distributed system:
 retry logic
 exponential backoff
 timeout control
 
-10.24 Logging &amp; Observability
+## 10.24 Logging &amp; Observability
 Microservices require:
 centralized logging
 tracing
@@ -289,7 +310,7 @@ Prometheus
 Grafana
 Jaeger
 
-10.25 Real Production Story — Microservice Debugging
+## 10.25 Real Production Story — Microservice Debugging
 Problem:
 payment delayed
 order stuck
@@ -305,7 +326,7 @@ trace ID implemented
 Result:
 issue root cause identified quickly
 
-10.26 Common Mistakes
+## 10.26 Common Mistakes
 
 Mistake 1 — Premature Microservices
 Small system → unnecessary complexity
@@ -322,7 +343,7 @@ Debug impossible
 Mistake 5 — No Event Design
 Tight coupling system
 
-10.27 Enterprise Best Practices
+## 10.27 Enterprise Best Practices
 domain-driven design (DDD)
 event-driven architecture
 API gateway
@@ -331,7 +352,7 @@ circuit breaker
 centralized logging
 database per service
 
-10.28 Interview Perspective
+## 10.28 Interview Perspective
 Common questions:
 Microservices কী?
 Monolith vs Microservices
@@ -340,7 +361,7 @@ Event-driven architecture কী?
 Service discovery কী?
 Circuit breaker কী?
 
-10.29 Mini Design Exercise
+## 10.29 Mini Design Exercise
 Design:
 “Food Delivery Microservices System”
 Consider:
@@ -352,7 +373,7 @@ delivery service
 event system
 scaling strategy
 
-10.30 Chapter Summary
+## 10.30 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Microservices architecture
 Service decomposition strategy

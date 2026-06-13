@@ -3,7 +3,7 @@
 Logging, Metrics, Tracing, Prometheus, Grafana &amp; Production Debugging
 Practical System Design in Bangla
 
-12.1 Introduction
+## 12.1 Introduction
 একটা system live production এ গেলে সবচেয়ে বড় প্রশ্ন হলো:
 “System ভিতরে কী হচ্ছে সেটা আমরা কীভাবে বুঝবো?”
 
@@ -15,7 +15,7 @@ user complain করছে কিন্তু root cause unknown
 এই সমস্যা solve করার জন্য দরকার:
 Observability (পর্যবেক্ষণযোগ্যতা)
 
-12.2 Observability কী?
+## 12.2 Observability কী?
 Observability হলো:
 system এর ভিতরের state external signals দিয়ে বোঝার capability
 
@@ -24,7 +24,7 @@ Logs
 Metrics
 Traces
 
-12.3 Real Production Story — Unknown Production Issue
+## 12.3 Real Production Story — Unknown Production Issue
 একটি ERP system এ:
 dashboard slow
 but no error in logs
@@ -42,7 +42,7 @@ logging + metrics + tracing implement
 Result:
 issue detect time 2 hours → 5 minutes
 
-12.4 Logging কী?
+## 12.4 Logging কী?
 Logging হলো:
 system এর ঘটনাগুলো record করা
 
@@ -55,7 +55,7 @@ Warning log
 Error log
 Debug log
 
-12.5 Structured Logging
+## 12.5 Structured Logging
 Bad log:
 User error happened
 Good log:
@@ -66,7 +66,7 @@ Good log:
   "reason": "invalid password"
 }
 
-12.6 Centralized Logging
+## 12.6 Centralized Logging
 Microservices system এ logs scattered থাকে।
 
 Solution:
@@ -75,7 +75,7 @@ centralized logging system
 Tools:
 ELK Stack (Elasticsearch, Logstash, Kibana)
 
-12.7 Metrics কী?
+## 12.7 Metrics কী?
 Metrics হলো:
 system performance numbers
 
@@ -86,7 +86,7 @@ request per second
 response time
 error rate
 
-12.8 Key System Metrics
+## 12.8 Key System Metrics
 Metric
 Meaning
 Latency
@@ -98,7 +98,7 @@ failed requests
 Availability
 uptime
 
-12.9 Real Production Example — CPU Spike
+## 12.9 Real Production Example — CPU Spike
 Problem:
 API slow
 
@@ -110,7 +110,7 @@ Solution:
 indexing fix
 caching added
 
-12.10 Monitoring Tools — Prometheus
+## 12.10 Monitoring Tools — Prometheus
 Prometheus হলো:
 metrics collection system
 
@@ -119,7 +119,7 @@ time series data
 alerting
 query support
 
-12.11 Visualization Tool — Grafana
+## 12.11 Visualization Tool — Grafana
 Grafana ব্যবহার করা হয়:
 metrics visualize করার জন্য
 
@@ -128,10 +128,10 @@ API latency graph
 CPU usage graph
 error rate chart
 
-12.12 Metrics Flow
+## 12.12 Metrics Flow
 Application → Prometheus → Grafana → Dashboard
 
-12.13 Alerting System
+## 12.13 Alerting System
 System problem detect হলে alert যায়:
 email
 SMS
@@ -141,7 +141,7 @@ webhook
 Example Alert
 API latency &gt; 2 sec
 
-12.14 Distributed Tracing কী?
+## 12.14 Distributed Tracing কী?
 Tracing হলো:
 request পুরো system এর ভিতর কোথায় কোথায় যাচ্ছে তা track করা
 
@@ -152,11 +152,11 @@ Tracing দেখায়:
 কোথায় delay হচ্ছে
 কোন service slow
 
-12.15 Trace ID Concept
+## 12.15 Trace ID Concept
 Every request gets unique ID:
 TRACE-ID: abc123
 
-12.16 Real Production Story — Microservice Debugging
+## 12.16 Real Production Story — Microservice Debugging
 Problem:
 payment delay
 
@@ -170,13 +170,13 @@ DB query bottleneck found
 Result:
 debugging time 3 hours → 10 minutes
 
-12.17 OpenTelemetry
+## 12.17 OpenTelemetry
 Modern standard for observability:
 logs
 metrics
 traces
 
-12.18 Logging vs Metrics vs Tracing
+## 12.18 Logging vs Metrics vs Tracing
 Type
 Purpose
 Logs
@@ -186,14 +186,14 @@ numbers
 Tracing
 request flow
 
-12.19 Error Tracking
+## 12.19 Error Tracking
 Production system এ error track করা গুরুত্বপূর্ণ।
 
 Tools:
 Sentry
 ELK stack
 
-12.20 Health Check System
+## 12.20 Health Check System
 System health check করে:
 service alive?
 DB connected?
@@ -202,7 +202,7 @@ dependency OK?
 Example Endpoint
 GET /health
 
-12.21 Log Retention Strategy
+## 12.21 Log Retention Strategy
 Logs forever রাখা যাবে না।
 
 Strategy:
@@ -210,13 +210,13 @@ Strategy:
 30 days cold logs
 archive storage
 
-12.22 Performance Monitoring
+## 12.22 Performance Monitoring
 Track:
 slow queries
 API bottlenecks
 memory leak
 
-12.23 Real Production Story — Memory Leak
+## 12.23 Real Production Story — Memory Leak
 Problem:
 server slow over time
 
@@ -230,7 +230,7 @@ Fix:
 code optimization
 proper memory management
 
-12.24 Distributed System Monitoring Challenges
+## 12.24 Distributed System Monitoring Challenges
 Challenges:
 multiple services
 scattered logs
@@ -239,7 +239,7 @@ inconsistent metrics
 Solution:
 centralized observability stack
 
-12.25 SLI, SLO, SLA
+## 12.25 SLI, SLO, SLA
 
 SLI (Service Level Indicator)
 actual performance metric
@@ -254,7 +254,7 @@ Example
 SLA: 99.9% uptime
 SLO: &lt; 200ms response time
 
-12.26 Incident Response System
+## 12.26 Incident Response System
 Production incident হলে:
 detect
 alert
@@ -262,7 +262,7 @@ analyze
 fix
 postmortem
 
-12.27 Common Mistakes
+## 12.27 Common Mistakes
 
 Mistake 1 — No Logging Strategy
 Debug impossible
@@ -279,10 +279,10 @@ Storage waste
 Mistake 5 — No Alerts
 Problem unnoticed
 
-12.28 Enterprise Observability Architecture
+## 12.28 Enterprise Observability Architecture
 User → API → Services → DB↓Logs + Metrics + Traces↓ELK + Prometheus + Grafana
 
-12.29 Interview Perspective
+## 12.29 Interview Perspective
 Common questions:
 Logging vs Metrics vs Tracing
 Prometheus কী?
@@ -291,7 +291,7 @@ Distributed tracing কী?
 SLI/SLO/SLA কী?
 Observability কেন দরকার?
 
-12.30 Mini Design Exercise
+## 12.30 Mini Design Exercise
 Design:
 “Global Banking Monitoring System”
 Consider:
@@ -302,7 +302,7 @@ alert system
 distributed tracing
 dashboard system
 
-12.31 Chapter Summary
+## 12.31 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Observability concept
 Logging system design

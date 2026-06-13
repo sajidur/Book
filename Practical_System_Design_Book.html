@@ -1223,7 +1223,7 @@ CDN ব্যবহার করলে ওই ইমেজটি বাংলা
 REST, GraphQL, gRPC, Versioning, Rate Limiting &amp; Scalable Backend Systems
 Practical System Design in Bangla
 
-7.1 Introduction
+## 7.1 Introduction
 একটি system যতই বড় হয়, সবকিছুর কেন্দ্র হয়ে দাঁড়ায় API।
 কারণ:
 frontend API call করে
@@ -1236,7 +1236,7 @@ microservices একে অপরের সাথে API দিয়ে communicat
 
 একটি দুর্বল API design পুরো system কে slow, unstable এবং unscalable করে দিতে পারে।
 
-7.2 Real Production Story — Bad API Design
+## 7.2 Real Production Story — Bad API Design
 একটি ERP system এ শুরুতে API ছিল:
 single endpoint
 heavy response
@@ -1264,14 +1264,14 @@ Result:
 12 sec → 250ms
 70% bandwidth reduction
 
-7.3 API কী?
+## 7.3 API কী?
 API (Application Programming Interface) হলো:
 দুই system এর মধ্যে communication bridge
 
 Example:
 Frontend → API → Backend → Database
 
-7.4 REST API কী?
+## 7.4 REST API কী?
 REST (Representational State Transfer) হলো সবচেয়ে common API architecture style।
 
 REST Principles
@@ -1280,7 +1280,7 @@ resource-based
 HTTP methods use
 standardized structure
 
-7.5 REST Methods
+## 7.5 REST Methods
 Method
 Use
 GET
@@ -1300,7 +1300,7 @@ POST /users
 PUT /users/1
 DELETE /users/1
 
-7.6 REST Best Practices
+## 7.6 REST Best Practices
 proper naming
 consistent structure
 versioning
@@ -1314,7 +1314,7 @@ GET /getUserDataByIdAndType
 Good API Example
 GET /users/{id}
 
-7.7 API Versioning
+## 7.7 API Versioning
 System evolve করলে API change হয়।
 
 Why Versioning Needed?
@@ -1326,7 +1326,7 @@ Example
 GET /api/v1/users
 GET /api/v2/users
 
-7.8 API Response Design
+## 7.8 API Response Design
 Good API response always structured:
 {
   "success": true,
@@ -1337,7 +1337,7 @@ Good API response always structured:
 Bad Response
 { "name": "Sajid" }
 
-7.9 Pagination
+## 7.9 Pagination
 Large dataset একসাথে load করা dangerous।
 
 Example
@@ -1348,11 +1348,11 @@ faster response
 reduced memory usage
 better UX
 
-7.10 Filtering &amp; Sorting
+## 7.10 Filtering &amp; Sorting
 Enterprise API supports:
 GET /products?category=mobile&amp;sort=price_desc
 
-7.11 GraphQL
+## 7.11 GraphQL
 GraphQL হলো:
 client driven query API
 
@@ -1380,7 +1380,7 @@ caching difficult
 complexity high
 learning curve steep
 
-7.12 gRPC
+## 7.12 gRPC
 gRPC হলো high-performance binary API protocol।
 
 Features
@@ -1396,7 +1396,7 @@ internal system calls
 Example Flow
 Auth Service → User Service → Order Service
 
-7.13 REST vs GraphQL vs gRPC
+## 7.13 REST vs GraphQL vs gRPC
 Type
 Use Case
 REST
@@ -1406,7 +1406,7 @@ frontend flexible queries
 gRPC
 internal microservices
 
-7.14 API Gateway
+## 7.14 API Gateway
 API Gateway হলো:
 single entry point for all APIs
 
@@ -1420,7 +1420,7 @@ load balancing
 Architecture
 Client → API Gateway → Microservices
 
-7.15 Rate Limiting
+## 7.15 Rate Limiting
 API abuse prevent করার জন্য rate limiting ব্যবহার হয়।
 
 Example
@@ -1434,7 +1434,7 @@ fixed window
 Real Use Case
 Login API protect against brute force attack
 
-7.16 Authentication &amp; Authorization
+## 7.16 Authentication &amp; Authorization
 
 Authentication
 User কে verify করা
@@ -1446,7 +1446,7 @@ Example
 Admin → full access
 User → limited access
 
-7.17 JWT (JSON Web Token)
+## 7.17 JWT (JSON Web Token)
 JWT হলো stateless authentication method।
 
 Flow
@@ -1458,7 +1458,7 @@ Benefits
 scalable
 no session storage needed
 
-7.18 API Security
+## 7.18 API Security
 Important protections:
 HTTPS
 JWT validation
@@ -1466,7 +1466,7 @@ input validation
 SQL injection prevention
 CORS policy
 
-7.19 Input Validation
+## 7.19 Input Validation
 Bad input → system crash বা attack
 
 Example
@@ -1474,7 +1474,7 @@ null check
 length validation
 type validation
 
-7.20 Error Handling
+## 7.20 Error Handling
 Good API always consistent error return করে।
 
 Example
@@ -1486,7 +1486,7 @@ Example
   }
 }
 
-7.21 Idempotency
+## 7.21 Idempotency
 Idempotency মানে:
 same request multiple times call করলেও result same থাকবে
 
@@ -1494,7 +1494,7 @@ Example
 Payment API:
 duplicate request → double payment হবে না
 
-7.22 Async API Design
+## 7.22 Async API Design
 Heavy operation async করা উচিত।
 
 Example
@@ -1505,7 +1505,7 @@ file processing
 Flow
 API → Queue → Worker → Result
 
-7.23 API Performance Optimization
+## 7.23 API Performance Optimization
 Techniques:
 caching
 pagination
@@ -1513,14 +1513,14 @@ compression
 async processing
 connection pooling
 
-7.24 Compression
+## 7.24 Compression
 API response compress করা হয় (gzip)
 
 Benefit
 bandwidth reduce
 faster response
 
-7.25 Real Production Story — API Bottleneck
+## 7.25 Real Production Story — API Bottleneck
 Problem:
 5000 concurrent user
 API slow 8 sec
@@ -1535,7 +1535,7 @@ split API
 Result:
 8 sec → 180ms
 
-7.26 Logging &amp; Observability
+## 7.26 Logging &amp; Observability
 API level monitoring খুব গুরুত্বপূর্ণ।
 
 Track:
@@ -1544,7 +1544,7 @@ error rate
 request count
 response time
 
-7.27 Common Mistakes
+## 7.27 Common Mistakes
 
 Mistake 1 — Chatty API
 Too many small calls
@@ -1561,13 +1561,13 @@ System abuse
 Mistake 5 — No Timeout Handling
 API hang issue
 
-7.28 Timeout Strategy
+## 7.28 Timeout Strategy
 Every API must have timeout:
 database timeout
 service timeout
 external API timeout
 
-7.29 Interview Perspective
+## 7.29 Interview Perspective
 Common questions:
 REST vs GraphQL
 API versioning
@@ -1576,7 +1576,7 @@ Rate limiting কী?
 Idempotency কী?
 gRPC কেন use করা হয়?
 
-7.30 Mini Design Exercise
+## 7.30 Mini Design Exercise
 Design:
 “Food Delivery API System”
 Think:
@@ -1588,7 +1588,7 @@ caching strategy
 rate limiting
 scalability
 
-7.31 Chapter Summary
+## 7.31 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 REST API design
 API best practices
@@ -1615,7 +1615,7 @@ Real production API issues
 JWT, OAuth, RBAC, Encryption, Attack Prevention &amp; Enterprise Security Architecture
 Practical System Design in Bangla
 
-8.1 Introduction
+## 8.1 Introduction
 একটা system যত বড় হয়, তত বেশি গুরুত্বপূর্ণ হয়ে যায় Security।
 কারণ:
 শুধু feature কাজ করলেই হবে না
@@ -1624,7 +1624,7 @@ system কে safe, trusted, tamper-proof হতে হবে
 একটি insecure system মানে:
 “পুরো system ঠিক আছে, কিন্তু যে কেউ ঢুকে data বদলে দিতে পারে”
 
-8.2 Real Production Story — Security Failure
+## 8.2 Real Production Story — Security Failure
 একটি enterprise ERP system এ:
 API endpoint ছিল public
 proper authentication ছিল না
@@ -1649,7 +1649,7 @@ system secured
 audit control restored
 access controlled properly
 
-8.3 Authentication vs Authorization
+## 8.3 Authentication vs Authorization
 এই দুইটা সবচেয়ে important concept।
 
 Authentication (Who are you?)
@@ -1665,14 +1665,14 @@ Example:
 admin can delete user
 normal user cannot
 
-8.4 Authentication Flow
+## 8.4 Authentication Flow
 User login
 credentials verify
 token generate
 token store/use
 API call with token
 
-8.5 JWT (JSON Web Token)
+## 8.5 JWT (JSON Web Token)
 JWT হলো stateless authentication system।
 
 Structure
@@ -1688,7 +1688,7 @@ Example Payload
   "exp": 1710000000
 }
 
-8.6 JWT Flow in System Design
+## 8.6 JWT Flow in System Design
 User → Login API → JWT Token → API Request → Validate Token
 
 Benefits
@@ -1701,7 +1701,7 @@ Problem
 token leak হলে security risk
 revoke করা hard
 
-8.7 Refresh Token Strategy
+## 8.7 Refresh Token Strategy
 JWT short-lived হয়।
 Refresh token ব্যবহার হয় long session maintain করতে।
 
@@ -1713,7 +1713,7 @@ Example
 Access token: 15 min
 Refresh token: 7 days
 
-8.8 OAuth2
+## 8.8 OAuth2
 OAuth হলো third-party authentication system।
 
 Example
@@ -1726,7 +1726,7 @@ user login
 token receive
 access API
 
-8.9 Role-Based Access Control (RBAC)
+## 8.9 Role-Based Access Control (RBAC)
 RBAC হলো:
 user role অনুযায়ী permission control system
 
@@ -1744,7 +1744,7 @@ Real ERP Example
 HR can view salary
 Employee cannot
 
-8.10 Permission System Design
+## 8.10 Permission System Design
 Enterprise system এ permission dynamic হয়।
 
 Structure
@@ -1756,7 +1756,7 @@ Module
 Problem
 Complex hierarchy handling difficult
 
-8.11 Encryption
+## 8.11 Encryption
 Encryption হলো data protect করার technique।
 
 Types
@@ -1769,7 +1769,7 @@ Example
 HTTPS uses encryption
 password stored hashed
 
-8.12 Hashing vs Encryption
+## 8.12 Hashing vs Encryption
 Type
 Purpose
 Hashing
@@ -1781,7 +1781,7 @@ Example
 Password:
 Stored as hash (not plain text)
 
-8.13 Password Security
+## 8.13 Password Security
 Never store plain password.
 
 Good Practice
@@ -1789,19 +1789,19 @@ bcrypt
 salt
 strong hashing
 
-8.14 API Security Layers
+## 8.14 API Security Layers
 Enterprise system usually has multiple layers:
 
 Client → API Gateway → Auth Service → Microservice → DB
 
-8.15 API Gateway Security
+## 8.15 API Gateway Security
 API Gateway handles:
 authentication
 rate limiting
 IP filtering
 logging
 
-8.16 Rate Limiting for Security
+## 8.16 Rate Limiting for Security
 Prevent attack:
 brute force
 DDoS
@@ -1809,11 +1809,11 @@ DDoS
 Example
 100 requests/min per user
 
-8.17 CORS Security
+## 8.17 CORS Security
 CORS controls:
 which domain API access করতে পারবে
 
-8.18 SQL Injection Attack
+## 8.18 SQL Injection Attack
 Most dangerous attack.
 
 Bad Example
@@ -1827,7 +1827,7 @@ Fix
 parameterized query
 ORM use
 
-8.19 XSS Attack
+## 8.19 XSS Attack
 Frontend security issue।
 
 Example
@@ -1838,14 +1838,14 @@ Fix
 input sanitization
 output encoding
 
-8.20 CSRF Attack
+## 8.20 CSRF Attack
 User session misuse করে unauthorized action।
 
 Fix
 CSRF token
 secure cookies
 
-8.21 Distributed System Security
+## 8.21 Distributed System Security
 Microservice architecture এ security আরও complex।
 
 Challenges
@@ -1858,7 +1858,7 @@ centralized auth service
 API gateway validation
 service-to-service authentication
 
-8.22 Zero Trust Architecture
+## 8.22 Zero Trust Architecture
 Modern system design concept:
 “Never trust, always verify”
 
@@ -1866,13 +1866,13 @@ Principle
 every request validate করতে হবে
 internal serviceও trusted না
 
-8.23 Secure Communication
+## 8.23 Secure Communication
 Use:
 HTTPS
 TLS
 encrypted channels
 
-8.24 Audit Logging
+## 8.24 Audit Logging
 Enterprise system এ audit mandatory।
 
 Example
@@ -1888,7 +1888,7 @@ traceability
 fraud detection
 compliance
 
-8.25 Real Production Story — Unauthorized Access
+## 8.25 Real Production Story — Unauthorized Access
 Problem:
 employee access level bypass করা হয়েছিল
 Cause:
@@ -1901,14 +1901,14 @@ Result:
 security restored
 access fully controlled
 
-8.26 Security Monitoring
+## 8.26 Security Monitoring
 Track:
 login attempts
 failed login
 API abuse
 unusual traffic
 
-8.27 Common Mistakes
+## 8.27 Common Mistakes
 
 Mistake 1 — Only Frontend Security
 Backend bypass possible
@@ -1925,7 +1925,7 @@ Unauthorized access
 Mistake 5 — No Audit Logs
 No traceability
 
-8.28 Enterprise Security Checklist
+## 8.28 Enterprise Security Checklist
 JWT/OAuth
 RBAC
 HTTPS
@@ -1936,7 +1936,7 @@ Logging
 Monitoring
 API Gateway security
 
-8.29 Interview Perspective
+## 8.29 Interview Perspective
 Common questions:
 Authentication vs Authorization
 JWT কী?
@@ -1946,7 +1946,7 @@ SQL injection কী?
 XSS কী?
 CSRF কী?
 
-8.30 Mini Design Exercise
+## 8.30 Mini Design Exercise
 Design:
 “Banking Security System”
 Consider:
@@ -1957,7 +1957,7 @@ fraud detection
 multi-factor authentication
 encryption strategy
 
-8.31 Chapter Summary
+## 8.31 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Authentication vs Authorization
 JWT architecture
@@ -1984,7 +1984,7 @@ Enterprise security mindset
 NGINX, HAProxy, Failover, Redundancy &amp; Enterprise Scale Architecture
 Practical System Design in Bangla
 
-9.1 Introduction
+## 9.1 Introduction
 একটা system যখন বড় হয়, তখন সবচেয়ে বড় সমস্যা হয়:
 “একটা server এর উপর সব traffic চলে আসে”
 Result:
@@ -1997,7 +1997,7 @@ business loss
 এই problem solve করার জন্য আমরা ব্যবহার করি:
 Load Balancing + High Availability + Fault Tolerance
 
-9.2 Real Production Story — Single Server Disaster
+## 9.2 Real Production Story — Single Server Disaster
 একটি ERP system শুরু হয়েছিল:
 1 application server
 1 database server
@@ -2021,7 +2021,7 @@ users cannot login
 Root Cause:
 single server architecture (no load balancing)
 
-9.3 Load Balancing কী?
+## 9.3 Load Balancing কী?
 Load balancing হলো:
 incoming traffic multiple server এ distribute করা
 
@@ -2031,16 +2031,16 @@ Instead of:
 We use:
 multiple servers share load
 
-9.4 Load Balancer Architecture
+## 9.4 Load Balancer Architecture
 User → Load Balancer → App Server 1→ App Server 2→ App Server 3
 
-9.5 Why Load Balancing is Important?
+## 9.5 Why Load Balancing is Important?
 performance improve
 high availability
 fault tolerance
 scalable system
 
-9.6 Load Balancer Types
+## 9.6 Load Balancer Types
 
 1. Hardware Load Balancer
 physical device
@@ -2056,7 +2056,7 @@ Apache
 AWS ELB
 Azure Load Balancer
 
-9.7 Load Balancing Algorithms
+## 9.7 Load Balancing Algorithms
 
 1. Round Robin
 Requests distribute sequentially
@@ -2073,7 +2073,7 @@ Same user → same server
 4. Weighted Round Robin
 Powerful server বেশি load পাবে
 
-9.8 Real Production Example
+## 9.8 Real Production Example
 E-commerce system:
 product browsing
 order processing
@@ -2090,14 +2090,14 @@ Result:
 balanced traffic
 stable system
 
-9.9 High Availability (HA)
+## 9.9 High Availability (HA)
 High availability মানে:
 system always available থাকবে
 
 Formula
 Availability = \frac{Uptime}{Uptime + Downtime}
 
-9.10 Availability Levels
+## 9.10 Availability Levels
 Level
 Downtime
 99%
@@ -2107,7 +2107,7 @@ Downtime
 99.99%
 52 minutes/year
 
-9.11 High Availability Architecture
+## 9.11 High Availability Architecture
 Core idea:
 multiple servers
 redundancy
@@ -2116,7 +2116,7 @@ failover system
 Example
 User → Load Balancer → Server A→ Server B (backup)
 
-9.12 Failover System
+## 9.12 Failover System
 Failover মানে:
 primary system fail হলে automatically backup system activate হবে
 
@@ -2129,7 +2129,7 @@ one standby
 both active
 both serve traffic
 
-9.13 Real Example — Server Crash Recovery
+## 9.13 Real Example — Server Crash Recovery
 Banking system এ:
 primary server crash
 secondary server auto activate
@@ -2138,7 +2138,7 @@ Result:
 zero downtime
 user not affected
 
-9.14 Fault Tolerance কী?
+## 9.14 Fault Tolerance কী?
 Fault tolerance মানে:
 system partial failure হলেও continue চলবে
 
@@ -2146,7 +2146,7 @@ Example
 notification service down
 but payment system still works
 
-9.15 Redundancy
+## 9.15 Redundancy
 Redundancy মানে:
 same component multiple copy রাখা
 
@@ -2155,14 +2155,14 @@ server redundancy
 database redundancy
 network redundancy
 
-9.16 Database Failover
+## 9.16 Database Failover
 Database architecture:
 Primary DB → Replica DB
 
 Scenario
 Primary fail → Replica takes over
 
-9.17 Real Production Story — Database Failure
+## 9.17 Real Production Story — Database Failure
 An ERP system:
 single SQL Server
 disk failure
@@ -2174,7 +2174,7 @@ no replication
 Lesson:
 redundancy is not optional
 
-9.18 Health Check System
+## 9.18 Health Check System
 Load balancer continuously checks:
 server alive?
 response time?
@@ -2183,7 +2183,7 @@ error rate?
 If failed:
 remove from pool
 
-9.19 Sticky Session Problem
+## 9.19 Sticky Session Problem
 Problem:
 User session must stay same server
 
@@ -2191,7 +2191,7 @@ Solution:
 sticky session (IP based)
 Redis session store
 
-9.20 Stateless Architecture
+## 9.20 Stateless Architecture
 Modern system prefers:
 stateless servers
 
@@ -2200,18 +2200,18 @@ easy scaling
 no session dependency
 better failover
 
-9.21 Horizontal Scaling with Load Balancer
+## 9.21 Horizontal Scaling with Load Balancer
 User → LB → multiple stateless servers
 
-9.22 Rate Limiting at Load Balancer
+## 9.22 Rate Limiting at Load Balancer
 Protect system from abuse:
 request limit per IP
 DDoS protection
 
-9.23 Load Balancer + Cache + DB Architecture
+## 9.23 Load Balancer + Cache + DB Architecture
 User→ Load Balancer→ App Server→ Redis Cache→ Database
 
-9.24 CDN Integration
+## 9.24 CDN Integration
 Static content serve:
 images
 JS
@@ -2220,20 +2220,20 @@ CSS
 Flow:
 User → CDN → Origin Server
 
-9.25 Network Redundancy
+## 9.25 Network Redundancy
 Enterprise system uses:
 multiple ISP
 backup route
 failover network
 
-9.26 Monitoring Load Balancer
+## 9.26 Monitoring Load Balancer
 Track:
 request count
 latency
 server health
 error rate
 
-9.27 Real Production Story — Traffic Spike
+## 9.27 Real Production Story — Traffic Spike
 Flash sale event:
 traffic 20x increase
 
@@ -2243,7 +2243,7 @@ With LB:
 traffic distributed
 system stable
 
-9.28 Common Mistakes
+## 9.28 Common Mistakes
 
 Mistake 1 — Single Load Balancer
 If LB fails → whole system down
@@ -2260,7 +2260,7 @@ Uneven load distribution
 Mistake 5 — No Auto Scaling
 Static infrastructure
 
-9.29 Enterprise Best Practices
+## 9.29 Enterprise Best Practices
 multiple load balancer
 auto scaling group
 health check enabled
@@ -2268,7 +2268,7 @@ stateless services
 distributed caching
 DB replication
 
-9.30 Interview Perspective
+## 9.30 Interview Perspective
 Common questions:
 Load balancing কী?
 Round robin vs least connection
@@ -2277,7 +2277,7 @@ High availability কী?
 Sticky session সমস্যা কী?
 Active-active vs active-passive
 
-9.31 Mini Design Exercise
+## 9.31 Mini Design Exercise
 Design:
 “Global E-Commerce Platform”
 Consider:
@@ -2289,7 +2289,7 @@ database replication
 caching strategy
 disaster recovery
 
-9.32 Chapter Summary
+## 9.32 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Load balancing concept
 NGINX / HAProxy role
@@ -2315,7 +2315,7 @@ Real production scaling issues
 Service Decomposition, Communication, Event-Driven Systems &amp; Saga Pattern
 Practical System Design in Bangla
 
-10.1 Introduction
+## 10.1 Introduction
 একটা system যখন ছোট থাকে, তখন একটি single application (monolith) যথেষ্ট।
 কিন্তু যখন system বড় হয়:
 multiple team
@@ -2328,7 +2328,7 @@ independent deployment needed
 তখন আমরা move করি:
 Microservices Architecture
 
-10.2 Real Production Story — Monolith Breakdown Problem
+## 10.2 Real Production Story — Monolith Breakdown Problem
 একটি ERP system শুরু হয়েছিল:
 single .NET application
 single database
@@ -2353,7 +2353,7 @@ system split into microservices
 independent deployment
 domain separation
 
-10.3 Microservices কী?
+## 10.3 Microservices কী?
 Microservices হলো:
 একটি বড় system কে ছোট independent services এ ভাগ করা
 
@@ -2363,7 +2363,7 @@ own database (ideally)
 specific business domain
 loosely coupled
 
-10.4 Monolith vs Microservices
+## 10.4 Monolith vs Microservices
 Feature
 Monolith
 Microservices
@@ -2383,7 +2383,7 @@ Team size
 Small
 Large
 
-10.5 Service Decomposition Strategy
+## 10.5 Service Decomposition Strategy
 Microservices design করার সবচেয়ে গুরুত্বপূর্ণ অংশ:
 কিভাবে system কে ভাগ করা হবে
 
@@ -2399,7 +2399,7 @@ User Service
 Email Service
 Report Service
 
-10.6 Real ERP Microservices Example
+## 10.6 Real ERP Microservices Example
 Service
 Responsibility
 Auth Service
@@ -2413,7 +2413,7 @@ stock
 Reporting Service
 analytics
 
-10.7 Communication Between Services
+## 10.7 Communication Between Services
 Microservices একে অপরের সাথে communicate করে।
 
 1. Synchronous (REST/gRPC)
@@ -2425,7 +2425,7 @@ RabbitMQ
 Kafka
 event-driven
 
-10.8 Synchronous Communication Problem
+## 10.8 Synchronous Communication Problem
 Example:
 Order Service → Payment Service → Inventory Service
 
@@ -2433,7 +2433,7 @@ Problem:
 one service slow → entire flow slow
 cascading failure risk
 
-10.9 Asynchronous Communication
+## 10.9 Asynchronous Communication
 Instead of direct call:
 Order Created → Event → Queue → Consumer Services
 
@@ -2442,7 +2442,7 @@ decoupled system
 scalable
 resilient
 
-10.10 Event-Driven Architecture
+## 10.10 Event-Driven Architecture
 System reacts based on events.
 
 Example Event
@@ -2453,7 +2453,7 @@ StockUpdated
 Flow
 Order Service → emits event → Kafka → multiple consumers
 
-10.11 Real Production Example — Event System
+## 10.11 Real Production Example — Event System
 E-commerce system:
 order placed
 inventory update
@@ -2467,7 +2467,7 @@ With event system:
 fast API
 async processing
 
-10.12 API Gateway in Microservices
+## 10.12 API Gateway in Microservices
 Microservices direct access না দিয়ে:
 API Gateway ব্যবহার করা হয়
 
@@ -2480,7 +2480,7 @@ logging
 Architecture
 Client → API Gateway → Microservices
 
-10.13 Database per Service
+## 10.13 Database per Service
 Best practice:
 each microservice should own its database
 
@@ -2492,7 +2492,7 @@ easier maintenance
 Problem
 distributed transactions difficult
 
-10.14 Shared Database Problem
+## 10.14 Shared Database Problem
 Bad design:
 all services same DB
 
@@ -2501,14 +2501,14 @@ tight coupling
 schema conflict
 deployment risk
 
-10.15 Distributed Transactions Problem
+## 10.15 Distributed Transactions Problem
 Example:
 Order → Payment → Inventory
 
 Problem:
 one fails → consistency issue
 
-10.16 Saga Pattern
+## 10.16 Saga Pattern
 Saga solves distributed transaction problem.
 
 Types
@@ -2518,7 +2518,7 @@ services communicate via events
 2. Orchestration
 central coordinator manages flow
 
-10.17 Saga Example
+## 10.17 Saga Example
 Order flow:
 Order created
 Payment success
@@ -2532,7 +2532,7 @@ Example Compensation
 payment refund
 stock restore
 
-10.18 Real Production Story — Payment Failure
+## 10.18 Real Production Story — Payment Failure
 System:
 order placed
 payment failed mid-way
@@ -2545,7 +2545,7 @@ saga compensation implemented
 Result:
 data consistency restored
 
-10.19 Service Discovery
+## 10.19 Service Discovery
 Microservices dynamic system।
 
 Problem:
@@ -2558,12 +2558,12 @@ Consul
 Eureka
 Kubernetes DNS
 
-10.20 Load Balancing in Microservices
+## 10.20 Load Balancing in Microservices
 Each service has its own scaling:
 Auth Service → 3 instances
 Order Service → 10 instances
 
-10.21 Fault Isolation
+## 10.21 Fault Isolation
 Microservices advantage:
 one service failure does not break system
 
@@ -2571,7 +2571,7 @@ Example:
 notification service down
 payment still works
 
-10.22 Circuit Breaker Pattern
+## 10.22 Circuit Breaker Pattern
 Prevent cascading failure.
 
 States
@@ -2583,13 +2583,13 @@ Benefit
 system stability
 failure isolation
 
-10.23 Retry &amp; Timeout Strategy
+## 10.23 Retry &amp; Timeout Strategy
 Important in distributed system:
 retry logic
 exponential backoff
 timeout control
 
-10.24 Logging &amp; Observability
+## 10.24 Logging &amp; Observability
 Microservices require:
 centralized logging
 tracing
@@ -2601,7 +2601,7 @@ Prometheus
 Grafana
 Jaeger
 
-10.25 Real Production Story — Microservice Debugging
+## 10.25 Real Production Story — Microservice Debugging
 Problem:
 payment delayed
 order stuck
@@ -2617,7 +2617,7 @@ trace ID implemented
 Result:
 issue root cause identified quickly
 
-10.26 Common Mistakes
+## 10.26 Common Mistakes
 
 Mistake 1 — Premature Microservices
 Small system → unnecessary complexity
@@ -2634,7 +2634,7 @@ Debug impossible
 Mistake 5 — No Event Design
 Tight coupling system
 
-10.27 Enterprise Best Practices
+## 10.27 Enterprise Best Practices
 domain-driven design (DDD)
 event-driven architecture
 API gateway
@@ -2643,7 +2643,7 @@ circuit breaker
 centralized logging
 database per service
 
-10.28 Interview Perspective
+## 10.28 Interview Perspective
 Common questions:
 Microservices কী?
 Monolith vs Microservices
@@ -2652,7 +2652,7 @@ Event-driven architecture কী?
 Service discovery কী?
 Circuit breaker কী?
 
-10.29 Mini Design Exercise
+## 10.29 Mini Design Exercise
 Design:
 “Food Delivery Microservices System”
 Consider:
@@ -2664,7 +2664,7 @@ delivery service
 event system
 scaling strategy
 
-10.30 Chapter Summary
+## 10.30 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Microservices architecture
 Service decomposition strategy
@@ -2691,7 +2691,7 @@ Real production issues
 RabbitMQ, Kafka, Background Processing &amp; Distributed Event Systems
 Practical System Design in Bangla
 
-11.1 Introduction
+## 11.1 Introduction
 একটা large system এ সবচেয়ে common problem হলো:
 “সব কাজ একসাথে synchronousভাবে করা”
 
@@ -2704,7 +2704,7 @@ system overload
 এই problem solve করার জন্য আমরা ব্যবহার করি:
 Message Queue &amp; Event Streaming
 
-11.2 Real Production Story — Email System Failure
+## 11.2 Real Production Story — Email System Failure
 একটি ERP system এ:
 user registration
 সাথে সাথে email send করা হচ্ছিল
@@ -2725,21 +2725,21 @@ Result:
 API response 200ms
 email async process
 
-11.3 Message Queue কী?
+## 11.3 Message Queue কী?
 Message queue হলো:
 system এর মধ্যে asynchronous communication mechanism
 
 Simple idea:
 Producer → Queue → Consumer
 
-11.4 Why Message Queue Needed?
+## 11.4 Why Message Queue Needed?
 async processing
 system decoupling
 scalability
 reliability
 retry mechanism
 
-11.5 Queue vs Direct API Call
+## 11.5 Queue vs Direct API Call
 Feature
 Direct Call
 Message Queue
@@ -2756,7 +2756,7 @@ Scalability
 Limited
 High
 
-11.6 RabbitMQ কী?
+## 11.6 RabbitMQ কী?
 RabbitMQ হলো:
 traditional message broker system
 
@@ -2766,10 +2766,10 @@ reliable delivery
 routing support
 acknowledgements
 
-11.7 RabbitMQ Architecture
+## 11.7 RabbitMQ Architecture
 Producer → Exchange → Queue → Consumer
 
-11.8 Kafka কী?
+## 11.8 Kafka কী?
 Kafka হলো:
 distributed event streaming platform
 
@@ -2779,7 +2779,7 @@ massive scale
 persistent log system
 replay capability
 
-11.9 RabbitMQ vs Kafka
+## 11.9 RabbitMQ vs Kafka
 Feature
 RabbitMQ
 Kafka
@@ -2796,19 +2796,19 @@ Replay
 Limited
 Yes
 
-11.10 When to Use RabbitMQ?
+## 11.10 When to Use RabbitMQ?
 email sending
 background jobs
 notification system
 task queue
 
-11.11 When to Use Kafka?
+## 11.11 When to Use Kafka?
 analytics system
 real-time tracking
 log processing
 event sourcing
 
-11.12 Background Processing
+## 11.12 Background Processing
 Background processing মানে:
 heavy task API থেকে আলাদা করে worker process এ করা
 
@@ -2823,7 +2823,7 @@ queue job
 worker process
 async response
 
-11.13 Real Production Example — Report System
+## 11.13 Real Production Example — Report System
 Problem:
 report generation 15 sec
 API timeout
@@ -2840,13 +2840,13 @@ Result:
 API fast
 system stable
 
-11.14 Producer &amp; Consumer
+## 11.14 Producer &amp; Consumer
 Producer
 message send করে
 Consumer
 message process করে
 
-11.15 Message Acknowledgement
+## 11.15 Message Acknowledgement
 Consumer must confirm:
 message received
 processed successfully
@@ -2854,13 +2854,13 @@ processed successfully
 If not:
 message retry হবে
 
-11.16 Retry Mechanism
+## 11.16 Retry Mechanism
 System failure handle করতে retry লাগে:
 temporary failure
 network issue
 service downtime
 
-11.17 Dead Letter Queue (DLQ)
+## 11.17 Dead Letter Queue (DLQ)
 Failed messages যায়:
 DLQ (Dead Letter Queue)
 
@@ -2869,7 +2869,7 @@ error analysis
 manual retry
 debugging
 
-11.18 Real Production Story — Payment Retry Issue
+## 11.18 Real Production Story — Payment Retry Issue
 System:
 payment processing queue
 
@@ -2884,7 +2884,7 @@ Result:
 zero message loss
 consistent processing
 
-11.19 Event Streaming Concept
+## 11.19 Event Streaming Concept
 Kafka-based system এ:
 everything is event
 
@@ -2893,7 +2893,7 @@ UserCreated
 OrderPlaced
 PaymentCompleted
 
-11.20 Event Flow Architecture
+## 11.20 Event Flow Architecture
 Producer → Kafka Topic → Multiple Consumers
 
 Benefit
@@ -2901,7 +2901,7 @@ real-time processing
 scalable system
 decoupled architecture
 
-11.21 Event Replay Feature
+## 11.21 Event Replay Feature
 Kafka advantage:
 old event আবার process করা যায়
 
@@ -2910,7 +2910,7 @@ analytics rebuild
 audit system
 debugging
 
-11.22 Topic Partitioning
+## 11.22 Topic Partitioning
 Kafka data split করে:
 partition 1
 partition 2
@@ -2920,11 +2920,11 @@ Benefit:
 parallel processing
 high throughput
 
-11.23 Message Ordering Problem
+## 11.23 Message Ordering Problem
 Important concept:
 ordering guarantee per partition
 
-11.24 Queue Backpressure Problem
+## 11.24 Queue Backpressure Problem
 When producer faster than consumer:
 queue overflow
 latency increase
@@ -2934,7 +2934,7 @@ scale consumer
 limit producer
 buffer management
 
-11.25 Real Production Story — Traffic Spike
+## 11.25 Real Production Story — Traffic Spike
 E-commerce flash sale:
 100,000 order/min
 
@@ -2944,7 +2944,7 @@ With queue:
 smooth processing
 controlled load
 
-11.26 Idempotent Consumer
+## 11.26 Idempotent Consumer
 Important concept:
 same message multiple times process হলেও result same হবে
 
@@ -2952,14 +2952,14 @@ Example:
 payment event duplicate
 still single transaction
 
-11.27 Monitoring Queue System
+## 11.27 Monitoring Queue System
 Track:
 queue length
 consumer lag
 processing time
 failure rate
 
-11.28 Common Mistakes
+## 11.28 Common Mistakes
 
 Mistake 1 — No Retry Strategy
 Message lost risk
@@ -2976,13 +2976,13 @@ Duplicate data issue
 Mistake 5 — Wrong Tool Choice
 Kafka vs RabbitMQ mismatch
 
-11.29 Enterprise Architecture Example
+## 11.29 Enterprise Architecture Example
 Banking system:
 Kafka → transaction events
 RabbitMQ → email + notification
 Worker service → report generation
 
-11.30 Interview Perspective
+## 11.30 Interview Perspective
 Common questions:
 Message queue কী?
 RabbitMQ vs Kafka
@@ -2991,7 +2991,7 @@ Event-driven architecture
 DLQ কী?
 Idempotency কী?
 
-11.31 Mini Design Exercise
+## 11.31 Mini Design Exercise
 Design:
 “Large Scale Notification System”
 Consider:
@@ -3002,7 +3002,7 @@ retry mechanism
 DLQ
 scaling strategy
 
-11.32 Chapter Summary
+## 11.32 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Message Queue concept
 RabbitMQ architecture
@@ -3028,7 +3028,7 @@ Real production queue systems
 Logging, Metrics, Tracing, Prometheus, Grafana &amp; Production Debugging
 Practical System Design in Bangla
 
-12.1 Introduction
+## 12.1 Introduction
 একটা system live production এ গেলে সবচেয়ে বড় প্রশ্ন হলো:
 “System ভিতরে কী হচ্ছে সেটা আমরা কীভাবে বুঝবো?”
 
@@ -3040,7 +3040,7 @@ user complain করছে কিন্তু root cause unknown
 এই সমস্যা solve করার জন্য দরকার:
 Observability (পর্যবেক্ষণযোগ্যতা)
 
-12.2 Observability কী?
+## 12.2 Observability কী?
 Observability হলো:
 system এর ভিতরের state external signals দিয়ে বোঝার capability
 
@@ -3049,7 +3049,7 @@ Logs
 Metrics
 Traces
 
-12.3 Real Production Story — Unknown Production Issue
+## 12.3 Real Production Story — Unknown Production Issue
 একটি ERP system এ:
 dashboard slow
 but no error in logs
@@ -3067,7 +3067,7 @@ logging + metrics + tracing implement
 Result:
 issue detect time 2 hours → 5 minutes
 
-12.4 Logging কী?
+## 12.4 Logging কী?
 Logging হলো:
 system এর ঘটনাগুলো record করা
 
@@ -3080,7 +3080,7 @@ Warning log
 Error log
 Debug log
 
-12.5 Structured Logging
+## 12.5 Structured Logging
 Bad log:
 User error happened
 Good log:
@@ -3091,7 +3091,7 @@ Good log:
   "reason": "invalid password"
 }
 
-12.6 Centralized Logging
+## 12.6 Centralized Logging
 Microservices system এ logs scattered থাকে।
 
 Solution:
@@ -3100,7 +3100,7 @@ centralized logging system
 Tools:
 ELK Stack (Elasticsearch, Logstash, Kibana)
 
-12.7 Metrics কী?
+## 12.7 Metrics কী?
 Metrics হলো:
 system performance numbers
 
@@ -3111,7 +3111,7 @@ request per second
 response time
 error rate
 
-12.8 Key System Metrics
+## 12.8 Key System Metrics
 Metric
 Meaning
 Latency
@@ -3123,7 +3123,7 @@ failed requests
 Availability
 uptime
 
-12.9 Real Production Example — CPU Spike
+## 12.9 Real Production Example — CPU Spike
 Problem:
 API slow
 
@@ -3135,7 +3135,7 @@ Solution:
 indexing fix
 caching added
 
-12.10 Monitoring Tools — Prometheus
+## 12.10 Monitoring Tools — Prometheus
 Prometheus হলো:
 metrics collection system
 
@@ -3144,7 +3144,7 @@ time series data
 alerting
 query support
 
-12.11 Visualization Tool — Grafana
+## 12.11 Visualization Tool — Grafana
 Grafana ব্যবহার করা হয়:
 metrics visualize করার জন্য
 
@@ -3153,10 +3153,10 @@ API latency graph
 CPU usage graph
 error rate chart
 
-12.12 Metrics Flow
+## 12.12 Metrics Flow
 Application → Prometheus → Grafana → Dashboard
 
-12.13 Alerting System
+## 12.13 Alerting System
 System problem detect হলে alert যায়:
 email
 SMS
@@ -3166,7 +3166,7 @@ webhook
 Example Alert
 API latency &gt; 2 sec
 
-12.14 Distributed Tracing কী?
+## 12.14 Distributed Tracing কী?
 Tracing হলো:
 request পুরো system এর ভিতর কোথায় কোথায় যাচ্ছে তা track করা
 
@@ -3177,11 +3177,11 @@ Tracing দেখায়:
 কোথায় delay হচ্ছে
 কোন service slow
 
-12.15 Trace ID Concept
+## 12.15 Trace ID Concept
 Every request gets unique ID:
 TRACE-ID: abc123
 
-12.16 Real Production Story — Microservice Debugging
+## 12.16 Real Production Story — Microservice Debugging
 Problem:
 payment delay
 
@@ -3195,13 +3195,13 @@ DB query bottleneck found
 Result:
 debugging time 3 hours → 10 minutes
 
-12.17 OpenTelemetry
+## 12.17 OpenTelemetry
 Modern standard for observability:
 logs
 metrics
 traces
 
-12.18 Logging vs Metrics vs Tracing
+## 12.18 Logging vs Metrics vs Tracing
 Type
 Purpose
 Logs
@@ -3211,14 +3211,14 @@ numbers
 Tracing
 request flow
 
-12.19 Error Tracking
+## 12.19 Error Tracking
 Production system এ error track করা গুরুত্বপূর্ণ।
 
 Tools:
 Sentry
 ELK stack
 
-12.20 Health Check System
+## 12.20 Health Check System
 System health check করে:
 service alive?
 DB connected?
@@ -3227,7 +3227,7 @@ dependency OK?
 Example Endpoint
 GET /health
 
-12.21 Log Retention Strategy
+## 12.21 Log Retention Strategy
 Logs forever রাখা যাবে না।
 
 Strategy:
@@ -3235,13 +3235,13 @@ Strategy:
 30 days cold logs
 archive storage
 
-12.22 Performance Monitoring
+## 12.22 Performance Monitoring
 Track:
 slow queries
 API bottlenecks
 memory leak
 
-12.23 Real Production Story — Memory Leak
+## 12.23 Real Production Story — Memory Leak
 Problem:
 server slow over time
 
@@ -3255,7 +3255,7 @@ Fix:
 code optimization
 proper memory management
 
-12.24 Distributed System Monitoring Challenges
+## 12.24 Distributed System Monitoring Challenges
 Challenges:
 multiple services
 scattered logs
@@ -3264,7 +3264,7 @@ inconsistent metrics
 Solution:
 centralized observability stack
 
-12.25 SLI, SLO, SLA
+## 12.25 SLI, SLO, SLA
 
 SLI (Service Level Indicator)
 actual performance metric
@@ -3279,7 +3279,7 @@ Example
 SLA: 99.9% uptime
 SLO: &lt; 200ms response time
 
-12.26 Incident Response System
+## 12.26 Incident Response System
 Production incident হলে:
 detect
 alert
@@ -3287,7 +3287,7 @@ analyze
 fix
 postmortem
 
-12.27 Common Mistakes
+## 12.27 Common Mistakes
 
 Mistake 1 — No Logging Strategy
 Debug impossible
@@ -3304,10 +3304,10 @@ Storage waste
 Mistake 5 — No Alerts
 Problem unnoticed
 
-12.28 Enterprise Observability Architecture
+## 12.28 Enterprise Observability Architecture
 User → API → Services → DB↓Logs + Metrics + Traces↓ELK + Prometheus + Grafana
 
-12.29 Interview Perspective
+## 12.29 Interview Perspective
 Common questions:
 Logging vs Metrics vs Tracing
 Prometheus কী?
@@ -3316,7 +3316,7 @@ Distributed tracing কী?
 SLI/SLO/SLA কী?
 Observability কেন দরকার?
 
-12.30 Mini Design Exercise
+## 12.30 Mini Design Exercise
 Design:
 “Global Banking Monitoring System”
 Consider:
@@ -3327,7 +3327,7 @@ alert system
 distributed tracing
 dashboard system
 
-12.31 Chapter Summary
+## 12.31 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Observability concept
 Logging system design
@@ -3353,7 +3353,7 @@ Real enterprise monitoring architecture
 Netflix, Amazon, Uber &amp; Real Enterprise Architecture Breakdown
 Practical System Design in Bangla
 
-13.1 Introduction
+## 13.1 Introduction
 এখন পর্যন্ত আমরা শিখেছি:
 database scaling
 caching
@@ -3370,7 +3370,7 @@ Netflix
 Amazon
 Uber
 
-13.2 Netflix System Design
+## 13.2 Netflix System Design
 Netflix হলো:
 global video streaming platform
 
@@ -3380,7 +3380,7 @@ high bandwidth video streaming
 global latency problem
 personalization recommendation
 
-13.3 Netflix Architecture Overview
+## 13.3 Netflix Architecture Overview
 User → CDN → API Gateway → Microservices → Database
 
 Key Components
@@ -3390,7 +3390,7 @@ Recommendation Engine
 Event streaming (Kafka)
 Monitoring system
 
-13.4 Netflix CDN Strategy
+## 13.4 Netflix CDN Strategy
 Netflix heavily relies on:
 CDN (Content Delivery Network)
 
@@ -3402,14 +3402,14 @@ global speed improve
 Flow
 User → nearest CDN → video stream
 
-13.5 Netflix Microservices
+## 13.5 Netflix Microservices
 Netflix system divided into:
 User Service
 Movie Catalog Service
 Recommendation Service
 Streaming Service
 
-13.6 Netflix Recommendation System
+## 13.6 Netflix Recommendation System
 Netflix uses:
 machine learning
 user behavior tracking
@@ -3418,13 +3418,13 @@ event data
 Example
 watched action movie → recommend similar movies
 
-13.7 Netflix Event Streaming
+## 13.7 Netflix Event Streaming
 Netflix uses Kafka for:
 watch history
 click tracking
 search logs
 
-13.8 Real Production Insight
+## 13.8 Real Production Insight
 Problem:
 recommendation delay
 Solution:
@@ -3432,34 +3432,34 @@ event-driven architecture
 Result:
 real-time recommendation
 
-13.9 Amazon System Design
+## 13.9 Amazon System Design
 Amazon হলো:
 world’s largest e-commerce platform
 
-13.10 Amazon Core Challenges
+## 13.10 Amazon Core Challenges
 huge product catalog
 millions of orders
 payment system
 inventory sync
 delivery tracking
 
-13.11 Amazon Architecture
+## 13.11 Amazon Architecture
 User → Load Balancer → Microservices → Databases
 
-13.12 Amazon Microservices
+## 13.12 Amazon Microservices
 Product Service
 Order Service
 Payment Service
 Inventory Service
 Shipping Service
 
-13.13 Amazon Order Flow
+## 13.13 Amazon Order Flow
 user places order
 payment process
 inventory update
 shipping trigger
 
-13.14 Amazon Distributed Transactions
+## 13.14 Amazon Distributed Transactions
 Problem:
 multiple services involved
 Solution:
@@ -3468,7 +3468,7 @@ Saga pattern
 Example
 Order → Payment → Inventory → Shipping
 
-13.15 Amazon Event-Driven System
+## 13.15 Amazon Event-Driven System
 Amazon uses:
 event queues
 asynchronous processing
@@ -3478,51 +3478,51 @@ scalable
 decoupled
 resilient
 
-13.16 Amazon Inventory System
+## 13.16 Amazon Inventory System
 Real-time stock management:
 distributed DB
 caching layer
 eventual consistency
 
-13.17 Uber System Design
+## 13.17 Uber System Design
 Uber হলো:
 real-time ride matching system
 
-13.18 Uber Core Challenges
+## 13.18 Uber Core Challenges
 real-time location tracking
 driver matching
 route optimization
 high concurrency
 
-13.19 Uber Architecture
+## 13.19 Uber Architecture
 Rider → API → Matching Service → Driver
 
-13.20 Real-Time Matching System
+## 13.20 Real-Time Matching System
 Uber uses:
 geo-spatial indexing
 real-time streaming
 in-memory processing
 
-13.21 Uber Location System
+## 13.21 Uber Location System
 Drivers continuously send:
 GPS data
 speed
 availability
 
-13.22 Matching Algorithm
+## 13.22 Matching Algorithm
 System selects:
 nearest driver
 best ETA
 traffic consideration
 
-13.23 Uber Event System
+## 13.23 Uber Event System
 Events:
 ride requested
 driver accepted
 ride started
 ride completed
 
-13.24 Uber Scaling Strategy
+## 13.24 Uber Scaling Strategy
 Problem:
 millions of real-time requests
 Solution:
@@ -3530,13 +3530,13 @@ horizontal scaling
 load balancing
 caching
 
-13.25 Real Production Insight — Uber Surge
+## 13.25 Real Production Insight — Uber Surge
 Problem:
 high demand peak time
 Solution:
 dynamic pricing system
 
-13.26 Comparing Netflix vs Amazon vs Uber
+## 13.26 Comparing Netflix vs Amazon vs Uber
 Company
 Focus
 Key Challenge
@@ -3550,7 +3550,7 @@ Uber
 Real-time
 location matching
 
-13.27 Common Architecture Patterns
+## 13.27 Common Architecture Patterns
 All systems use:
 microservices
 caching
@@ -3558,7 +3558,7 @@ load balancing
 event-driven design
 distributed databases
 
-13.28 Real Enterprise Pattern Summary
+## 13.28 Real Enterprise Pattern Summary
 1. Edge Layer
 CDN
 API Gateway
@@ -3569,14 +3569,14 @@ SQL + NoSQL + Cache
 4. Event Layer
 Kafka / Queue
 
-13.29 Lessons from Big Tech
+## 13.29 Lessons from Big Tech
 always design for scale
 assume failure
 decouple everything
 use async processing
 monitor everything
 
-13.30 Common Mistakes in Real Systems
+## 13.30 Common Mistakes in Real Systems
 
 Mistake 1 — Over engineering early
 Small system → microservices too early
@@ -3593,7 +3593,7 @@ Debug impossible
 Mistake 5 — Ignoring latency
 User experience poor
 
-13.31 Interview Perspective
+## 13.31 Interview Perspective
 Common questions:
 Netflix system design
 Amazon order flow
@@ -3602,7 +3602,7 @@ CDN role
 microservices architecture
 scalability strategy
 
-13.32 Mini Design Exercise
+## 13.32 Mini Design Exercise
 Design:
 “Global Video Streaming Platform”
 Consider:
@@ -3614,7 +3614,7 @@ microservices
 caching
 scaling
 
-13.33 Chapter Summary
+## 13.33 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Netflix architecture breakdown
 Amazon e-commerce system design
@@ -3638,7 +3638,7 @@ big tech engineering mindset
 End-to-End Problem Solving, Architecture Design &amp; Real Interview Scenarios
 Practical System Design in Bangla
 
-14.1 Introduction
+## 14.1 Introduction
 System Design interview শুধু theory না।
 এটা হলো:
 “একটা ambiguous problem কে structured production architecture এ convert করার skill”
@@ -3656,7 +3656,7 @@ architecture
 scaling strategy
 trade-offs
 
-14.2 Real Interview Mindset
+## 14.2 Real Interview Mindset
 একজন senior engineer ভাবে:
 system কিভাবে scale করবে
 কোথায় bottleneck হবে
@@ -3664,7 +3664,7 @@ failure হলে কী হবে
 cost কেমন হবে
 maintainability কেমন হবে
 
-14.3 Interview Structure
+## 14.3 Interview Structure
 Step 1 — Requirements Gathering
 functional requirements
 non-functional requirements
@@ -3689,7 +3689,7 @@ caching
 partitioning
 async processing
 
-14.4 Example Problem — Design URL Shortener
+## 14.4 Example Problem — Design URL Shortener
 
 Requirements
 long URL → short URL
@@ -3706,7 +3706,7 @@ Hash Generator
 Database
 Redis Cache
 
-14.5 URL Shortener Deep Design
+## 14.5 URL Shortener Deep Design
 Database Design
 Field
 Type
@@ -3729,7 +3729,7 @@ Scaling
 sharding by hash
 read replicas
 
-14.6 Example Problem — Design Chat System
+## 14.6 Example Problem — Design Chat System
 
 Requirements
 real-time messaging
@@ -3749,7 +3749,7 @@ message ordering
 delivery guarantee
 offline sync
 
-14.7 Example Problem — Design Netflix-like System
+## 14.7 Example Problem — Design Netflix-like System
 
 Requirements
 video streaming
@@ -3765,7 +3765,7 @@ video encoding service
 recommendation engine
 event streaming
 
-14.8 Example Problem — Design Uber-like System
+## 14.8 Example Problem — Design Uber-like System
 
 Requirements
 real-time ride matching
@@ -3780,7 +3780,7 @@ geospatial indexing
 real-time streaming
 caching
 
-14.9 Common Interview Mistakes
+## 14.9 Common Interview Mistakes
 
 Mistake 1 — Jumping to solution
 Without requirements understanding
@@ -3797,12 +3797,12 @@ Real systems always fail
 Mistake 5 — No bottleneck analysis
 System collapse points ignored
 
-14.10 Scalability Thinking
+## 14.10 Scalability Thinking
 Always think:
 can this handle 10x traffic?
 can this handle 100x traffic?
 
-14.11 Performance Optimization Checklist
+## 14.11 Performance Optimization Checklist
 caching layer
 database indexing
 partitioning
@@ -3810,7 +3810,7 @@ async processing
 load balancing
 CDN usage
 
-14.12 Trade-Off Thinking
+## 14.12 Trade-Off Thinking
 Decision
 Trade-off
 caching
@@ -3822,7 +3822,7 @@ query complexity
 async system
 eventual consistency
 
-14.13 Real Production Interview Story
+## 14.13 Real Production Interview Story
 Candidate problem:
 “Design a file storage system like Google Drive”
 
@@ -3840,7 +3840,7 @@ versioning
 Result:
 Strong system thinking → interview success
 
-14.14 Architecture Drawing Strategy
+## 14.14 Architecture Drawing Strategy
 Always draw:
 client layer
 API layer
@@ -3849,7 +3849,7 @@ data layer
 cache layer
 event layer
 
-14.15 System Design Template
+## 14.15 System Design Template
 Use this template in every interview:
 
 1. Requirements
@@ -3861,13 +3861,13 @@ Use this template in every interview:
 7. Failure Handling
 8. Trade-offs
 
-14.16 Time Management in Interview
+## 14.16 Time Management in Interview
 10 min → requirements
 10 min → design
 15 min → deep dive
 5 min → optimization
 
-14.17 Senior Engineer Thinking Pattern
+## 14.17 Senior Engineer Thinking Pattern
 Senior engineer focuses on:
 reliability
 scalability
@@ -3880,7 +3880,7 @@ Not just:
 But:
 “system will survive real traffic”
 
-14.18 Common System Design Questions
+## 14.18 Common System Design Questions
 Design WhatsApp
 Design URL shortener
 Design YouTube
@@ -3888,7 +3888,7 @@ Design Uber
 Design Netflix
 Design payment system
 
-14.19 Mini Design Exercise
+## 14.19 Mini Design Exercise
 Design:
 “Online Exam System”
 Consider:
@@ -3898,14 +3898,14 @@ scaling
 result processing
 monitoring
 
-14.20 Final Interview Strategy
+## 14.20 Final Interview Strategy
 think out loud
 clarify requirements
 draw architecture
 explain trade-offs
 handle scaling scenario
 
-14.21 Chapter Summary
+## 14.21 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 system design interview structure
 requirement analysis technique

@@ -3,7 +3,7 @@
 JWT, OAuth, RBAC, Encryption, Attack Prevention &amp; Enterprise Security Architecture
 Practical System Design in Bangla
 
-8.1 Introduction
+## 8.1 Introduction
 একটা system যত বড় হয়, তত বেশি গুরুত্বপূর্ণ হয়ে যায় Security।
 কারণ:
 শুধু feature কাজ করলেই হবে না
@@ -12,7 +12,7 @@ system কে safe, trusted, tamper-proof হতে হবে
 একটি insecure system মানে:
 “পুরো system ঠিক আছে, কিন্তু যে কেউ ঢুকে data বদলে দিতে পারে”
 
-8.2 Real Production Story — Security Failure
+## 8.2 Real Production Story — Security Failure
 একটি enterprise ERP system এ:
 API endpoint ছিল public
 proper authentication ছিল না
@@ -37,7 +37,7 @@ system secured
 audit control restored
 access controlled properly
 
-8.3 Authentication vs Authorization
+## 8.3 Authentication vs Authorization
 এই দুইটা সবচেয়ে important concept।
 
 Authentication (Who are you?)
@@ -53,14 +53,14 @@ Example:
 admin can delete user
 normal user cannot
 
-8.4 Authentication Flow
+## 8.4 Authentication Flow
 User login
 credentials verify
 token generate
 token store/use
 API call with token
 
-8.5 JWT (JSON Web Token)
+## 8.5 JWT (JSON Web Token)
 JWT হলো stateless authentication system।
 
 Structure
@@ -76,7 +76,7 @@ Example Payload
   "exp": 1710000000
 }
 
-8.6 JWT Flow in System Design
+## 8.6 JWT Flow in System Design
 User → Login API → JWT Token → API Request → Validate Token
 
 Benefits
@@ -89,7 +89,7 @@ Problem
 token leak হলে security risk
 revoke করা hard
 
-8.7 Refresh Token Strategy
+## 8.7 Refresh Token Strategy
 JWT short-lived হয়।
 Refresh token ব্যবহার হয় long session maintain করতে।
 
@@ -101,7 +101,7 @@ Example
 Access token: 15 min
 Refresh token: 7 days
 
-8.8 OAuth2
+## 8.8 OAuth2
 OAuth হলো third-party authentication system।
 
 Example
@@ -114,7 +114,7 @@ user login
 token receive
 access API
 
-8.9 Role-Based Access Control (RBAC)
+## 8.9 Role-Based Access Control (RBAC)
 RBAC হলো:
 user role অনুযায়ী permission control system
 
@@ -132,7 +132,7 @@ Real ERP Example
 HR can view salary
 Employee cannot
 
-8.10 Permission System Design
+## 8.10 Permission System Design
 Enterprise system এ permission dynamic হয়।
 
 Structure
@@ -144,7 +144,7 @@ Module
 Problem
 Complex hierarchy handling difficult
 
-8.11 Encryption
+## 8.11 Encryption
 Encryption হলো data protect করার technique।
 
 Types
@@ -157,7 +157,7 @@ Example
 HTTPS uses encryption
 password stored hashed
 
-8.12 Hashing vs Encryption
+## 8.12 Hashing vs Encryption
 Type
 Purpose
 Hashing
@@ -169,7 +169,7 @@ Example
 Password:
 Stored as hash (not plain text)
 
-8.13 Password Security
+## 8.13 Password Security
 Never store plain password.
 
 Good Practice
@@ -177,19 +177,19 @@ bcrypt
 salt
 strong hashing
 
-8.14 API Security Layers
+## 8.14 API Security Layers
 Enterprise system usually has multiple layers:
 
 Client → API Gateway → Auth Service → Microservice → DB
 
-8.15 API Gateway Security
+## 8.15 API Gateway Security
 API Gateway handles:
 authentication
 rate limiting
 IP filtering
 logging
 
-8.16 Rate Limiting for Security
+## 8.16 Rate Limiting for Security
 Prevent attack:
 brute force
 DDoS
@@ -197,11 +197,11 @@ DDoS
 Example
 100 requests/min per user
 
-8.17 CORS Security
+## 8.17 CORS Security
 CORS controls:
 which domain API access করতে পারবে
 
-8.18 SQL Injection Attack
+## 8.18 SQL Injection Attack
 Most dangerous attack.
 
 Bad Example
@@ -215,7 +215,7 @@ Fix
 parameterized query
 ORM use
 
-8.19 XSS Attack
+## 8.19 XSS Attack
 Frontend security issue।
 
 Example
@@ -226,14 +226,14 @@ Fix
 input sanitization
 output encoding
 
-8.20 CSRF Attack
+## 8.20 CSRF Attack
 User session misuse করে unauthorized action।
 
 Fix
 CSRF token
 secure cookies
 
-8.21 Distributed System Security
+## 8.21 Distributed System Security
 Microservice architecture এ security আরও complex।
 
 Challenges
@@ -246,7 +246,7 @@ centralized auth service
 API gateway validation
 service-to-service authentication
 
-8.22 Zero Trust Architecture
+## 8.22 Zero Trust Architecture
 Modern system design concept:
 “Never trust, always verify”
 
@@ -254,13 +254,13 @@ Principle
 every request validate করতে হবে
 internal serviceও trusted না
 
-8.23 Secure Communication
+## 8.23 Secure Communication
 Use:
 HTTPS
 TLS
 encrypted channels
 
-8.24 Audit Logging
+## 8.24 Audit Logging
 Enterprise system এ audit mandatory।
 
 Example
@@ -276,7 +276,7 @@ traceability
 fraud detection
 compliance
 
-8.25 Real Production Story — Unauthorized Access
+## 8.25 Real Production Story — Unauthorized Access
 Problem:
 employee access level bypass করা হয়েছিল
 Cause:
@@ -289,14 +289,14 @@ Result:
 security restored
 access fully controlled
 
-8.26 Security Monitoring
+## 8.26 Security Monitoring
 Track:
 login attempts
 failed login
 API abuse
 unusual traffic
 
-8.27 Common Mistakes
+## 8.27 Common Mistakes
 
 Mistake 1 — Only Frontend Security
 Backend bypass possible
@@ -313,7 +313,7 @@ Unauthorized access
 Mistake 5 — No Audit Logs
 No traceability
 
-8.28 Enterprise Security Checklist
+## 8.28 Enterprise Security Checklist
 JWT/OAuth
 RBAC
 HTTPS
@@ -324,7 +324,7 @@ Logging
 Monitoring
 API Gateway security
 
-8.29 Interview Perspective
+## 8.29 Interview Perspective
 Common questions:
 Authentication vs Authorization
 JWT কী?
@@ -334,7 +334,7 @@ SQL injection কী?
 XSS কী?
 CSRF কী?
 
-8.30 Mini Design Exercise
+## 8.30 Mini Design Exercise
 Design:
 “Banking Security System”
 Consider:
@@ -345,7 +345,7 @@ fraud detection
 multi-factor authentication
 encryption strategy
 
-8.31 Chapter Summary
+## 8.31 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Authentication vs Authorization
 JWT architecture

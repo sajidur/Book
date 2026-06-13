@@ -1,0 +1,3 @@
+node_modules/pdf-parse/dist/node/esm/index.d.ts
+node_modules/.*
+node_modules/*

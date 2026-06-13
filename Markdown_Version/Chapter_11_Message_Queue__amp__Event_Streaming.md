@@ -3,7 +3,7 @@
 RabbitMQ, Kafka, Background Processing &amp; Distributed Event Systems
 Practical System Design in Bangla
 
-11.1 Introduction
+## 11.1 Introduction
 একটা large system এ সবচেয়ে common problem হলো:
 “সব কাজ একসাথে synchronousভাবে করা”
 
@@ -16,7 +16,7 @@ system overload
 এই problem solve করার জন্য আমরা ব্যবহার করি:
 Message Queue &amp; Event Streaming
 
-11.2 Real Production Story — Email System Failure
+## 11.2 Real Production Story — Email System Failure
 একটি ERP system এ:
 user registration
 সাথে সাথে email send করা হচ্ছিল
@@ -37,21 +37,21 @@ Result:
 API response 200ms
 email async process
 
-11.3 Message Queue কী?
+## 11.3 Message Queue কী?
 Message queue হলো:
 system এর মধ্যে asynchronous communication mechanism
 
 Simple idea:
 Producer → Queue → Consumer
 
-11.4 Why Message Queue Needed?
+## 11.4 Why Message Queue Needed?
 async processing
 system decoupling
 scalability
 reliability
 retry mechanism
 
-11.5 Queue vs Direct API Call
+## 11.5 Queue vs Direct API Call
 Feature
 Direct Call
 Message Queue
@@ -68,7 +68,7 @@ Scalability
 Limited
 High
 
-11.6 RabbitMQ কী?
+## 11.6 RabbitMQ কী?
 RabbitMQ হলো:
 traditional message broker system
 
@@ -78,10 +78,10 @@ reliable delivery
 routing support
 acknowledgements
 
-11.7 RabbitMQ Architecture
+## 11.7 RabbitMQ Architecture
 Producer → Exchange → Queue → Consumer
 
-11.8 Kafka কী?
+## 11.8 Kafka কী?
 Kafka হলো:
 distributed event streaming platform
 
@@ -91,7 +91,7 @@ massive scale
 persistent log system
 replay capability
 
-11.9 RabbitMQ vs Kafka
+## 11.9 RabbitMQ vs Kafka
 Feature
 RabbitMQ
 Kafka
@@ -108,19 +108,19 @@ Replay
 Limited
 Yes
 
-11.10 When to Use RabbitMQ?
+## 11.10 When to Use RabbitMQ?
 email sending
 background jobs
 notification system
 task queue
 
-11.11 When to Use Kafka?
+## 11.11 When to Use Kafka?
 analytics system
 real-time tracking
 log processing
 event sourcing
 
-11.12 Background Processing
+## 11.12 Background Processing
 Background processing মানে:
 heavy task API থেকে আলাদা করে worker process এ করা
 
@@ -135,7 +135,7 @@ queue job
 worker process
 async response
 
-11.13 Real Production Example — Report System
+## 11.13 Real Production Example — Report System
 Problem:
 report generation 15 sec
 API timeout
@@ -152,13 +152,13 @@ Result:
 API fast
 system stable
 
-11.14 Producer &amp; Consumer
+## 11.14 Producer &amp; Consumer
 Producer
 message send করে
 Consumer
 message process করে
 
-11.15 Message Acknowledgement
+## 11.15 Message Acknowledgement
 Consumer must confirm:
 message received
 processed successfully
@@ -166,13 +166,13 @@ processed successfully
 If not:
 message retry হবে
 
-11.16 Retry Mechanism
+## 11.16 Retry Mechanism
 System failure handle করতে retry লাগে:
 temporary failure
 network issue
 service downtime
 
-11.17 Dead Letter Queue (DLQ)
+## 11.17 Dead Letter Queue (DLQ)
 Failed messages যায়:
 DLQ (Dead Letter Queue)
 
@@ -181,7 +181,7 @@ error analysis
 manual retry
 debugging
 
-11.18 Real Production Story — Payment Retry Issue
+## 11.18 Real Production Story — Payment Retry Issue
 System:
 payment processing queue
 
@@ -196,7 +196,7 @@ Result:
 zero message loss
 consistent processing
 
-11.19 Event Streaming Concept
+## 11.19 Event Streaming Concept
 Kafka-based system এ:
 everything is event
 
@@ -205,7 +205,7 @@ UserCreated
 OrderPlaced
 PaymentCompleted
 
-11.20 Event Flow Architecture
+## 11.20 Event Flow Architecture
 Producer → Kafka Topic → Multiple Consumers
 
 Benefit
@@ -213,7 +213,7 @@ real-time processing
 scalable system
 decoupled architecture
 
-11.21 Event Replay Feature
+## 11.21 Event Replay Feature
 Kafka advantage:
 old event আবার process করা যায়
 
@@ -222,7 +222,7 @@ analytics rebuild
 audit system
 debugging
 
-11.22 Topic Partitioning
+## 11.22 Topic Partitioning
 Kafka data split করে:
 partition 1
 partition 2
@@ -232,11 +232,11 @@ Benefit:
 parallel processing
 high throughput
 
-11.23 Message Ordering Problem
+## 11.23 Message Ordering Problem
 Important concept:
 ordering guarantee per partition
 
-11.24 Queue Backpressure Problem
+## 11.24 Queue Backpressure Problem
 When producer faster than consumer:
 queue overflow
 latency increase
@@ -246,7 +246,7 @@ scale consumer
 limit producer
 buffer management
 
-11.25 Real Production Story — Traffic Spike
+## 11.25 Real Production Story — Traffic Spike
 E-commerce flash sale:
 100,000 order/min
 
@@ -256,7 +256,7 @@ With queue:
 smooth processing
 controlled load
 
-11.26 Idempotent Consumer
+## 11.26 Idempotent Consumer
 Important concept:
 same message multiple times process হলেও result same হবে
 
@@ -264,14 +264,14 @@ Example:
 payment event duplicate
 still single transaction
 
-11.27 Monitoring Queue System
+## 11.27 Monitoring Queue System
 Track:
 queue length
 consumer lag
 processing time
 failure rate
 
-11.28 Common Mistakes
+## 11.28 Common Mistakes
 
 Mistake 1 — No Retry Strategy
 Message lost risk
@@ -288,13 +288,13 @@ Duplicate data issue
 Mistake 5 — Wrong Tool Choice
 Kafka vs RabbitMQ mismatch
 
-11.29 Enterprise Architecture Example
+## 11.29 Enterprise Architecture Example
 Banking system:
 Kafka → transaction events
 RabbitMQ → email + notification
 Worker service → report generation
 
-11.30 Interview Perspective
+## 11.30 Interview Perspective
 Common questions:
 Message queue কী?
 RabbitMQ vs Kafka
@@ -303,7 +303,7 @@ Event-driven architecture
 DLQ কী?
 Idempotency কী?
 
-11.31 Mini Design Exercise
+## 11.31 Mini Design Exercise
 Design:
 “Large Scale Notification System”
 Consider:
@@ -314,7 +314,7 @@ retry mechanism
 DLQ
 scaling strategy
 
-11.32 Chapter Summary
+## 11.32 Chapter Summary
 এই chapter এ আমরা শিখলাম:
 Message Queue concept
 RabbitMQ architecture
