@@ -115,20 +115,20 @@ Practical System Design in Bangla
 <div id="Chapter_01_System_Design_Introduction" class="chapter-section">
 
 # Chapter 1 — System Design Introduction
-Practical System Design in Bangla
 
 ## 1.1 System Design (সিস্টেম ডিজাইন) কী?
-System Design বা সিস্টেম ডিজাইন হলো এমন একটি প্রক্রিয়া (Process) যেখানে একটি সফটওয়্যার সিস্টেম কীভাবে কাজ করবে, কীভাবে স্কেল (scale) বা বৃদ্ধি পাবে, কীভাবে ডেটা সিকিউর (secure) থাকবে এবং ভবিষ্যতের বিপুল পরিমাণ ইউজার বা ডেটা কীভাবে সামলাবে—তার সম্পূর্ণ আর্কিটেকচার ও ইনফ্রাস্ট্রাকচারের পূর্বপরিকল্পনা করা হয়।
-
+System Design বা সিস্টেম ডিজাইন হলো একটি সফটওয়্যার সিস্টেমের সম্পূর্ণ কাঠামো (architecture) পরিকল্পনা করার প্রক্রিয়া, যেখানে নির্ধারণ করা হয়—সিস্টেমটি কীভাবে কাজ করবে, কীভাবে বিভিন্ন অংশ (components) একে অপরের সাথে যোগাযোগ করবে, কীভাবে এটি ভবিষ্যতে বৃদ্ধি পাবে (scalability), কীভাবে ডেটা নিরাপদ থাকবে (security), এবং কীভাবে বড় পরিমাণ ব্যবহারকারী ও ডেটা কার্যকরভাবে পরিচালনা করবে।
 সহজ ও প্রাঞ্জল বাংলায় বলতে গেলে:
-> "একটি সফটওয়্যার মানে শুধুমাত্র কিছু কোড লেখা নয়। সম্পূর্ণ সিস্টেমটি ভবিষ্যতে বড় হলে কীভাবে কোনো সমস্যা ছাড়াই অত্যন্ত দ্রুত এবং কার্যকরভাবে (efficiently) চলবে, সেই ব্লু-প্রিন্ট তৈরি করাই হলো System Design।"
+> "System Design হলো একটি সফটওয়্যার সিস্টেমের ভবিষ্যৎ রূপ কেমন হবে, সেটির পূর্ণাঙ্গ নকশা বা ব্লু-প্রিন্ট তৈরি করার প্রক্রিয়া, যাতে এটি বর্তমান ও ভবিষ্যতের চাহিদা অনুযায়ী দ্রুত, নির্ভরযোগ্য এবং সম্প্রসারণযোগ্য (scalable)ভাবে কাজ করতে পারে।"
 
 ধরুন, আপনি একটি ছোট ই-কমার্স (E-commerce) বা ইআরপি (ERP) সফটওয়্যার তৈরি করলেন।
 **প্রাথমিক অবস্থা:**
 - মাত্র ১০ জন ইউজার।
 - একটি সাধারণ সার্ভার।
 - একটি মাত্র ডাটাবেজ (Database)।
-সবকিছু খুব ভালোভাবেই চলছিল। কোনো স্লোনেস বা ডিলে (Delay) ছিল না।
+- সীমিত ফিচার
+
+এই অবস্থায় সিস্টেমটি খুবই দ্রুত এবং স্থিতিশীলভাবে (stable) কাজ করছিল।
 
 **২ বছর পর বর্তমান অবস্থা:**
 - ইউজারের সংখ্যা ৫০,০০০ ছাড়িয়ে গেছে।
@@ -137,7 +137,7 @@ System Design বা সিস্টেম ডিজাইন হলো এম�
 - একাধিক পেমেন্ট গেটওয়ের (Payment API) ইন্টিগ্রেশন হয়েছে।
 - রিয়েল-টাইম (Real-time) রিপোর্টিংয়ের দরকার পড়ছে।
 
-ঠিক এই পর্যায়ে এসে আপনার সিস্টেম ধীরগতি (Slow) হতে শুরু করল। সার্ভার ক্র্যাশ করা বা ডাটাবেজ লক হয়ে যাওয়া নিত্যনৈমিত্তিক ব্যাপার হয়ে দাঁড়ালো। এখান থেকেই শুরু হয় **"System Design"** এর আসল প্রয়োজনীয়তা।
+এই পর্যায়ে এসে পূর্বের সরল আর্কিটেকচার আর কার্যকর থাকে না। সিস্টেম ধীরে ধীরে স্লো হয়ে যায়, ডাটাবেজে লকিং সমস্যা দেখা দেয়, সার্ভার অতিরিক্ত লোড নিতে পারে না, এমনকি কিছু ক্ষেত্রে সিস্টেম ক্র্যাশও করতে পারে। ঠিক এই জায়গা থেকেই **System Design**-এর প্রকৃত প্রয়োজনীয়তা স্পষ্ট হয়ে ওঠে। কারণ একটি ভালো System Design আগেই এসব স্কেলিং, পারফরম্যান্স, এবং নির্ভরযোগ্যতার (reliability) সমস্যা সমাধানের জন্য কাঠামো তৈরি করে রাখে, যাতে ভবিষ্যতে সিস্টেম বড় হলেও তা নির্বিঘ্নে (smoothly) পরিচালিত হতে পারে।
 
 ---
 
@@ -267,6 +267,8 @@ Business বড় হওয়ার সাথে সাথে System-ও ব�
 
 # Software Development Lifecycle-এ System Design-এর অবস্থান
 
+![System Design in place of SDLC](assets/system%20design%20in%20place%20of%20SDLC.png)
+
 ```text
 Requirements
       ↓
@@ -286,30 +288,212 @@ Maintenance
 ---
 
 ## 1.3 Real World Example (বাস্তব উদাহরণ)
-একটি কোম্পানি প্রথমে একটি সাধারণ মনোলিথিক (Monolithic) ইআরপি তৈরি করেছিল।
+একটি শিক্ষা প্রতিষ্ঠান প্রথমে একটি ছোট **Online Admission & Result Portal** তৈরি করেছিল। শুরুতে লক্ষ্য ছিল খুব সাধারণ: শিক্ষার্থীরা অনলাইনে ভর্তি ফর্ম পূরণ করবে, ফি পেমেন্ট করবে, আর পরে একই পোর্টাল থেকে রেজাল্ট দেখতে পারবে। প্রথম ভার্সনে সিস্টেমটি ভালোই কাজ করছিল, কারণ ব্যবহারকারী কম ছিল এবং একই সময়ে খুব বেশি ট্রাফিক আসতো না।
 
-**প্রাথমিক সেটআপ (Initial Setup):**
-- ASP.NET অ্যাপ্লিকেশন।
-- একটি মাত্র SQL Server।
-- IIS হোস্টিং।
-- ২০ জন ইউজার।
-সিস্টেম খুব দ্রুত (Fast) কাজ করছিল।
+**Business Problem:**
+- ভর্তি ফর্ম অনলাইনে জমা নিতে হবে।
+- আবেদনকারীর ছবি, জন্মসনদ এবং মার্কশিট আপলোড করতে হবে।
+- ভর্তি ফি অনলাইনে পেমেন্ট করতে হবে।
+- পেমেন্ট সফল হলে রসিদ তৈরি করতে হবে।
+- পরীক্ষার ফলাফল প্রকাশের দিনে শিক্ষার্থী ও অভিভাবকরা লগইন করে ফলাফল দেখবে।
+- অ্যাডমিন প্যানেল থেকে আবেদন, পেমেন্ট, ফলাফল এবং রিপোর্ট ম্যানেজ করতে হবে।
 
-**৩ বছর পরে সিস্টেমের অবস্থা:**
-- ৩০০ এর বেশি ব্রাঞ্চ।
-- ১০,০০০ এর বেশি কনকারেন্ট (Concurrent) বা এককালীন ইউজার।
-- মোবাইল অ্যাপ এবং পেমেন্ট গেটওয়ে যুক্ত হয়েছে।
-- SMS ইন্টিগ্রেশন এবং রিপোর্টিং সার্ভার যুক্ত হয়েছে।
+**প্রাথমিক টেক স্ট্যাক (Initial Tech Stack):**
+- Frontend: HTML, CSS, Bootstrap, jQuery
+- Backend: ASP.NET Core MVC
+- API Layer: একই ASP.NET Core অ্যাপ্লিকেশনের Controller
+- Database: SQL Server Express
+- ORM: Entity Framework Core
+- Hosting: IIS on a single Windows Server
+- File Storage: একই সার্ভারের `wwwroot/uploads` ফোল্ডার
+- Authentication: Cookie-based login session
+- Payment: Third-party payment gateway API
+- Email/SMS: সরাসরি অ্যাপ্লিকেশন থেকে SMTP এবং SMS API call
+- Reporting: SQL query থেকে synchronously PDF/Excel generate
+
+**প্রাথমিক সিস্টেম স্ট্রাকচার:**
+```text
+User Browser
+     ↓
+IIS Web Server
+     ↓
+ASP.NET Core MVC Application
+     ├── Admission Module
+     ├── Payment Module
+     ├── Result Module
+     ├── Admin Module
+     ├── File Upload Logic
+     ├── Report Generation Logic
+     └── Email/SMS Sending Logic
+     ↓
+Single SQL Server Database
+     ↓
+Local Server Disk: wwwroot/uploads
+```
+
+**শুরুতে বাস্তব লোড:**
+- ১টি ক্যাম্পাস।
+- প্রায় ৫০০ শিক্ষার্থী।
+- দিনে ৫০-১০০টি ভর্তি ফর্ম সাবমিট।
+- একই সময়ে সর্বোচ্চ ২০-৩০ জন ইউজার।
+- ফাইল আপলোড খুব কম।
+- রিপোর্ট সাধারণত অ্যাডমিনরা অফিস সময়ে চালাতেন।
+
+এই অবস্থায় সিস্টেমটি দ্রুত মনে হচ্ছিল। কারণ Web Server, Database, File Storage এবং Reporting সব একই মেশিনে থাকলেও লোড খুব কম ছিল।
+
+**২ বছর পরে সিস্টেমের অবস্থা:**
+- ১২টি ক্যাম্পাস একই পোর্টাল ব্যবহার করতে শুরু করলো।
+- ভর্তি মৌসুমে দিনে ৮,০০০-১০,০০০ আবেদন জমা পড়তে লাগলো।
+- ফলাফল প্রকাশের প্রথম ৩০ মিনিটে ২০,০০০+ request আসতে লাগলো।
+- একই সময়ে ৩,০০০-৫,০০০ concurrent user লগইন করার চেষ্টা করছিল।
+- প্রতিটি আবেদনকারীর ছবি, ডকুমেন্ট, মার্কশিট এবং পেমেন্ট রসিদ জমা হচ্ছিল।
+- অ্যাডমিনরা একই সময়ে admission report, payment report এবং result summary generate করছিলেন।
+
+**বাস্তব ঘটনার মতো একটি Production Day Timeline:**
+```text
+09:00 AM  Result publish করার ঘোষণা দেওয়া হলো।
+09:05 AM  শিক্ষার্থী ও অভিভাবকরা একসাথে login page refresh করতে শুরু করলো।
+09:10 AM  Login API response time 300ms থেকে 8-12 seconds হয়ে গেল।
+09:15 AM  SQL Server CPU 95%-100% এ চলে গেল।
+09:20 AM  Payment callback queue না থাকায় gateway থেকে আসা callback request timeout হতে লাগলো।
+09:25 AM  Admin panel থেকে report download করার চেষ্টা করলে application pool recycle হলো।
+09:30 AM  কিছু user payment successful SMS পেল, কিন্তু portal-এ payment pending দেখাচ্ছিল।
+09:45 AM  IIS restart দেওয়া হলো, কিন্তু restart-এর পরে pending SMS/email process হারিয়ে গেল।
+10:15 AM  Team result page সাময়িকভাবে বন্ধ করে শুধু notice দেখাতে বাধ্য হলো।
+```
+
+**Database-এর বাস্তব চাপ:**
+- `Students` table: শুরুতে ৫০০ row, পরে ১,৫০,০০০+ row।
+- `Applications` table: ভর্তি মৌসুম শেষে ২,৫০,০০০+ row।
+- `Payments` table: প্রতিদিন ২০,০০০+ transaction record।
+- `UploadedFiles` table: ৮-১০ লক্ষ file metadata।
+- `Results` table: প্রতি পরীক্ষায় কয়েক লক্ষ row insert/update।
+- `AuditLogs` table: login, payment, admin action মিলিয়ে দ্রুত বড় হচ্ছিল।
+
+**Slow Query-এর উদাহরণ:**
+```sql
+SELECT s.StudentId, s.Name, r.TotalMark, r.Grade, p.PaymentStatus
+FROM Students s
+JOIN Results r ON s.StudentId = r.StudentId
+LEFT JOIN Payments p ON s.StudentId = p.StudentId
+WHERE s.RollNo = @RollNo AND r.ExamId = @ExamId;
+```
+
+এই query দেখতে ছোট, কিন্তু `RollNo`, `ExamId`, `StudentId`-এ proper index না থাকলে result publish day-তে একই query হাজার হাজার বার চলতে থাকে। ফলে database CPU, memory এবং disk I/O একসাথে চাপের মধ্যে পড়ে।
+
+**Payment Failure Scenario:**
+```text
+1. User payment gateway-তে টাকা দিল।
+2. Gateway payment success দেখাল।
+3. Gateway portal-এর callback URL hit করলো।
+4. Portal তখন slow ছিল, তাই callback request timeout হলো।
+5. Gateway পরে আবার callback retry করলো।
+6. Portal duplicate callback properly handle করতে পারলো না।
+7. User-এর টাকা কাটা গেল, কিন্তু portal-এ status pending থাকলো।
+```
+
+এখানে সমস্যাটি শুধু coding bug নয়। এটি design problem। Payment callback অবশ্যই idempotent হতে হবে, transaction reference unique হতে হবে, আর receipt generation background worker দিয়ে reliableভাবে করতে হবে।
+
+**File Upload Failure Scenario:**
+```text
+Admission form submit
+      ↓
+Image + PDF upload to same web server disk
+      ↓
+Disk I/O high
+      ↓
+ASP.NET request wait করে
+      ↓
+User আবার submit button চাপ দেয়
+      ↓
+Duplicate application তৈরি হওয়ার ঝুঁকি
+```
+
+ভালো ডিজাইনে file upload সরাসরি object storage-এ যাবে, database-এ শুধু file URL বা object key থাকবে, এবং duplicate submit ঠেকাতে application tracking number বা idempotency key থাকবে।
 
 **যেসব সমস্যা শুরু হলো:**
-- API টাইমআউট (Timeout) হতে শুরু করলো।
-- ডাটাবেজে ডেডলক (Deadlock) লেগেই থাকতো।
-- সার্ভারের CPU প্রায়ই ১০০% হয়ে যেত।
-- মাঝে মাঝেই পুরো সার্ভার ক্র্যাশ করতো।
-- লগইন করতে অনেক সময় লাগতো এবং একটি রিপোর্ট জেনারেট হতে ৫ মিনিটের বেশি সময় লাগতো।
+- Login page slow হয়ে গেল, কারণ session এবং user validation একই database-এ চাপ তৈরি করছিল।
+- Result publish করার সময় database-এর `Students`, `Results`, `Payments` টেবিলে heavy read শুরু হলো।
+- Admission form submit করার সময় file upload slow হয়ে গেল, কারণ web server disk I/O busy হয়ে যাচ্ছিল।
+- Payment gateway callback দেরিতে process হওয়ায় অনেক payment successful হলেও receipt pending দেখাচ্ছিল।
+- Report generate করার query main transactional database-এ চলছিল, তাই normal user request block হচ্ছিল।
+- SMS এবং email synchronous হওয়ায় form submit বা payment confirmation response আটকে থাকতো।
+- একটি বড় Excel report generate হলে IIS worker process-এর memory usage বেড়ে যেত।
+- Database backup চলার সময় application আরও slow হয়ে যেত।
+- Server restart হলে uploaded file, running request এবং pending notification process সব একসাথে প্রভাবিত হতো।
 
+**মূল ডিজাইন সমস্যা:**
+- Web application, API, background কাজ, report generation এবং file serving একই server-এ ছিল।
+- Database read/write workload আলাদা করা হয়নি।
+- Static file বা uploaded document আলাদা object storage-এ রাখা হয়নি।
+- Payment callback idempotent করা হয়নি, তাই retry এলে duplicate বা pending state তৈরি হতো।
+- SMS/email পাঠানোর জন্য queue ব্যবহার করা হয়নি।
+- Result page cache করা হয়নি, অথচ result publish day-তে বেশিরভাগ request একই ধরনের data read করছিল।
+- Monitoring, logging, alerting এবং performance metric ঠিকভাবে ছিল না।
+- Capacity planning করা হয়নি: peak traffic, storage growth, database size, backup window, report load আগে থেকে হিসাব করা হয়নি।
+
+**ভালো System Design হলে structure এমন হতে পারতো:**
+```text
+User Browser / Mobile App
+          ↓
+Load Balancer
+          ↓
+Multiple Web/API Servers
+          ↓
+Application Services
+     ├── Admission Service
+     ├── Payment Service
+     ├── Result Service
+     ├── Notification Worker
+     └── Reporting Worker
+          ↓
+Database Layer
+     ├── Primary SQL Server for write
+     ├── Read Replica for result/report read
+     └── Backup and archive storage
+          ↓
+Supporting Infrastructure
+     ├── Redis Cache for result and session cache
+     ├── Queue for SMS, email, receipt generation
+     ├── Object Storage for uploaded files
+     ├── CDN for public/static file delivery
+     └── Monitoring and centralized logging
+```
+
+**Recommended Tech Structure:**
+- Frontend: React বা Razor Pages, কিন্তু static assets CDN থেকে serve করা।
+- Backend API: ASP.NET Core Web API, stateless design।
+- Database: SQL Server Standard/Enterprise with indexing, backup strategy, read replica।
+- Cache: Redis, especially result view, session/token cache এবং frequently-read lookup data-এর জন্য।
+- Queue: RabbitMQ, Azure Service Bus বা AWS SQS; payment receipt, SMS, email, report generation async করার জন্য।
+- File Storage: Azure Blob Storage, AWS S3 বা MinIO; web server local disk নয়।
+- Load Balancer: Nginx, IIS ARR, Azure Application Gateway বা AWS ALB।
+- Background Worker: .NET Worker Service বা Hangfire।
+- Monitoring: Application Insights, Prometheus/Grafana অথবা ELK stack।
+- Logging: Structured logging with Serilog, centralized log storage।
+
+**Problem বনাম Design Fix Mapping:**
+| Real Problem | Better Design Decision |
+| --- | --- |
+| Result page বারবার একই data read করছে | Redis cache + read replica |
+| Payment callback timeout হচ্ছে | Idempotent callback + queue + retry policy |
+| SMS/email পাঠাতে request আটকে যাচ্ছে | Background worker + message queue |
+| Report generation database block করছে | Reporting worker + read replica + pre-generated report |
+| File upload web server slow করছে | Object storage + signed upload URL |
+| Login traffic database চাপাচ্ছে | Stateless auth/token cache + rate limiting |
+| Server restart হলে pending কাজ হারিয়ে যাচ্ছে | Durable queue + worker retry |
+| Problem কোথায় হচ্ছে বোঝা যাচ্ছে না | Centralized logging + metrics + tracing |
+
+
+**এই Example থেকে শেখার বিষয়:**
+- Small user দিয়ে test করলে system fast মনে হতে পারে, কিন্তু peak traffic আলাদা জিনিস।
+- Feature working মানেই system production-ready নয়।
+- একই server-এ সব কাজ রাখলে একটি কাজের চাপ অন্য সব কাজকে ধীর করে দেয়।
+- Payment, notification, report এবং file upload সাধারণ request-response flow থেকে আলাদা করে ভাবতে হয়।
+- Database design শুধু table বানানো নয়; indexing, read/write separation, backup, archive এবং query pattern বুঝতে হয়।
+- Real-world system design মানে future load, failure, retry, monitoring এবং recovery নিয়ে আগে থেকে সিদ্ধান্ত নেওয়া।
 **কারণ কী?**
-কারণ, সিস্টেমটি শুরুতে "ছোট স্কেল (Small scale)" এর কথা ভেবে ডিজাইন করা হয়েছিল। ভবিষ্যতের বিশাল লোডের কথা চিন্তায় আনা হয়নি।
+কারণ, প্রথম ডিজাইনটি শুধু feature complete করার জন্য বানানো হয়েছিল, কিন্তু peak load, file growth, payment reliability, report workload, notification delay এবং database scaling নিয়ে আগেই ভাবা হয়নি। System Design-এর কাজ হলো শুধু কোড কোথায় লেখা হবে তা ঠিক করা নয়; বরং কোন কাজ কোন component করবে, কোন data কোথায় থাকবে, কোন request synchronous হবে, কোন কাজ queue-তে যাবে, এবং বেশি চাপ এলে system কীভাবে stable থাকবে তা আগে থেকেই ঠিক করা।
 
 ---
 
@@ -326,6 +510,18 @@ Maintenance
 ---
 
 ## 1.5 একজন System Designer কী চিন্তা করেন?
+
+**একজন System Designer আগে কী প্রশ্ন করতেন?**
+- Result publish day-তে peak concurrent user কত হতে পারে?
+- একই result data কি cache করা যাবে?
+- Payment success হলে source of truth কোনটি: gateway, database, না receipt table?
+- File upload web server দিয়ে যাবে, নাকি direct object storage-এ যাবে?
+- Report কি live database থেকে generate হবে, নাকি background process-এ তৈরি হবে?
+- SMS/email fail হলে retry হবে কীভাবে?
+- Database backup কখন চলবে, এবং backup চলার সময় user request slow হবে কি না?
+- Server down হলে কোন data হারানো যাবে না?
+- Monitoring dashboard-এ কোন metric দেখে team বুঝবে system বিপদে আছে?
+
 একজন সিনিয়র সফটওয়্যার ইঞ্জিনিয়ার বা আর্কিটেক্ট কোড লেখার আগে সাধারণত যেসব বিষয়ে গভীরভাবে চিন্তা করেন:
 - ভবিষ্যতে যখন ১ লাখ ইউজার হবে, তখন এই সিস্টেম কি কাজ করবে?
 - ডাটাবেজ যদি কোনো কারণে ফেইল (Fail) করে, তবে ব্যাকআপ ডাটাবেজ কীভাবে কাজ শুরু করবে?
