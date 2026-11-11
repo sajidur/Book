@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Architect-এর Toolkit · Practical System Design in Bangla</title>
+<meta name="description" content="Template, checklist ও cheat sheet: প্রতিদিনের কাজে সরাসরি ব্যবহারের জন্য">
+<meta name="author" content="Md. Sajidur Rahman">
+<meta name="theme-color" content="#0b1530">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/book.css">
+<script>(function(){try{var t=localStorage.getItem('psd-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">মূল লেখায় যান</a>
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" data-action="nav" aria-label="সূচিপত্র"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="4.5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="4.5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="4.5" rx="1.2"/><path d="M12 7v4.5M5.5 16.5v-2.5h13v2.5"/></svg></span><span class="brand-text">Practical System Design <span>in Bangla</span></span></a>
+  <div class="top-spacer"></div>
+  <div class="search" role="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="search" type="search" placeholder="খুঁজুন: cache, Kafka, RAG…  ( / )" autocomplete="off" aria-label="বইয়ে খুঁজুন"><div class="search-results" id="search-results"></div></div>
+  <a class="icon-btn" href="downloads/Practical-System-Design-in-Bangla-A4.pdf" title="PDF ডাউনলোড" aria-label="PDF ডাউনলোড"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg></a>
+  <button class="icon-btn" data-action="theme" aria-label="থিম পরিবর্তন" title="Light / Dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="সূচিপত্র">
+<div class="side-group"><div class="side-title">শুরুর কথা</div><a class="side-link" href="dedication.html"><span class="no">·</span><span>উৎসর্গ</span></a><a class="side-link" href="preface.html"><span class="no">·</span><span>ভূমিকা</span></a><a class="side-link" href="how-to-read.html"><span class="no">·</span><span>বইটি কীভাবে পড়বেন</span></a><a class="side-link" href="meet-the-team.html"><span class="no">·</span><span>নদী টেকের মানুষেরা</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ১ ·</b>ভিত্তি</div><a class="side-link" href="ch01.html"><span class="no">01</span><span>System Design পরিচিতি</span></a><a class="side-link" href="ch02.html"><span class="no">02</span><span>Requirement Analysis ও Capacity Planning</span></a><a class="side-link" href="ch03.html"><span class="no">03</span><span>Core Architecture: Scalability, Availability ও CAP</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ২ ·</b>ডেটা ও স্টোরেজ</div><a class="side-link" href="ch04.html"><span class="no">04</span><span>Database Design-এর ভিত্তি</span></a><a class="side-link" href="ch05.html"><span class="no">05</span><span>Database Scaling: Partitioning, Sharding ও Replication</span></a><a class="side-link" href="ch06.html"><span class="no">06</span><span>Caching ও Performance Engineering</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৩ ·</b>Backend ও Distributed System</div><a class="side-link" href="ch07.html"><span class="no">07</span><span>API Design ও Backend Architecture</span></a><a class="side-link" href="ch08.html"><span class="no">08</span><span>Security: Authentication থেকে Zero Trust</span></a><a class="side-link" href="ch09.html"><span class="no">09</span><span>Load Balancing, High Availability ও Fault Tolerance</span></a><a class="side-link" href="ch10.html"><span class="no">10</span><span>Microservices Architecture</span></a><a class="side-link" href="ch11.html"><span class="no">11</span><span>Message Queue ও Event Streaming</span></a><a class="side-link" href="ch12.html"><span class="no">12</span><span>Observability ও Monitoring</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৪ ·</b>Platform ও Delivery</div><a class="side-link" href="ch13.html"><span class="no">13</span><span>Docker ও Kubernetes</span></a><a class="side-link" href="ch14.html"><span class="no">14</span><span>CI/CD ও নিরাপদ Deployment</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৫ ·</b>AI যুগের System Design</div><a class="side-link" href="ch15.html"><span class="no">15</span><span>LLM Application Architecture: RAG, Vector DB ও AI Gateway</span></a><a class="side-link" href="ch16.html"><span class="no">16</span><span>AI Agent, MLOps ও Responsible AI</span></a><a class="side-link" href="ch17.html"><span class="no">17</span><span>AI যুগে Architect: মানুষ ও মেশিনের যৌথ কাজ</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৬ ·</b>Enterprise System</div><a class="side-link" href="ch18.html"><span class="no">18</span><span>ERP System Design</span></a><a class="side-link" href="ch19.html"><span class="no">19</span><span>Fintech System Design</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৭ ·</b>বাস্তব কেস স্টাডি</div><a class="side-link" href="ch20.html"><span class="no">20</span><span>বড় প্রতিষ্ঠানের কেস স্টাডি: Netflix, Amazon, Uber</span></a><a class="side-link" href="ch21.html"><span class="no">21</span><span>News Feed System Design</span></a><a class="side-link" href="ch22.html"><span class="no">22</span><span>Real-time Chat System Design</span></a><a class="side-link" href="ch23.html"><span class="no">23</span><span>Video Streaming Platform Design</span></a><a class="side-link" href="ch24.html"><span class="no">24</span><span>Capstone: Admission Portal-এর পুনর্জন্ম</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৮ ·</b>Interview ও Career</div><a class="side-link" href="ch25.html"><span class="no">25</span><span>System Design Interview Mastery</span></a></div>
+<div class="side-group"><div class="side-title">পরিশিষ্ট</div><a class="side-link" href="appendix-a.html"><span class="no">A</span><span>Interview প্রশ্নোত্তর</span></a><a class="side-link active" href="appendix-b.html" aria-current="page"><span class="no">B</span><span>Architect-এর Toolkit</span></a><a class="side-link" href="appendix-c.html"><span class="no">C</span><span>পরিভাষা</span></a><a class="side-link" href="appendix-d.html"><span class="no">D</span><span>তথ্যসূত্র ও আরো পড়ুন</span></a></div>
+</nav>
+<div class="scrim" data-action="nav"></div>
+<div class="shell">
+<div class="page-grid"><main class="page-main" id="main"><header class="doc-hero web">
+  <div class="hero-kicker">পরিশিষ্ট</div>
+  <div class="hero-number"><span>পরিশিষ্ট</span><b>B</b></div>
+  <h1>Architect-এর Toolkit</h1><p class="hero-en">Architect's Toolkit</p><p class="hero-sub">Template, checklist ও cheat sheet: প্রতিদিনের কাজে সরাসরি ব্যবহারের জন্য</p>
+  <div class="hero-rule"></div>
+</header><article class="prose"><p>এই পরিশিষ্টের প্রতিটি অংশ নদী টেকের team-এর মতো আপনিও copy করে নিজের প্রয়োজনে বদলে নিতে পারেন। এগুলো বইয়ের বিভিন্ন অধ্যায়ের শিক্ষাকে কাজের তালিকায় রূপ দিয়েছে।</p>
+<figure class="figure figure-diagram" id="appendix-b-fig-B-1"><div class="diagram"><svg aria-roledescription="flowchart-v2" role="graphics-document document" viewBox="0 0 1557 129.25" style="max-width: 1557px;" class="flowchart" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="100%" id="dg-379ce681d9bcb2c2"><style>#dg-379ce681d9bcb2c2{font-family:"Hind Siliguri","Noto Serif Bengali",sans-serif;font-size:15px;fill:#1E293B;}#dg-379ce681d9bcb2c2 .error-icon{fill:#FFF7ED;}#dg-379ce681d9bcb2c2 .error-text{fill:#7C2D12;stroke:#7C2D12;}#dg-379ce681d9bcb2c2 .edge-thickness-normal{stroke-width:1px;}#dg-379ce681d9bcb2c2 .edge-thickness-thick{stroke-width:3.5px;}#dg-379ce681d9bcb2c2 .edge-pattern-solid{stroke-dasharray:0;}#dg-379ce681d9bcb2c2 .edge-thickness-invisible{stroke-width:0;fill:none;}#dg-379ce681d9bcb2c2 .edge-pattern-dashed{stroke-dasharray:3;}#dg-379ce681d9bcb2c2 .edge-pattern-dotted{stroke-dasharray:2;}#dg-379ce681d9bcb2c2 .marker{fill:#64748B;stroke:#64748B;}#dg-379ce681d9bcb2c2 .marker.cross{stroke:#64748B;}#dg-379ce681d9bcb2c2 svg{font-family:"Hind Siliguri","Noto Serif Bengali",sans-serif;font-size:15px;}#dg-379ce681d9bcb2c2 p{margin:0;}#dg-379ce681d9bcb2c2 .label{font-family:"Hind Siliguri","Noto Serif Bengali",sans-serif;color:#1E1B4B;}#dg-379ce681d9bcb2c2 .cluster-label text{fill:#1E293B;}#dg-379ce681d9bcb2c2 .cluster-label span{color:#1E293B;}#dg-379ce681d9bcb2c2 .cluster-label span p{background-color:transparent;}#dg-379ce681d9bcb2c2 .label text,#dg-379ce681d9bcb2c2 span{fill:#1E1B4B;color:#1E1B4B;}#dg-379ce681d9bcb2c2 .node rect,#dg-379ce681d9bcb2c2 .node circle,#dg-379ce681d9bcb2c2 .node ellipse,#dg-379ce681d9bcb2c2 .node polygon,#dg-379ce681d9bcb2c2 .node path{fill:#EEF2FF;stroke:#4F46E5;stroke-width:1px;}#dg-379ce681d9bcb2c2 .rough-node .label text,#dg-379ce681d9bcb2c2 .node .label text,#dg-379ce681d9bcb2c2 .image-shape .label,#dg-379ce681d9bcb2c2 .icon-shape .label{text-anchor:middle;}#dg-379ce681d9bcb2c2 .node .katex path{fill:#000;stroke:#000;stroke-width:1px;}#dg-379ce681d9bcb2c2 .rough-node .label,#dg-379ce681d9bcb2c2 .node .label,#dg-379ce681d9bcb2c2 .image-shape .label,#dg-379ce681d9bcb2c2 .icon-shape .label{text-align:center;}#dg-379ce681d9bcb2c2 .node.clickable{cursor:pointer;}#dg-379ce681d9bcb2c2 .root .anchor path{fill:#64748B!important;stroke-width:0;stroke:#64748B;}#dg-379ce681d9bcb2c2 .arrowheadPath{fill:#0b0b0b;}#dg-379ce681d9bcb2c2 .edgePath .path{stroke:#64748B;stroke-width:2.0px;}#dg-379ce681d9bcb2c2 .flowchart-link{stroke:#64748B;fill:none;}#dg-379ce681d9bcb2c2 .edgeLabel{background-color:#FFFFFF;text-align:center;}#dg-379ce681d9bcb2c2 .edgeLabel p{background-color:#FFFFFF;}#dg-379ce681d9bcb2c2 .edgeLabel rect{opacity:0.5;background-color:#FFFFFF;fill:#FFFFFF;}#dg-379ce681d9bcb2c2 .labelBkg{background-color:rgba(255, 255, 255, 0.5);}#dg-379ce681d9bcb2c2 .cluster rect{fill:#F8FAFC;stroke:#94A3B8;stroke-width:1px;}#dg-379ce681d9bcb2c2 .cluster text{fill:#1E293B;}#dg-379ce681d9bcb2c2 .cluster span{color:#1E293B;}#dg-379ce681d9bcb2c2 div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-family:"Hind Siliguri","Noto Serif Bengali",sans-serif;font-size:12px;background:#FFF7ED;border:1px solid #EA580C;border-radius:2px;pointer-events:none;z-index:100;}#dg-379ce681d9bcb2c2 .flowchartTitleText{text-anchor:middle;font-size:18px;fill:#1E293B;}#dg-379ce681d9bcb2c2 rect.text{fill:none;stroke-width:0;}#dg-379ce681d9bcb2c2 .icon-shape,#dg-379ce681d9bcb2c2 .image-shape{background-color:#FFFFFF;text-align:center;}#dg-379ce681d9bcb2c2 .icon-shape p,#dg-379ce681d9bcb2c2 .image-shape p{background-color:#FFFFFF;padding:2px;}#dg-379ce681d9bcb2c2 .icon-shape rect,#dg-379ce681d9bcb2c2 .image-shape rect{opacity:0.5;background-color:#FFFFFF;fill:#FFFFFF;}#dg-379ce681d9bcb2c2 :root{--mermaid-font-family:"Hind Siliguri","Noto Serif Bengali",sans-serif;}#dg-379ce681d9bcb2c2 .client&gt;*{fill:#E0F2FE!important;stroke:#0284C7!important;color:#0C4A6E!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .client span{fill:#E0F2FE!important;stroke:#0284C7!important;color:#0C4A6E!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .client tspan{fill:#0C4A6E!important;}#dg-379ce681d9bcb2c2 .svc&gt;*{fill:#EEF2FF!important;stroke:#4F46E5!important;color:#1E1B4B!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .svc span{fill:#EEF2FF!important;stroke:#4F46E5!important;color:#1E1B4B!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .svc tspan{fill:#1E1B4B!important;}#dg-379ce681d9bcb2c2 .db&gt;*{fill:#ECFDF5!important;stroke:#059669!important;color:#064E3B!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .db span{fill:#ECFDF5!important;stroke:#059669!important;color:#064E3B!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .db tspan{fill:#064E3B!important;}#dg-379ce681d9bcb2c2 .cache&gt;*{fill:#FFF7ED!important;stroke:#EA580C!important;color:#7C2D12!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .cache span{fill:#FFF7ED!important;stroke:#EA580C!important;color:#7C2D12!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .cache tspan{fill:#7C2D12!important;}#dg-379ce681d9bcb2c2 .queue&gt;*{fill:#FEF3C7!important;stroke:#D97706!important;color:#78350F!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .queue span{fill:#FEF3C7!important;stroke:#D97706!important;color:#78350F!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .queue tspan{fill:#78350F!important;}#dg-379ce681d9bcb2c2 .ai&gt;*{fill:#F5F3FF!important;stroke:#7C3AED!important;color:#4C1D95!important;stroke-width:1.8px!important;}#dg-379ce681d9bcb2c2 .ai span{fill:#F5F3FF!important;stroke:#7C3AED!important;color:#4C1D95!important;stroke-width:1.8px!important;}#dg-379ce681d9bcb2c2 .ai tspan{fill:#4C1D95!important;}#dg-379ce681d9bcb2c2 .ext&gt;*{fill:#F8FAFC!important;stroke:#64748B!important;color:#0F172A!important;stroke-dasharray:5 3!important;}#dg-379ce681d9bcb2c2 .ext span{fill:#F8FAFC!important;stroke:#64748B!important;color:#0F172A!important;stroke-dasharray:5 3!important;}#dg-379ce681d9bcb2c2 .ext tspan{fill:#0F172A!important;}#dg-379ce681d9bcb2c2 .bad&gt;*{fill:#FFE4E6!important;stroke:#E11D48!important;color:#881337!important;stroke-width:1.8px!important;}#dg-379ce681d9bcb2c2 .bad span{fill:#FFE4E6!important;stroke:#E11D48!important;color:#881337!important;stroke-width:1.8px!important;}#dg-379ce681d9bcb2c2 .bad tspan{fill:#881337!important;}#dg-379ce681d9bcb2c2 .good&gt;*{fill:#DCFCE7!important;stroke:#16A34A!important;color:#14532D!important;stroke-width:1.8px!important;}#dg-379ce681d9bcb2c2 .good span{fill:#DCFCE7!important;stroke:#16A34A!important;color:#14532D!important;stroke-width:1.8px!important;}#dg-379ce681d9bcb2c2 .good tspan{fill:#14532D!important;}#dg-379ce681d9bcb2c2 .human&gt;*{fill:#FDF2F8!important;stroke:#DB2777!important;color:#831843!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .human span{fill:#FDF2F8!important;stroke:#DB2777!important;color:#831843!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .human tspan{fill:#831843!important;}#dg-379ce681d9bcb2c2 .infra&gt;*{fill:#F1F5F9!important;stroke:#334155!important;color:#0F172A!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .infra span{fill:#F1F5F9!important;stroke:#334155!important;color:#0F172A!important;stroke-width:1.5px!important;}#dg-379ce681d9bcb2c2 .infra tspan{fill:#0F172A!important;}#dg-379ce681d9bcb2c2 .note&gt;*{fill:#FEFCE8!important;stroke:#CA8A04!important;color:#422006!important;}#dg-379ce681d9bcb2c2 .note span{fill:#FEFCE8!important;stroke:#CA8A04!important;color:#422006!important;}#dg-379ce681d9bcb2c2 .note tspan{fill:#422006!important;}</style><g><marker orient="auto" markerHeight="8" markerWidth="8" markerUnits="userSpaceOnUse" refY="5" refX="5" viewBox="0 0 10 10" class="marker flowchart-v2" id="dg-379ce681d9bcb2c2_flowchart-v2-pointEnd"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 0 L 10 5 L 0 10 z"></path></marker><marker orient="auto" markerHeight="8" markerWidth="8" markerUnits="userSpaceOnUse" refY="5" refX="4.5" viewBox="0 0 10 10" class="marker flowchart-v2" id="dg-379ce681d9bcb2c2_flowchart-v2-pointStart"><path style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 0 5 L 10 10 L 10 0 z"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="11" viewBox="0 0 10 10" class="marker flowchart-v2" id="dg-379ce681d9bcb2c2_flowchart-v2-circleEnd"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5" refX="-1" viewBox="0 0 10 10" class="marker flowchart-v2" id="dg-379ce681d9bcb2c2_flowchart-v2-circleStart"><circle style="stroke-width: 1; stroke-dasharray: 1, 0;" class="arrowMarkerPath" r="5" cy="5" cx="5"></circle></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="12" viewBox="0 0 11 11" class="marker cross flowchart-v2" id="dg-379ce681d9bcb2c2_flowchart-v2-crossEnd"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><marker orient="auto" markerHeight="11" markerWidth="11" markerUnits="userSpaceOnUse" refY="5.2" refX="-1" viewBox="0 0 11 11" class="marker cross flowchart-v2" id="dg-379ce681d9bcb2c2_flowchart-v2-crossStart"><path style="stroke-width: 2; stroke-dasharray: 1, 0;" class="arrowMarkerPath" d="M 1,1 l 9,9 M 10,1 l -9,9"></path></marker><g class="root"><g class="clusters"></g><g class="edgePaths"><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_R_E_0" d="M148,52.862L152,51.468C156,50.074,164,47.287,171.333,45.894C178.667,44.5,185.333,44.5,188.667,44.5L192,44.5"></path><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_E_D_1" d="M342,44.5L346,44.5C350,44.5,358,44.5,365.333,44.5C372.667,44.5,379.333,44.5,382.667,44.5L386,44.5"></path><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_D_RV_2" d="M558,44.5L562,44.5C566,44.5,574,44.5,581.333,44.5C588.667,44.5,595.333,44.5,598.667,44.5L602,44.5"></path><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_RV_ADR_3" d="M778,44.5L784.25,44.5C790.5,44.5,803,44.5,814.833,44.5C826.667,44.5,837.833,44.5,843.417,44.5L849,44.5"></path><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_ADR_PR_4" d="M959,44.5L963,44.5C967,44.5,975,44.5,982.333,44.5C989.667,44.5,996.333,44.5,999.667,44.5L1003,44.5"></path><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_PR_AI_5" d="M1156,44.5L1160,44.5C1164,44.5,1172,44.5,1179.333,44.5C1186.667,44.5,1193.333,44.5,1196.667,44.5L1200,44.5"></path><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-solid edge-thickness-normal edge-pattern-solid flowchart-link" id="L_AI_OPS_6" d="M1344,44.5L1348,44.5C1352,44.5,1360,44.5,1367.365,45.575C1374.73,46.65,1381.46,48.801,1384.825,49.876L1388.19,50.951"></path><path marker-end="url(#dg-379ce681d9bcb2c2_flowchart-v2-pointEnd)" style="" class="edge-thickness-normal edge-pattern-dotted edge-thickness-normal edge-pattern-solid flowchart-link" id="L_OPS_R_7" d="M1392,102.332L1388,103.61C1384,104.888,1376,107.444,1356.333,108.722C1336.667,110,1305.333,110,1274,110C1242.667,110,1211.333,110,1179.25,110C1147.167,110,1114.333,110,1081.5,110C1048.667,110,1015.833,110,986.583,110C957.333,110,931.667,110,903.75,110C875.833,110,845.667,110,810,110C774.333,110,733.167,110,694.25,110C655.333,110,618.667,110,582.333,110C546,110,510,110,474,110C438,110,402,110,367.833,110C333.667,110,301.333,110,269,110C236.667,110,204.333,110,184.796,108.826C165.259,107.651,158.518,105.303,155.148,104.129L151.777,102.954"></path></g><g class="edgeLabels"><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g class="edgeLabel"><g transform="translate(0, 0)" class="label"><foreignObject height="0" width="0"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"></span></div></foreignObject></g></g><g transform="translate(815.5, 110)" class="edgeLabel"><g transform="translate(-13.5, -11.25)" class="label"><foreignObject height="22.5" width="27"><div style="display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 200px; text-align: center;" class="labelBkg" xmlns="http://www.w3.org/1999/xhtml"><span class="edgeLabel"><p>শেখা</p></span></div></foreignObject></g></g></g><g class="nodes"><g transform="translate(78, 77.25)" id="flowchart-R-146" class="node default human"><rect height="73" width="140" y="-36.5" x="-70" style="fill:#FDF2F8 !important;stroke:#DB2777 !important;stroke-width:1.5px !important" class="basic label-container"></rect><g transform="translate(-42, -22.5)" style="color:#831843 !important" class="label"><rect></rect><foreignObject height="45" width="84"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(131, 24, 67) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#831843 !important"><p>B.1 প্রশ্নমালা<br>Requirement</p></span></div></foreignObject></g></g><g transform="translate(269, 44.5)" id="flowchart-E-147" class="node default cache"><rect height="50.5" width="146" y="-25.25" x="-73" style="fill:#FFF7ED !important;stroke:#EA580C !important;stroke-width:1.5px !important" class="basic label-container"></rect><g transform="translate(-45, -11.25)" style="color:#7C2D12 !important" class="label"><rect></rect><foreignObject height="22.5" width="90"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(124, 45, 18) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#7C2D12 !important"><p>B.2 Estimation</p></span></div></foreignObject></g></g><g transform="translate(474, 44.5)" id="flowchart-D-148" class="node default svc"><rect height="73" width="168" y="-36.5" x="-84" style="fill:#EEF2FF !important;stroke:#4F46E5 !important;stroke-width:1.5px !important" class="basic label-container"></rect><g transform="translate(-56, -22.5)" style="color:#1E1B4B !important" class="label"><rect></rect><foreignObject height="45" width="112"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(30, 27, 75) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#1E1B4B !important"><p>Design ও Diagram<br>B.9 রঙের ভাষা</p></span></div></foreignObject></g></g><g transform="translate(692, 44.5)" id="flowchart-RV-150" class="node default good"><rect height="50.5" width="172" y="-25.25" x="-86" style="fill:#DCFCE7 !important;stroke:#16A34A !important;stroke-width:1.8px !important" class="basic label-container"></rect><g transform="translate(-58, -11.25)" style="color:#14532D !important" class="label"><rect></rect><foreignObject height="22.5" width="116"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(20, 83, 45) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#14532D !important"><p>B.3 Design Review</p></span></div></foreignObject></g></g><g transform="translate(906, 44.5)" id="flowchart-ADR-151" class="node default db"><rect height="50.5" width="106" y="-25.25" x="-53" style="fill:#ECFDF5 !important;stroke:#059669 !important;stroke-width:1.5px !important" class="basic label-container"></rect><g transform="translate(-25, -11.25)" style="color:#064E3B !important" class="label"><rect></rect><foreignObject height="22.5" width="50"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(6, 78, 59) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#064E3B !important"><p>B.4 ADR</p></span></div></foreignObject></g></g><g transform="translate(1081.5, 44.5)" id="flowchart-PR-153" class="node default infra"><rect height="73" width="149" y="-36.5" x="-74.5" style="fill:#F1F5F9 !important;stroke:#334155 !important;stroke-width:1.5px !important" class="basic label-container"></rect><g transform="translate(-46.5, -22.5)" style="color:#0F172A !important" class="label"><rect></rect><foreignObject height="45" width="93"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(15, 23, 42) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#0F172A !important"><p>B.5 Production<br>Readiness</p></span></div></foreignObject></g></g><g transform="translate(1274, 44.5)" id="flowchart-AI-154" class="node default ai"><rect height="73" width="140" y="-36.5" x="-70" style="fill:#F5F3FF !important;stroke:#7C3AED !important;stroke-width:1.8px !important" class="basic label-container"></rect><g transform="translate(-42, -22.5)" style="color:#4C1D95 !important" class="label"><rect></rect><foreignObject height="45" width="84"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(76, 29, 149) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#4C1D95 !important"><p>B.6 AI Launch<br>(প্রযোজ্য হলে)</p></span></div></foreignObject></g></g><g transform="translate(1470.5, 77.25)" id="flowchart-OPS-156" class="node default bad"><rect height="73" width="157" y="-36.5" x="-78.5" style="fill:#FFE4E6 !important;stroke:#E11D48 !important;stroke-width:1.8px !important" class="basic label-container"></rect><g transform="translate(-50.5, -22.5)" style="color:#881337 !important" class="label"><rect></rect><foreignObject height="45" width="101"><div xmlns="http://www.w3.org/1999/xhtml" style="color: rgb(136, 19, 55) !important; display: table-cell; white-space: nowrap; line-height: 1.5; max-width: 210px; text-align: center;"><span class="nodeLabel" style="color:#881337 !important"><p>B.7 Runbook ·<br>B.8 Postmortem</p></span></div></foreignObject></g></g></g></g></g></svg></div><figcaption><span class="fig-label">চিত্র B.1</span> একটি design-এর জীবনচক্র: প্রতিটি ধাপে এই পরিশিষ্টের একটি টুল</figcaption></figure>
+<h2 id="appendix-b-s-B-1"><a class="anchor" href="#appendix-b-s-B-1" aria-hidden="true">#</a>B.1 Requirement Discovery প্রশ্নমালা</h2>
+<p><em>অধ্যায় ২</em></p>
+<p><strong>ব্যবসা ও মানুষ</strong></p>
+<ul>
+<li>System-টি কোন সমস্যা সমাধান করছে? সফলতা কীভাবে মাপা হবে?</li>
+<li>কারা ব্যবহার করবেন (ভূমিকা অনুযায়ী)? কোন device, কোন network-এ?</li>
+<li>কী ভুল হলে সবচেয়ে বড় ক্ষতি (টাকা, আস্থা, আইন, মানুষের জীবন)?</li>
+</ul>
+<p><strong>Traffic ও data</strong></p>
+<ul>
+<li>DAU কত? স্বাভাবিক দিনের peak কখন?</li>
+<li><strong>সবচেয়ে খারাপ দিনটা দেখতে কেমন?</strong> (তারিখ, সময়, মিনিট ধরে)</li>
+<li>Read:write অনুপাত? কোন data কতদিন রাখতে হবে?</li>
+<li>Data-র বৃদ্ধির হার? Archive-এর নিয়ম?</li>
+</ul>
+<p><strong>মান (NFR)</strong></p>
+<ul>
+<li>কোন কাজের latency কত (p95/p99)?</li>
+<li>কতটুকু downtime গ্রহণযোগ্য? RPO ও RTO?</li>
+<li>কোন data-তে strong consistency লাগবে, কোথায় eventual চলবে?</li>
+</ul>
+<p><strong>নিরাপত্তা ও নিয়ম</strong></p>
+<ul>
+<li>কোন data সংবেদনশীল? কে কী দেখতে পারবেন?</li>
+<li>কোন আইন, নিয়ন্ত্রক নির্দেশনা বা চুক্তির শর্ত প্রযোজ্য? Data কোথায় রাখা যাবে?</li>
+</ul>
+<p><strong>Constraint</strong></p>
+<ul>
+<li>Budget (মাসিক ও প্রাথমিক)? Deadline?</li>
+<li>Team-এর দক্ষতা ও আকার? কে চালাবেন?</li>
+<li>কোন বিদ্যমান system-এর সাথে যুক্ত হতে হবে?</li>
+</ul>
+<h2 id="appendix-b-s-B-2"><a class="anchor" href="#appendix-b-s-B-2" aria-hidden="true">#</a>B.2 Estimation Cheat Sheet</h2>
+<p><em>অধ্যায় ২</em></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>বিষয়</th>
+<th>মান</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>দিনে সেকেন্ড</td>
+<td>86,400 ≈ 10^5</td>
+</tr>
+<tr>
+<td>দিনে ১০ লাখ request</td>
+<td>≈ 12 RPS (গড়)</td>
+</tr>
+<tr>
+<td>Peak factor (সাধারণ)</td>
+<td>গড়ের ২-৫ গুণ; বিশেষ দিনে শত-হাজার গুণ</td>
+</tr>
+<tr>
+<td>1 KB × 10 লাখ</td>
+<td>1 GB</td>
+</tr>
+<tr>
+<td>1 MB × 10 লাখ</td>
+<td>1 TB</td>
+</tr>
+<tr>
+<td>Little&#39;s Law</td>
+<td>Concurrency = RPS × গড় latency (সেকেন্ড)</td>
+</tr>
+<tr>
+<td>Storage-এর অতিরিক্ত</td>
+<td>Index +৩০-১০০%, প্রতিটি replica ও backup আলাদা</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Availability</th>
+<th>বছরে downtime</th>
+<th>মাসে downtime</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>99%</td>
+<td>৩.৬৫ দিন</td>
+<td>৭.৩ ঘণ্টা</td>
+</tr>
+<tr>
+<td>99.9%</td>
+<td>৮.৭৬ ঘণ্টা</td>
+<td>৪৩.৮ মিনিট</td>
+</tr>
+<tr>
+<td>99.95%</td>
+<td>৪.৩৮ ঘণ্টা</td>
+<td>২১.৯ মিনিট</td>
+</tr>
+<tr>
+<td>99.99%</td>
+<td>৫২.৬ মিনিট</td>
+<td>৪.৪ মিনিট</td>
+</tr>
+</tbody></table>
+</div>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Latency (মোটামুটি)</th>
+<th>সময়</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>RAM থেকে পড়া</td>
+<td>~100 ns</td>
+</tr>
+<tr>
+<td>SSD random read</td>
+<td>~0.1 ms</td>
+</tr>
+<tr>
+<td>একই data center-এ round trip / Redis GET</td>
+<td>~0.5 ms</td>
+</tr>
+<tr>
+<td>Indexed SQL query</td>
+<td>~1-5 ms</td>
+</tr>
+<tr>
+<td>ঢাকা → সিঙ্গাপুর round trip</td>
+<td>~40-60 ms</td>
+</tr>
+<tr>
+<td>ঢাকা → ইউরোপ/আমেরিকা round trip</td>
+<td>~150-300 ms</td>
+</tr>
+<tr>
+<td>LLM-এর একটি উত্তর</td>
+<td>~1-10 s</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="appendix-b-s-B-3"><a class="anchor" href="#appendix-b-s-B-3" aria-hidden="true">#</a>B.3 Design Review Checklist</h2>
+<p><em>পুরো বই</em></p>
+<p><strong>Requirement</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Functional, non-functional ও constraint লিখিত, সংখ্যাসহ</li>
+<li><input disabled="" type="checkbox"> &quot;সবচেয়ে খারাপ দিন&quot; সংজ্ঞায়িত ও capacity হিসাব করা</li>
+</ul>
+<p><strong>Architecture</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> প্রতিটি component-এর দায়িত্ব স্পষ্ট; diagram হালনাগাদ</li>
+<li><input disabled="" type="checkbox"> SPOF তালিকা ও সমাধান (মানুষসহ)</li>
+<li><input disabled="" type="checkbox"> Sync বনাম async-এর সিদ্ধান্ত যুক্তিসহ</li>
+<li><input disabled="" type="checkbox"> প্রতিটি data store-এর consistency মডেল লেখা</li>
+</ul>
+<p><strong>Data</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Data model, constraint ও index পর্যালোচিত</li>
+<li><input disabled="" type="checkbox"> বৃদ্ধি, partition ও archive-এর পরিকল্পনা</li>
+<li><input disabled="" type="checkbox"> Backup, restore drill, RPO/RTO যাচাই</li>
+</ul>
+<p><strong>নির্ভরযোগ্যতা</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> প্রতিটি external call-এ timeout, retry নীতি, circuit breaker</li>
+<li><input disabled="" type="checkbox"> Idempotency (API, consumer, payment)</li>
+<li><input disabled="" type="checkbox"> Load test worst-day লক্ষ্যের উপর</li>
+<li><input disabled="" type="checkbox"> Graceful degradation ও load shedding-এর অগ্রাধিকার</li>
+</ul>
+<p><strong>নিরাপত্তা</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> Threat model (STRIDE)</li>
+<li><input disabled="" type="checkbox"> Object-level authorization ও tenant isolation</li>
+<li><input disabled="" type="checkbox"> Secret management, encryption, audit</li>
+</ul>
+<p><strong>Operations</strong></p>
+<ul>
+<li><input disabled="" type="checkbox"> SLO, dashboard, alert ও runbook</li>
+<li><input disabled="" type="checkbox"> CI/CD, rollback, migration-এর কৌশল</li>
+<li><input disabled="" type="checkbox"> খরচের আনুমানিক হিসাব ও budget alert</li>
+</ul>
+<h2 id="appendix-b-s-B-4"><a class="anchor" href="#appendix-b-s-B-4" aria-hidden="true">#</a>B.4 Architecture Decision Record (ADR) Template</h2>
+<p><em>অধ্যায় ১৭, ২৪</em></p>
+<div class="code-block code-plain"><pre><code class="hljs">ADR-[নম্বর]: [সিদ্ধান্তের সংক্ষিপ্ত শিরোনাম]
+তারিখ    : [YYYY-MM-DD]
+অবস্থা    : প্রস্তাবিত | গৃহীত | প্রতিস্থাপিত (ADR-xx দ্বারা) | বাতিল
+সিদ্ধান্তদাতা: [নাম]   পর্যালোচক: [নাম]
+
+প্রসঙ্গ
+  কী সমস্যা? কোন requirement বা সংখ্যা এই সিদ্ধান্তকে চালিত করছে?
+
+বিবেচিত বিকল্প
+  (ক) …  সুবিধা / অসুবিধা / খরচ
+  (খ) …
+  (গ) …
+
+সিদ্ধান্ত
+  কোনটি বেছে নেওয়া হলো।
+
+কারণ
+  কেন এটি, এই প্রসঙ্গে। কোন trade-off সচেতনভাবে গ্রহণ করা হলো।
+
+পরিণতি
+  এখন কী করতে হবে, কোন ঝুঁকি থাকল, কোন অবস্থায় এই সিদ্ধান্ত আবার বিবেচনা করা হবে।</code></pre></div>
+<h2 id="appendix-b-s-B-5"><a class="anchor" href="#appendix-b-s-B-5" aria-hidden="true">#</a>B.5 Production Readiness Checklist</h2>
+<p><em>অধ্যায় ৯, ১২, ১৩, ১৪</em></p>
+<ul>
+<li><input disabled="" type="checkbox"> অন্তত দুটি instance, ভিন্ন zone-এ; PodDisruptionBudget</li>
+<li><input disabled="" type="checkbox"> Liveness ও readiness আলাদা; graceful shutdown ও draining</li>
+<li><input disabled="" type="checkbox"> Resource request/limit; autoscaling নিয়ম ও সীমা</li>
+<li><input disabled="" type="checkbox"> Structured log + trace ID; RED metric; distributed tracing</li>
+<li><input disabled="" type="checkbox"> SLO ও burn-rate alert; প্রতিটি alert-এর runbook</li>
+<li><input disabled="" type="checkbox"> Secret vault-এ; image scan; least privilege</li>
+<li><input disabled="" type="checkbox"> Backup ও restore পরীক্ষিত</li>
+<li><input disabled="" type="checkbox"> Rollback এক ধাপে; feature flag দিয়ে kill switch</li>
+<li><input disabled="" type="checkbox"> On-call rotation ও escalation পথ</li>
+<li><input disabled="" type="checkbox"> Load test রিপোর্ট</li>
+</ul>
+<h2 id="appendix-b-s-B-6"><a class="anchor" href="#appendix-b-s-B-6" aria-hidden="true">#</a>B.6 AI Feature Launch Checklist</h2>
+<p><em>অধ্যায় ১৫-১৭</em></p>
+<ul>
+<li><input disabled="" type="checkbox"> Use case ও ঝুঁকির মূল্যায়ন: ভুল উত্তরের ক্ষতি কতটা, কার উপর</li>
+<li><input disabled="" type="checkbox"> তথ্যের উৎস অনুমোদিত, হালনাগাদ, encoding ও OCR যাচাই করা</li>
+<li><input disabled="" type="checkbox"> Retrieval-এ permission ও tenant filter</li>
+<li><input disabled="" type="checkbox"> Prompt version-controlled; structured output যাচাই</li>
+<li><input disabled="" type="checkbox"> Golden dataset (উত্তরহীন প্রশ্ন ও আক্রমণাত্মক প্রশ্নসহ); CI-তে eval</li>
+<li><input disabled="" type="checkbox"> Grounding check, citation, &quot;জানি না&quot; পথ, মানুষের কাছে হস্তান্তর</li>
+<li><input disabled="" type="checkbox"> Input/output guardrail; prompt injection পরীক্ষা</li>
+<li><input disabled="" type="checkbox"> Agent হলে: সংকীর্ণ tool, idempotent write, budget, ঝুঁকিপূর্ণ কাজে মানুষের অনুমোদন</li>
+<li><input disabled="" type="checkbox"> Token budget, খরচের alert, AI gateway, fallback</li>
+<li><input disabled="" type="checkbox"> Observability: trace, খরচ, feedback, PII masking</li>
+<li><input disabled="" type="checkbox"> User-কে জানানো যে তিনি AI-এর সাথে কথা বলছেন</li>
+<li><input disabled="" type="checkbox"> Feature flag ও kill switch; canary rollout</li>
+</ul>
+<h2 id="appendix-b-s-B-7"><a class="anchor" href="#appendix-b-s-B-7" aria-hidden="true">#</a>B.7 Incident Runbook Template</h2>
+<p><em>অধ্যায় ১২</em></p>
+<div class="code-block code-plain"><pre><code class="hljs">Alert: [নাম ও শর্ত, যেমন: checkout error rate &gt; 2% (5 মিনিট)]
+প্রভাব: ব্যবহারকারী কী অনুভব করছেন?
+Dashboard: [link]
+
+প্রথম ৫ মিনিট
+  ১. গত ১ ঘণ্টায় কোনো deploy বা config পরিবর্তন? থাকলে rollback বিবেচনা।
+  ২. Dependency-র অবস্থা (database, payment gateway, queue lag)।
+  ৩. Severity নির্ধারণ; SEV1/2 হলে incident channel ও commander।
+
+প্রশমনের বিকল্প
+  - Rollback: [command / pipeline link]
+  - Feature flag বন্ধ: [flag নাম]
+  - Scale up: [কীভাবে]
+  - Load shedding: [কোন feature বন্ধ করা যায়]
+
+Escalation: [কাকে, কখন]
+যোগাযোগ: [status page, client-কে কে জানাবেন]</code></pre></div>
+<h2 id="appendix-b-s-B-8"><a class="anchor" href="#appendix-b-s-B-8" aria-hidden="true">#</a>B.8 Blameless Postmortem Template</h2>
+<p><em>অধ্যায় ১২</em></p>
+<div class="code-block code-plain"><pre><code class="hljs">শিরোনাম ও severity
+সারসংক্ষেপ (৩ বাক্যে)
+প্রভাব: সময়কাল, ক্ষতিগ্রস্ত ব্যবহারকারী, আর্থিক বা অন্যান্য প্রভাব
+Timeline: শনাক্ত → প্রশমন → সমাধান (মিনিট ধরে)
+মূল কারণ ও সহায়ক কারণ (system ও প্রক্রিয়া, ব্যক্তি নয়)
+কী ভালো হয়েছে
+কোথায় ভাগ্য সহায় ছিল
+Action item: [কাজ] — [মালিক] — [তারিখ]
+শিক্ষা</code></pre></div>
+<h2 id="appendix-b-s-B-9"><a class="anchor" href="#appendix-b-s-B-9" aria-hidden="true">#</a>B.9 Diagram-এর রঙের ভাষা</h2>
+<p><em>বইটি কীভাবে পড়বেন</em></p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>Class</th>
+<th>অর্থ</th>
+<th>রঙ</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>client</code></td>
+<td>ব্যবহারকারী, app</td>
+<td>আকাশি</td>
+</tr>
+<tr>
+<td><code>svc</code></td>
+<td>Service, API</td>
+<td>নীলচে বেগুনি</td>
+</tr>
+<tr>
+<td><code>db</code></td>
+<td>Database, স্থায়ী storage</td>
+<td>সবুজ</td>
+</tr>
+<tr>
+<td><code>cache</code></td>
+<td>Cache, in-memory</td>
+<td>কমলা</td>
+</tr>
+<tr>
+<td><code>queue</code></td>
+<td>Queue, stream</td>
+<td>হলুদ</td>
+</tr>
+<tr>
+<td><code>ai</code></td>
+<td>AI বা ML model (ষড়ভুজ)</td>
+<td>বেগুনি</td>
+</tr>
+<tr>
+<td><code>infra</code></td>
+<td>Infrastructure (LB, gateway, CDN)</td>
+<td>ধূসর-নীল</td>
+</tr>
+<tr>
+<td><code>ext</code></td>
+<td>বাইরের system (ডটেড)</td>
+<td>হালকা ধূসর</td>
+</tr>
+<tr>
+<td><code>human</code></td>
+<td>মানুষ ও team</td>
+<td>গোলাপি</td>
+</tr>
+<tr>
+<td><code>bad</code> / <code>good</code></td>
+<td>সমস্যা / সমাধান</td>
+<td>লাল / সবুজ</td>
+</tr>
+</tbody></table>
+</div>
+<p>এই বইয়ের diagram-গুলো Mermaid-এ লেখা। নিজের document-এ একই ভাষা ব্যবহার করলে পুরো team একই চোখে diagram পড়বে।</p>
+<h2 id="appendix-b-s-B-10"><a class="anchor" href="#appendix-b-s-B-10" aria-hidden="true">#</a>B.10 প্রস্তাবিত Tool</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>কাজ</th>
+<th>Tool</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Diagram</td>
+<td>Draw.io (diagrams.net), Excalidraw, Mermaid, PlantUML, Figma, Lucidchart</td>
+</tr>
+<tr>
+<td>Container ও orchestration</td>
+<td>Docker, Docker Compose, Kubernetes (AKS/EKS/GKE), Helm</td>
+</tr>
+<tr>
+<td>CI/CD ও GitOps</td>
+<td>GitHub Actions, GitLab CI, Azure DevOps, Argo CD</td>
+</tr>
+<tr>
+<td>Infrastructure as Code</td>
+<td>Terraform, Bicep, Pulumi</td>
+</tr>
+<tr>
+<td>Database</td>
+<td>SQL Server Management Studio, SQL Server Profiler / Extended Events, pgAdmin, Azure Data Studio</td>
+</tr>
+<tr>
+<td>Cache ও queue</td>
+<td>RedisInsight, RabbitMQ Management UI, Kafka UI</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>OpenTelemetry, Prometheus, Grafana, Loki, Tempo/Jaeger, Seq, Sentry</td>
+</tr>
+<tr>
+<td>Load test</td>
+<td>k6, JMeter, Locust, NBomber (.NET)</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>OWASP ZAP, Trivy, Dependabot/Renovate, gitleaks</td>
+</tr>
+<tr>
+<td>AI</td>
+<td>pgvector, Azure AI Search / OpenSearch, evaluation framework (যেমন Ragas, promptfoo), AI gateway</td>
+</tr>
+</tbody></table>
+</div>
+</article><nav class="pager" aria-label="পরবর্তী ও পূর্ববর্তী"><a class="prev" href="appendix-a.html"><div class="lbl">← আগের অংশ</div><div class="ttl">Interview প্রশ্নোত্তর</div></a><a class="next" href="appendix-c.html"><div class="lbl">পরের অংশ →</div><div class="ttl">পরিভাষা</div></a></nav></main><aside class="onpage" aria-label="এই পৃষ্ঠায়"><div class="onpage-title">এই অধ্যায়ে</div><a href="#appendix-b-s-B-1">B.1 Requirement Discovery প্রশ্নমালা</a><a href="#appendix-b-s-B-2">B.2 Estimation Cheat Sheet</a><a href="#appendix-b-s-B-3">B.3 Design Review Checklist</a><a href="#appendix-b-s-B-4">B.4 Architecture Decision Record (ADR) Template</a><a href="#appendix-b-s-B-5">B.5 Production Readiness Checklist</a><a href="#appendix-b-s-B-6">B.6 AI Feature Launch Checklist</a><a href="#appendix-b-s-B-7">B.7 Incident Runbook Template</a><a href="#appendix-b-s-B-8">B.8 Blameless Postmortem Template</a><a href="#appendix-b-s-B-9">B.9 Diagram-এর রঙের ভাষা</a><a href="#appendix-b-s-B-10">B.10 প্রস্তাবিত Tool</a></aside></div>
+<footer class="site-foot">© 2026 Md. Sajidur Rahman · Practical System Design in Bangla · <a href="copyright.html">কপিরাইট</a></footer>
+</div>
+<script src="assets/js/book.js" defer></script>
+</body>
+</html>

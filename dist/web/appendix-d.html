@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>তথ্যসূত্র ও আরো পড়ুন · Practical System Design in Bangla</title>
+<meta name="description" content="বইয়ে উল্লেখিত বাস্তব ঘটনা, গবেষণা, বই ও standard-এর উৎস">
+<meta name="author" content="Md. Sajidur Rahman">
+<meta name="theme-color" content="#0b1530">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/book.css">
+<script>(function(){try{var t=localStorage.getItem('psd-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">মূল লেখায় যান</a>
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" data-action="nav" aria-label="সূচিপত্র"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="4.5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="4.5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="4.5" rx="1.2"/><path d="M12 7v4.5M5.5 16.5v-2.5h13v2.5"/></svg></span><span class="brand-text">Practical System Design <span>in Bangla</span></span></a>
+  <div class="top-spacer"></div>
+  <div class="search" role="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="search" type="search" placeholder="খুঁজুন: cache, Kafka, RAG…  ( / )" autocomplete="off" aria-label="বইয়ে খুঁজুন"><div class="search-results" id="search-results"></div></div>
+  <a class="icon-btn" href="downloads/Practical-System-Design-in-Bangla-A4.pdf" title="PDF ডাউনলোড" aria-label="PDF ডাউনলোড"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg></a>
+  <button class="icon-btn" data-action="theme" aria-label="থিম পরিবর্তন" title="Light / Dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="সূচিপত্র">
+<div class="side-group"><div class="side-title">শুরুর কথা</div><a class="side-link" href="dedication.html"><span class="no">·</span><span>উৎসর্গ</span></a><a class="side-link" href="preface.html"><span class="no">·</span><span>ভূমিকা</span></a><a class="side-link" href="how-to-read.html"><span class="no">·</span><span>বইটি কীভাবে পড়বেন</span></a><a class="side-link" href="meet-the-team.html"><span class="no">·</span><span>নদী টেকের মানুষেরা</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ১ ·</b>ভিত্তি</div><a class="side-link" href="ch01.html"><span class="no">01</span><span>System Design পরিচিতি</span></a><a class="side-link" href="ch02.html"><span class="no">02</span><span>Requirement Analysis ও Capacity Planning</span></a><a class="side-link" href="ch03.html"><span class="no">03</span><span>Core Architecture: Scalability, Availability ও CAP</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ২ ·</b>ডেটা ও স্টোরেজ</div><a class="side-link" href="ch04.html"><span class="no">04</span><span>Database Design-এর ভিত্তি</span></a><a class="side-link" href="ch05.html"><span class="no">05</span><span>Database Scaling: Partitioning, Sharding ও Replication</span></a><a class="side-link" href="ch06.html"><span class="no">06</span><span>Caching ও Performance Engineering</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৩ ·</b>Backend ও Distributed System</div><a class="side-link" href="ch07.html"><span class="no">07</span><span>API Design ও Backend Architecture</span></a><a class="side-link" href="ch08.html"><span class="no">08</span><span>Security: Authentication থেকে Zero Trust</span></a><a class="side-link" href="ch09.html"><span class="no">09</span><span>Load Balancing, High Availability ও Fault Tolerance</span></a><a class="side-link" href="ch10.html"><span class="no">10</span><span>Microservices Architecture</span></a><a class="side-link" href="ch11.html"><span class="no">11</span><span>Message Queue ও Event Streaming</span></a><a class="side-link" href="ch12.html"><span class="no">12</span><span>Observability ও Monitoring</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৪ ·</b>Platform ও Delivery</div><a class="side-link" href="ch13.html"><span class="no">13</span><span>Docker ও Kubernetes</span></a><a class="side-link" href="ch14.html"><span class="no">14</span><span>CI/CD ও নিরাপদ Deployment</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৫ ·</b>AI যুগের System Design</div><a class="side-link" href="ch15.html"><span class="no">15</span><span>LLM Application Architecture: RAG, Vector DB ও AI Gateway</span></a><a class="side-link" href="ch16.html"><span class="no">16</span><span>AI Agent, MLOps ও Responsible AI</span></a><a class="side-link" href="ch17.html"><span class="no">17</span><span>AI যুগে Architect: মানুষ ও মেশিনের যৌথ কাজ</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৬ ·</b>Enterprise System</div><a class="side-link" href="ch18.html"><span class="no">18</span><span>ERP System Design</span></a><a class="side-link" href="ch19.html"><span class="no">19</span><span>Fintech System Design</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৭ ·</b>বাস্তব কেস স্টাডি</div><a class="side-link" href="ch20.html"><span class="no">20</span><span>বড় প্রতিষ্ঠানের কেস স্টাডি: Netflix, Amazon, Uber</span></a><a class="side-link" href="ch21.html"><span class="no">21</span><span>News Feed System Design</span></a><a class="side-link" href="ch22.html"><span class="no">22</span><span>Real-time Chat System Design</span></a><a class="side-link" href="ch23.html"><span class="no">23</span><span>Video Streaming Platform Design</span></a><a class="side-link" href="ch24.html"><span class="no">24</span><span>Capstone: Admission Portal-এর পুনর্জন্ম</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৮ ·</b>Interview ও Career</div><a class="side-link" href="ch25.html"><span class="no">25</span><span>System Design Interview Mastery</span></a></div>
+<div class="side-group"><div class="side-title">পরিশিষ্ট</div><a class="side-link" href="appendix-a.html"><span class="no">A</span><span>Interview প্রশ্নোত্তর</span></a><a class="side-link" href="appendix-b.html"><span class="no">B</span><span>Architect-এর Toolkit</span></a><a class="side-link" href="appendix-c.html"><span class="no">C</span><span>পরিভাষা</span></a><a class="side-link active" href="appendix-d.html" aria-current="page"><span class="no">D</span><span>তথ্যসূত্র ও আরো পড়ুন</span></a></div>
+</nav>
+<div class="scrim" data-action="nav"></div>
+<div class="shell">
+<div class="page-grid"><main class="page-main" id="main"><header class="doc-hero web">
+  <div class="hero-kicker">পরিশিষ্ট</div>
+  <div class="hero-number"><span>পরিশিষ্ট</span><b>D</b></div>
+  <h1>তথ্যসূত্র ও আরো পড়ুন</h1><p class="hero-en">References &amp; Further Reading</p><p class="hero-sub">বইয়ে উল্লেখিত বাস্তব ঘটনা, গবেষণা, বই ও standard-এর উৎস</p>
+  <div class="hero-rule"></div>
+</header><article class="prose"><p>বইয়ের বাস্তব ঘটনাগুলো (CASE বাক্স) সংশ্লিষ্ট প্রতিষ্ঠানের প্রকাশিত postmortem, engineering blog, আদালতের রায়, সরকারি তদন্ত প্রতিবেদন এবং নির্ভরযোগ্য সংবাদমাধ্যমের ভিত্তিতে সংক্ষেপে লেখা। বিস্তারিত ও সর্বশেষ তথ্যের জন্য মূল উৎস দেখুন। Web link সময়ের সাথে বদলাতে পারে; শিরোনাম দিয়ে খুঁজলে সাধারণত পাওয়া যায়।</p>
+<h2 id="appendix-d-s-D-1"><a class="anchor" href="#appendix-d-s-D-1" aria-hidden="true">#</a>D.1 বই</h2>
+<p><strong>System Design ও Architecture</strong></p>
+<ul>
+<li>Martin Kleppmann. <em>Designing Data-Intensive Applications</em>. O&#39;Reilly, 2017. (Data system-এর জন্য সবচেয়ে প্রভাবশালী বই; অধ্যায় ৩-৫, ১১)</li>
+<li>Alex Xu. <em>System Design Interview: An Insider&#39;s Guide</em>, Vol. 1 ও Vol. 2 (Sahn Lam-এর সাথে)। ByteByteGo. (অধ্যায় ২৫)</li>
+<li>Alan Dennis, Barbara Haley Wixom, Roberta M. Roth. <em>Systems Analysis and Design</em>, 5th ed. Wiley, 2012. (Requirement ও SDLC; অধ্যায় ১-২)</li>
+<li>Sam Newman. <em>Building Microservices</em>, 2nd ed. O&#39;Reilly, 2021. (অধ্যায় ১০)</li>
+<li>Eric Evans. <em>Domain-Driven Design</em>. Addison-Wesley, 2003. (অধ্যায় ১০)</li>
+<li>Michael T. Nygard. <em>Release It!</em>, 2nd ed. Pragmatic Bookshelf, 2018. (Circuit breaker, bulkhead; অধ্যায় ৯-১০)</li>
+<li>Alex Petrov. <em>Database Internals</em>. O&#39;Reilly, 2019. (অধ্যায় ৪-৫)</li>
+<li>Matthew Skelton, Manuel Pais. <em>Team Topologies</em>. IT Revolution, 2019. (Conway&#39;s Law; অধ্যায় ১০)</li>
+</ul>
+<p><strong>Reliability, Operations ও Delivery</strong></p>
+<ul>
+<li>Betsy Beyer et al. (eds.). <em>Site Reliability Engineering: How Google Runs Production Systems</em>. O&#39;Reilly, 2016. অনলাইনে বিনামূল্যে: <a target="_blank" rel="noopener" href="https://sre.google/books/">https://sre.google/books/</a> (অধ্যায় ১২)</li>
+<li>Nicole Forsgren, Jez Humble, Gene Kim. <em>Accelerate</em>. IT Revolution, 2018. (DORA metric; অধ্যায় ১৪)</li>
+<li>Jez Humble, David Farley. <em>Continuous Delivery</em>. Addison-Wesley, 2010. (অধ্যায় ১৪)</li>
+</ul>
+<p><strong>AI ও Machine Learning System</strong></p>
+<ul>
+<li>Chip Huyen. <em>Designing Machine Learning Systems</em>. O&#39;Reilly, 2022. (অধ্যায় ১৬)</li>
+<li>Chip Huyen. <em>AI Engineering</em>. O&#39;Reilly, 2025. (অধ্যায় ১৫-১৬)</li>
+</ul>
+<h2 id="appendix-d-s-D-2"><a class="anchor" href="#appendix-d-s-D-2" aria-hidden="true">#</a>D.2 গবেষণাপত্র</h2>
+<ul>
+<li>G. DeCandia et al. &quot;Dynamo: Amazon&#39;s Highly Available Key-value Store.&quot; <em>SOSP</em>, 2007. (অধ্যায় ২০)</li>
+<li>R. Nishtala et al. &quot;Scaling Memcache at Facebook.&quot; <em>NSDI</em>, 2013. (অধ্যায় ৬)</li>
+<li>C. A. Gomez-Uribe, N. Hunt. &quot;The Netflix Recommender System: Algorithms, Business Value, and Innovation.&quot; <em>ACM Transactions on Management Information Systems</em>, 2015. (অধ্যায় ২০)</li>
+<li>A. Verma et al. &quot;Large-scale cluster management at Google with Borg.&quot; <em>EuroSys</em>, 2015. (Kubernetes-এর পূর্বসূরি; অধ্যায় ১৩)</li>
+<li>S. Peng et al. &quot;The Impact of AI on Developer Productivity: Evidence from GitHub Copilot.&quot; arXiv:2302.06590, 2023. (অধ্যায় ১৭)</li>
+<li>METR. &quot;Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity.&quot; arXiv:2507.09089, 2025. (অধ্যায় ১৭)</li>
+<li>P. Lewis et al. &quot;Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks.&quot; <em>NeurIPS</em>, 2020. (RAG-এর মূল গবেষণা; অধ্যায় ১৫)</li>
+</ul>
+<h2 id="appendix-d-s-D-3"><a class="anchor" href="#appendix-d-s-D-3" aria-hidden="true">#</a>D.3 বাস্তব ঘটনা ও Postmortem (অধ্যায় অনুযায়ী)</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>অধ্যায়</th>
+<th>ঘটনা</th>
+<th>উৎস</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>১</td>
+<td>Healthcare.gov launch, ২০১৩</td>
+<td>U.S. GAO-এর প্রতিবেদন; Steven Brill, &quot;Obama&#39;s Trauma Team,&quot; <em>Time</em>, ২০১৪</td>
+</tr>
+<tr>
+<td>২</td>
+<td>Pokémon GO launch traffic, ২০১৬</td>
+<td>Google Cloud Blog, &quot;Bringing Pokémon GO to life on Google Cloud,&quot; ২০১৬</td>
+</tr>
+<tr>
+<td>৩</td>
+<td>GitHub network partition, অক্টোবর ২০১৮</td>
+<td>GitHub Blog, &quot;October 21 post-incident analysis,&quot; ২০১৮: <a target="_blank" rel="noopener" href="https://github.blog/2018-10-30-oct21-post-incident-analysis/">https://github.blog/2018-10-30-oct21-post-incident-analysis/</a></td>
+</tr>
+<tr>
+<td>৩</td>
+<td>Stack Overflow architecture</td>
+<td>Nick Craver, &quot;Stack Overflow: The Architecture – 2016 Edition&quot;</td>
+</tr>
+<tr>
+<td>৪</td>
+<td>GitLab database deletion, জানুয়ারি ২০১৭</td>
+<td>GitLab Blog, &quot;Postmortem of database outage of January 31,&quot; ২০১৭</td>
+</tr>
+<tr>
+<td>৫</td>
+<td>Notion Postgres sharding, ২০২১</td>
+<td>Notion Blog, &quot;Herding elephants: Lessons learned from sharding Postgres at Notion,&quot; ২০২১</td>
+</tr>
+<tr>
+<td>৭</td>
+<td>Stripe idempotency key</td>
+<td>Stripe API documentation ও Stripe Engineering Blog, &quot;Designing robust and predictable APIs with idempotency&quot;</td>
+</tr>
+<tr>
+<td>৮</td>
+<td>Equifax breach, ২০১৭</td>
+<td>U.S. House Committee on Oversight and Government Reform, &quot;The Equifax Data Breach,&quot; December 2018</td>
+</tr>
+<tr>
+<td>৮</td>
+<td>Samsung ও generative AI, ২০২৩</td>
+<td>Bloomberg ও অন্যান্য সংবাদমাধ্যমের প্রতিবেদন, মে ২০২৩</td>
+</tr>
+<tr>
+<td>৯</td>
+<td>AWS S3 outage, ফেব্রুয়ারি ২০১৭</td>
+<td>AWS, &quot;Summary of the Amazon S3 Service Disruption in the Northern Virginia (US-EAST-1) Region&quot;: <a target="_blank" rel="noopener" href="https://aws.amazon.com/message/41926/">https://aws.amazon.com/message/41926/</a></td>
+</tr>
+<tr>
+<td>৯</td>
+<td>Facebook outage, অক্টোবর ২০২১</td>
+<td>Engineering at Meta, &quot;More details about the October 4 outage,&quot; ২০২১</td>
+</tr>
+<tr>
+<td>১০</td>
+<td>Amazon API mandate</td>
+<td>Steve Yegge, &quot;Stevey&#39;s Google Platforms Rant,&quot; ২০১১</td>
+</tr>
+<tr>
+<td>১০</td>
+<td>Segment microservices</td>
+<td>Segment Engineering, &quot;Goodbye Microservices: From 100s of problem children to 1 superstar,&quot; ২০১৮</td>
+</tr>
+<tr>
+<td>১০</td>
+<td>Prime Video monitoring service</td>
+<td>Prime Video Tech Blog, &quot;Scaling up the Prime Video audio/video monitoring service and reducing costs by 90%,&quot; ২০২৩</td>
+</tr>
+<tr>
+<td>১১</td>
+<td>Kafka-র জন্ম</td>
+<td>Jay Kreps, &quot;The Log: What every software engineer should know about real-time data&#39;s unifying abstraction,&quot; LinkedIn Engineering, ২০১৩</td>
+</tr>
+<tr>
+<td>১২</td>
+<td>Blameless postmortem</td>
+<td>John Allspaw, &quot;Blameless PostMortems and a Just Culture,&quot; Etsy Code as Craft, ২০১২</td>
+</tr>
+<tr>
+<td>১৩</td>
+<td>OpenAI outage, ডিসেম্বর ২০২৪</td>
+<td>OpenAI status page incident report, ১১ ডিসেম্বর ২০২৪</td>
+</tr>
+<tr>
+<td>১৪</td>
+<td>Knight Capital, আগস্ট ২০১২</td>
+<td>U.S. SEC, Knight Capital Americas LLC সংক্রান্ত administrative proceeding ও press release, ২০১৩</td>
+</tr>
+<tr>
+<td>১৪</td>
+<td>CrowdStrike, জুলাই ২০২৪</td>
+<td>CrowdStrike, Preliminary Post Incident Review ও Root Cause Analysis, ২০২৪; Microsoft-এর প্রকাশিত প্রভাবের হিসাব</td>
+</tr>
+<tr>
+<td>১৪</td>
+<td>Cloudflare outage, জুলাই ২০১৯</td>
+<td>Cloudflare Blog, &quot;Details of the Cloudflare outage on July 2, 2019&quot;</td>
+</tr>
+<tr>
+<td>১৫</td>
+<td>Air Canada chatbot</td>
+<td><em>Moffatt v. Air Canada</em>, 2024 BCCRT 149 (British Columbia Civil Resolution Tribunal)</td>
+</tr>
+<tr>
+<td>১৬</td>
+<td>Replit agent incident, জুলাই ২০২৫</td>
+<td>Jason Lemkin-এর প্রকাশ্য পোস্ট; Replit CEO-র বিবৃতি; <em>Fortune</em> ও অন্যান্য প্রতিবেদন, জুলাই ২০২৫</td>
+</tr>
+<tr>
+<td>১৬</td>
+<td>Klarna AI assistant</td>
+<td>Klarna press release, ফেব্রুয়ারি ২০২৪; Bloomberg ও অন্যান্য প্রতিবেদন, মে ২০২৫</td>
+</tr>
+<tr>
+<td>১৬</td>
+<td>Lethal trifecta</td>
+<td>Simon Willison, &quot;The lethal trifecta for AI agents,&quot; ২০২৫</td>
+</tr>
+<tr>
+<td>১৭</td>
+<td>Mata v. Avianca</td>
+<td><em>Mata v. Avianca, Inc.</em>, No. 22-cv-1461 (S.D.N.Y. 2023)</td>
+</tr>
+<tr>
+<td>১৮</td>
+<td>Lidl SAP প্রকল্প</td>
+<td><em>Handelsblatt</em> ও অন্যান্য জার্মান সংবাদমাধ্যমের প্রতিবেদন, ২০১৮</td>
+</tr>
+<tr>
+<td>১৯</td>
+<td>Bangladesh Bank heist, ২০১৬</td>
+<td>Reuters, BBC ও অন্যান্য সংবাদমাধ্যমের অনুসন্ধানী প্রতিবেদন; বাংলাদেশ সরকারের তদন্ত কমিটির প্রকাশ্য তথ্য</td>
+</tr>
+<tr>
+<td>২০</td>
+<td>Netflix Open Connect, Chaos Monkey</td>
+<td>Netflix Tech Blog; Open Connect overview (openconnect.netflix.com)</td>
+</tr>
+<tr>
+<td>২০</td>
+<td>Uber H3</td>
+<td>Uber Engineering, &quot;H3: Uber&#39;s Hexagonal Hierarchical Spatial Index,&quot; ২০১৮</td>
+</tr>
+<tr>
+<td>২১</td>
+<td>Twitter timeline</td>
+<td>Raffi Krikorian, &quot;Timelines at Scale,&quot; QCon San Francisco, ২০১২</td>
+</tr>
+<tr>
+<td>২২</td>
+<td>WhatsApp connection</td>
+<td>WhatsApp Blog, &quot;1 million is so 2011,&quot; ২০১২</td>
+</tr>
+<tr>
+<td>২২</td>
+<td>Discord message storage</td>
+<td>Discord Blog, &quot;How Discord Stores Trillions of Messages,&quot; ২০২৩</td>
+</tr>
+<tr>
+<td>২২</td>
+<td>WhatsApp end-to-end encryption</td>
+<td>WhatsApp Encryption Overview (technical white paper)</td>
+</tr>
+<tr>
+<td>২৩</td>
+<td>Netflix per-title encoding</td>
+<td>Netflix Tech Blog, &quot;Per-Title Encode Optimization,&quot; ২০১৫</td>
+</tr>
+<tr>
+<td>২৩</td>
+<td>YouTube ও Vitess</td>
+<td>Vitess project documentation ও ইতিহাস (vitess.io)</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="appendix-d-s-D-4"><a class="anchor" href="#appendix-d-s-D-4" aria-hidden="true">#</a>D.4 Standard ও Specification</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>বিষয়</th>
+<th>Standard</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTP</td>
+<td>RFC 9110 (HTTP Semantics)</td>
+</tr>
+<tr>
+<td>API error</td>
+<td>RFC 9457 (Problem Details for HTTP APIs)</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>RFC 7519</td>
+</tr>
+<tr>
+<td>OAuth 2.0 / PKCE</td>
+<td>RFC 6749 / RFC 7636; OAuth 2.0 Security Best Current Practice</td>
+</tr>
+<tr>
+<td>OpenID Connect</td>
+<td>OpenID Connect Core 1.0</td>
+</tr>
+<tr>
+<td>Trace context</td>
+<td>W3C Trace Context</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>OpenTelemetry specification (opentelemetry.io)</td>
+</tr>
+<tr>
+<td>API নিরাপত্তা</td>
+<td>OWASP API Security Top 10 (2023)</td>
+</tr>
+<tr>
+<td>Web নিরাপত্তা</td>
+<td>OWASP Top 10</td>
+</tr>
+<tr>
+<td>Card data</td>
+<td>PCI DSS</td>
+</tr>
+<tr>
+<td>AI নিয়ন্ত্রণ</td>
+<td>Regulation (EU) 2024/1689 (EU AI Act)</td>
+</tr>
+<tr>
+<td>AI tool সংযোগ</td>
+<td>Model Context Protocol specification (modelcontextprotocol.io)</td>
+</tr>
+<tr>
+<td>Streaming</td>
+<td>HLS (RFC 8216), MPEG-DASH (ISO/IEC 23009-1)</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="appendix-d-s-D-5"><a class="anchor" href="#appendix-d-s-D-5" aria-hidden="true">#</a>D.5 নিয়মিত পড়ার মতো Engineering Blog</h2>
+<ul>
+<li>Netflix Tech Blog · Uber Engineering · Meta Engineering · Discord Blog · Cloudflare Blog</li>
+<li>AWS Architecture Blog ও Amazon Builders&#39; Library</li>
+<li>Google SRE resources (sre.google)</li>
+<li>Microsoft Azure Architecture Center (Cloud Design Patterns)</li>
+<li>Martin Fowler-এর website (martinfowler.com): pattern ও architecture প্রবন্ধ</li>
+<li>ByteByteGo newsletter</li>
+<li>বিভিন্ন প্রতিষ্ঠানের public postmortem সংগ্রহ (যেমন GitHub-এ &quot;awesome postmortems&quot; ধরনের তালিকা)</li>
+</ul>
+<h2 id="appendix-d-s-D-6"><a class="anchor" href="#appendix-d-s-D-6" aria-hidden="true">#</a>D.6 বাংলাদেশের প্রেক্ষাপটে</h2>
+<p>এই বইয়ের নদী টেকের গল্পগুলো কাল্পনিক, কিন্তু বাংলাদেশের software industry-র বাস্তব অভিজ্ঞতা থেকে অনুপ্রাণিত: পাবলিক পরীক্ষার ফল প্রকাশ, ঈদের আগের e-commerce ও বেতন, mobile financial service, microfinance, গার্মেন্টস শিল্পের ERP। দেশের প্রতিষ্ঠানগুলোর engineering blog, tech conference-এর talk এবং community-র অভিজ্ঞতা বিনিময় (meetup, online group) এই জ্ঞানের সবচেয়ে মূল্যবান উৎস। আপনার নিজের team-এর postmortem লিখুন এবং, সম্ভব হলে, community-র সাথে ভাগ করুন। পরের প্রজন্মের engineer-রা সেখান থেকেই শিখবেন।</p>
+</article><nav class="pager" aria-label="পরবর্তী ও পূর্ববর্তী"><a class="prev" href="appendix-c.html"><div class="lbl">← আগের অংশ</div><div class="ttl">পরিভাষা</div></a></nav></main><aside class="onpage" aria-label="এই পৃষ্ঠায়"><div class="onpage-title">এই অধ্যায়ে</div><a href="#appendix-d-s-D-1">D.1 বই</a><a href="#appendix-d-s-D-2">D.2 গবেষণাপত্র</a><a href="#appendix-d-s-D-3">D.3 বাস্তব ঘটনা ও Postmortem (অধ্যায় অনুযায়ী)</a><a href="#appendix-d-s-D-4">D.4 Standard ও Specification</a><a href="#appendix-d-s-D-5">D.5 নিয়মিত পড়ার মতো Engineering Blog</a><a href="#appendix-d-s-D-6">D.6 বাংলাদেশের প্রেক্ষাপটে</a></aside></div>
+<footer class="site-foot">© 2026 Md. Sajidur Rahman · Practical System Design in Bangla · <a href="copyright.html">কপিরাইট</a></footer>
+</div>
+<script src="assets/js/book.js" defer></script>
+</body>
+</html>

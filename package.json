@@ -1,6 +1,26 @@
 {
+  "name": "practical-system-design-in-bangla",
+  "private": true,
+  "description": "Practical System Design in Bangla — manuscript and build pipeline for the web and print editions",
+  "scripts": {
+    "build": "node build/build.mjs",
+    "build:web": "node build/build.mjs --web",
+    "build:pdf": "node build/build.mjs --pdf",
+    "build:pdf:a4": "node build/build.mjs --pdf --paper=a4",
+    "build:pdf:book": "node build/build.mjs --pdf --paper=b5",
+    "check": "node build/build.mjs --web --strict"
+  },
   "dependencies": {
     "pdf-parse": "^2.4.5",
     "pdfjs-dist": "^6.0.227"
+  },
+  "devDependencies": {
+    "@fontsource/hind-siliguri": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "@fontsource/noto-serif-bengali": "5.3.0",
+    "highlight.js": "11.11.1",
+    "marked": "15.0.12",
+    "mermaid": "11.4.1",
+    "puppeteer-core": "23.11.1"
   }
 }

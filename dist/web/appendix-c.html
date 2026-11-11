@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>পরিভাষা · Practical System Design in Bangla</title>
+<meta name="description" content="বইয়ে ব্যবহৃত গুরুত্বপূর্ণ technical শব্দের সহজ বাংলা ব্যাখ্যা">
+<meta name="author" content="Md. Sajidur Rahman">
+<meta name="theme-color" content="#0b1530">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/book.css">
+<script>(function(){try{var t=localStorage.getItem('psd-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}})();</script>
+</head>
+<body>
+<a class="skip" href="#main">মূল লেখায় যান</a>
+<div class="progress" id="progress"></div>
+<header class="topbar">
+  <button class="icon-btn menu-btn" data-action="nav" aria-label="সূচিপত্র"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <a class="brand" href="index.html"><span class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2.5" width="6" height="4.5" rx="1.2"/><rect x="2.5" y="16.5" width="6" height="4.5" rx="1.2"/><rect x="15.5" y="16.5" width="6" height="4.5" rx="1.2"/><path d="M12 7v4.5M5.5 16.5v-2.5h13v2.5"/></svg></span><span class="brand-text">Practical System Design <span>in Bangla</span></span></a>
+  <div class="top-spacer"></div>
+  <div class="search" role="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="search" type="search" placeholder="খুঁজুন: cache, Kafka, RAG…  ( / )" autocomplete="off" aria-label="বইয়ে খুঁজুন"><div class="search-results" id="search-results"></div></div>
+  <a class="icon-btn" href="downloads/Practical-System-Design-in-Bangla-A4.pdf" title="PDF ডাউনলোড" aria-label="PDF ডাউনলোড"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0l-4-4m4 4l4-4"/><path d="M5 19h14"/></svg></a>
+  <button class="icon-btn" data-action="theme" aria-label="থিম পরিবর্তন" title="Light / Dark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+</header>
+<nav class="sidebar" id="sidebar" aria-label="সূচিপত্র">
+<div class="side-group"><div class="side-title">শুরুর কথা</div><a class="side-link" href="dedication.html"><span class="no">·</span><span>উৎসর্গ</span></a><a class="side-link" href="preface.html"><span class="no">·</span><span>ভূমিকা</span></a><a class="side-link" href="how-to-read.html"><span class="no">·</span><span>বইটি কীভাবে পড়বেন</span></a><a class="side-link" href="meet-the-team.html"><span class="no">·</span><span>নদী টেকের মানুষেরা</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ১ ·</b>ভিত্তি</div><a class="side-link" href="ch01.html"><span class="no">01</span><span>System Design পরিচিতি</span></a><a class="side-link" href="ch02.html"><span class="no">02</span><span>Requirement Analysis ও Capacity Planning</span></a><a class="side-link" href="ch03.html"><span class="no">03</span><span>Core Architecture: Scalability, Availability ও CAP</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ২ ·</b>ডেটা ও স্টোরেজ</div><a class="side-link" href="ch04.html"><span class="no">04</span><span>Database Design-এর ভিত্তি</span></a><a class="side-link" href="ch05.html"><span class="no">05</span><span>Database Scaling: Partitioning, Sharding ও Replication</span></a><a class="side-link" href="ch06.html"><span class="no">06</span><span>Caching ও Performance Engineering</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৩ ·</b>Backend ও Distributed System</div><a class="side-link" href="ch07.html"><span class="no">07</span><span>API Design ও Backend Architecture</span></a><a class="side-link" href="ch08.html"><span class="no">08</span><span>Security: Authentication থেকে Zero Trust</span></a><a class="side-link" href="ch09.html"><span class="no">09</span><span>Load Balancing, High Availability ও Fault Tolerance</span></a><a class="side-link" href="ch10.html"><span class="no">10</span><span>Microservices Architecture</span></a><a class="side-link" href="ch11.html"><span class="no">11</span><span>Message Queue ও Event Streaming</span></a><a class="side-link" href="ch12.html"><span class="no">12</span><span>Observability ও Monitoring</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৪ ·</b>Platform ও Delivery</div><a class="side-link" href="ch13.html"><span class="no">13</span><span>Docker ও Kubernetes</span></a><a class="side-link" href="ch14.html"><span class="no">14</span><span>CI/CD ও নিরাপদ Deployment</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৫ ·</b>AI যুগের System Design</div><a class="side-link" href="ch15.html"><span class="no">15</span><span>LLM Application Architecture: RAG, Vector DB ও AI Gateway</span></a><a class="side-link" href="ch16.html"><span class="no">16</span><span>AI Agent, MLOps ও Responsible AI</span></a><a class="side-link" href="ch17.html"><span class="no">17</span><span>AI যুগে Architect: মানুষ ও মেশিনের যৌথ কাজ</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৬ ·</b>Enterprise System</div><a class="side-link" href="ch18.html"><span class="no">18</span><span>ERP System Design</span></a><a class="side-link" href="ch19.html"><span class="no">19</span><span>Fintech System Design</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৭ ·</b>বাস্তব কেস স্টাডি</div><a class="side-link" href="ch20.html"><span class="no">20</span><span>বড় প্রতিষ্ঠানের কেস স্টাডি: Netflix, Amazon, Uber</span></a><a class="side-link" href="ch21.html"><span class="no">21</span><span>News Feed System Design</span></a><a class="side-link" href="ch22.html"><span class="no">22</span><span>Real-time Chat System Design</span></a><a class="side-link" href="ch23.html"><span class="no">23</span><span>Video Streaming Platform Design</span></a><a class="side-link" href="ch24.html"><span class="no">24</span><span>Capstone: Admission Portal-এর পুনর্জন্ম</span></a></div>
+<div class="side-group"><div class="side-title"><b>পর্ব ৮ ·</b>Interview ও Career</div><a class="side-link" href="ch25.html"><span class="no">25</span><span>System Design Interview Mastery</span></a></div>
+<div class="side-group"><div class="side-title">পরিশিষ্ট</div><a class="side-link" href="appendix-a.html"><span class="no">A</span><span>Interview প্রশ্নোত্তর</span></a><a class="side-link" href="appendix-b.html"><span class="no">B</span><span>Architect-এর Toolkit</span></a><a class="side-link active" href="appendix-c.html" aria-current="page"><span class="no">C</span><span>পরিভাষা</span></a><a class="side-link" href="appendix-d.html"><span class="no">D</span><span>তথ্যসূত্র ও আরো পড়ুন</span></a></div>
+</nav>
+<div class="scrim" data-action="nav"></div>
+<div class="shell">
+<div class="page-grid"><main class="page-main" id="main"><header class="doc-hero web">
+  <div class="hero-kicker">পরিশিষ্ট</div>
+  <div class="hero-number"><span>পরিশিষ্ট</span><b>C</b></div>
+  <h1>পরিভাষা</h1><p class="hero-en">Glossary</p><p class="hero-sub">বইয়ে ব্যবহৃত গুরুত্বপূর্ণ technical শব্দের সহজ বাংলা ব্যাখ্যা</p>
+  <div class="hero-rule"></div>
+</header><article class="prose"><p>বইয়ে technical শব্দগুলো ইচ্ছা করে ইংরেজিতে রাখা হয়েছে, কারণ documentation, error message, interview ও code review-তে এগুলোই আপনি দেখবেন। এখানে প্রতিটির সহজ বাংলা ব্যাখ্যা ও যে অধ্যায়ে বিস্তারিত আছে তা দেওয়া হলো।</p>
+<h2 id="appendix-c-a-c"><a class="anchor" href="#appendix-c-a-c" aria-hidden="true">#</a>A–C</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>শব্দ</th>
+<th>সহজ ব্যাখ্যা</th>
+<th>অধ্যায়</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>ABAC</td>
+<td>User, resource ও পরিবেশের বৈশিষ্ট্য দেখে অনুমতির সিদ্ধান্ত</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>ACID</td>
+<td>Transaction-এর চার নিশ্চয়তা: সব-অথবা-কিছুই-না, বৈধ অবস্থা, পারস্পরিক বিচ্ছিন্নতা, স্থায়িত্ব</td>
+<td>৪</td>
+</tr>
+<tr>
+<td>Active-Active / Active-Passive</td>
+<td>সব node কাজ করে / একটি কাজ করে, অন্যটি অপেক্ষায়</td>
+<td>৯</td>
+</tr>
+<tr>
+<td>ADR</td>
+<td>Architecture-এর সিদ্ধান্ত, বিকল্প ও কারণের লিখিত রেকর্ড</td>
+<td>১৭, পরিশিষ্ট B</td>
+</tr>
+<tr>
+<td>Agent (AI)</td>
+<td>LLM যে লক্ষ্য পেয়ে নিজে tool বেছে নিয়ে ধাপে ধাপে কাজ করে</td>
+<td>১৬</td>
+</tr>
+<tr>
+<td>AI Gateway</td>
+<td>সব LLM call-এর কেন্দ্রীয় স্তর: routing, budget, cache, log</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>API Gateway</td>
+<td>সব API-র একক প্রবেশদ্বার: routing, auth, rate limit</td>
+<td>৭</td>
+</tr>
+<tr>
+<td>Availability</td>
+<td>System কতটুকু সময় ব্যবহারযোগ্য থাকে</td>
+<td>৩, ৯</td>
+</tr>
+<tr>
+<td>Backpressure</td>
+<td>Producer যখন consumer-এর চেয়ে দ্রুত, তখনকার চাপ ও তা সামলানো</td>
+<td>১১</td>
+</tr>
+<tr>
+<td>BFF</td>
+<td>প্রতিটি ধরনের client-এর জন্য আলাদা পাতলা backend</td>
+<td>৭</td>
+</tr>
+<tr>
+<td>Blue-Green Deployment</td>
+<td>দুটি পূর্ণ environment, একবারে traffic বদল</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>Bloom Filter</td>
+<td>&quot;নিশ্চিতভাবে নেই&quot; বা &quot;সম্ভবত আছে&quot; বলতে পারা ছোট data structure</td>
+<td>৬</td>
+</tr>
+<tr>
+<td>Bounded Context</td>
+<td>একটি domain-এর সীমানা, যার ভেতরে শব্দগুলোর অর্থ একটি</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>Bulkhead</td>
+<td>প্রতিটি dependency-র জন্য আলাদা resource সীমা, যাতে একটি ব্যর্থতা সব না আটকায়</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>Cache-Aside</td>
+<td>আগে cache দেখা, না পেলে database থেকে এনে cache-এ রাখা</td>
+<td>৬</td>
+</tr>
+<tr>
+<td>Cache Stampede</td>
+<td>Cache মুছে গেলে একসাথে বহু request database-এ ছুটে যাওয়া</td>
+<td>৬</td>
+</tr>
+<tr>
+<td>Canary Release</td>
+<td>নতুন version প্রথমে অল্প user-কে, metric দেখে ধাপে ধাপে বাড়ানো</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>CAP Theorem</td>
+<td>Network বিচ্ছিন্নতায় consistency আর availability-র একটি বেছে নিতে হয়</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>CDC</td>
+<td>Database-এর পরিবর্তন event হিসেবে বের করে আনা</td>
+<td>৫, ১০</td>
+</tr>
+<tr>
+<td>CDN</td>
+<td>User-এর কাছাকাছি server থেকে content দেওয়ার network</td>
+<td>৬, ২৩</td>
+</tr>
+<tr>
+<td>Chaos Engineering</td>
+<td>নিয়ন্ত্রিতভাবে ব্যর্থতা ঘটিয়ে system-এর সহনশীলতা যাচাই</td>
+<td>৯, ২০</td>
+</tr>
+<tr>
+<td>Chunking (RAG)</td>
+<td>Document-কে খোঁজার উপযোগী ছোট অংশে ভাগ করা</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Circuit Breaker</td>
+<td>বারবার ব্যর্থ dependency-কে সাময়িকভাবে call না করা</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>Connection Pooling</td>
+<td>Database connection পুনর্ব্যবহার করা, প্রতিবার নতুন না খুলে</td>
+<td>৫</td>
+</tr>
+<tr>
+<td>Consistent Hashing</td>
+<td>Server যোগ-বিয়োগে কম data সরে এমন বণ্টন কৌশল</td>
+<td>৯</td>
+</tr>
+<tr>
+<td>Consumer Group</td>
+<td>Kafka-তে একসাথে একটি topic-এর কাজ ভাগ করে নেওয়া consumer-এর দল</td>
+<td>১১</td>
+</tr>
+<tr>
+<td>Consumer Lag</td>
+<td>Consumer কতটা পিছিয়ে আছে</td>
+<td>১১, ১২</td>
+</tr>
+<tr>
+<td>Container</td>
+<td>Application ও তার পরিবেশ একসাথে প্যাক করা চলমান একক</td>
+<td>১৩</td>
+</tr>
+<tr>
+<td>CQRS</td>
+<td>লেখা ও পড়ার model আলাদা রাখা</td>
+<td>৫</td>
+</tr>
+<tr>
+<td>CSRF</td>
+<td>User-এর অজান্তে তার session দিয়ে অন্য site থেকে কাজ করানোর আক্রমণ</td>
+<td>৮</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="appendix-c-d-h"><a class="anchor" href="#appendix-c-d-h" aria-hidden="true">#</a>D–H</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>শব্দ</th>
+<th>সহজ ব্যাখ্যা</th>
+<th>অধ্যায়</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Data Drift / Concept Drift</td>
+<td>Input-এর ধরন বদলানো / input ও ফলাফলের সম্পর্ক বদলানো</td>
+<td>১৬</td>
+</tr>
+<tr>
+<td>Dead Letter Queue (DLQ)</td>
+<td>বারবার ব্যর্থ message আলাদা করে রাখার queue</td>
+<td>১১</td>
+</tr>
+<tr>
+<td>Deadlock</td>
+<td>দুটি transaction একে অপরের lock-এর জন্য চিরকাল অপেক্ষা</td>
+<td>৪, ১৯</td>
+</tr>
+<tr>
+<td>Denormalization</td>
+<td>পড়ার গতির জন্য সচেতনভাবে data duplicate করা</td>
+<td>৪</td>
+</tr>
+<tr>
+<td>Distributed Monolith</td>
+<td>নামে microservice, কিন্তু shared database ও জট পাকানো নির্ভরতা</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>DORA Metrics</td>
+<td>Deploy-এর হার, lead time, failure rate ও restore time</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>Double-entry</td>
+<td>প্রতিটি লেনদেনে মোট debit = মোট credit</td>
+<td>১৮, ১৯</td>
+</tr>
+<tr>
+<td>Dual Write</td>
+<td>দুটি আলাদা system-এ আলাদাভাবে লেখার ঝুঁকিপূর্ণ অভ্যাস</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>E2EE</td>
+<td>শুধু প্রেরক ও প্রাপকের device পড়তে পারে, server নয়</td>
+<td>২২</td>
+</tr>
+<tr>
+<td>Embedding</td>
+<td>Text-এর অর্থকে সংখ্যার vector-এ রূপান্তর</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Error Budget</td>
+<td>SLO অনুযায়ী অনুমোদিত ব্যর্থতার পরিমাণ</td>
+<td>১২</td>
+</tr>
+<tr>
+<td>Evaluation (Eval)</td>
+<td>AI-এর উত্তরের মান অনেক উদাহরণে মাপা</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Event Sourcing</td>
+<td>বর্তমান অবস্থার বদলে সব পরিবর্তনের event সংরক্ষণ</td>
+<td>১১</td>
+</tr>
+<tr>
+<td>Eventual Consistency</td>
+<td>কিছু সময় পর সব জায়গায় data মিলে যাবে</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Expand-Contract</td>
+<td>ধাপে ধাপে, downtime ছাড়া schema পরিবর্তন</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>Failover</td>
+<td>প্রধানটি ব্যর্থ হলে বিকল্পে স্বয়ংক্রিয়ভাবে সরে যাওয়া</td>
+<td>৯</td>
+</tr>
+<tr>
+<td>Fanout</td>
+<td>একটি post বা message বহু প্রাপকের কাছে ছড়ানো</td>
+<td>২১</td>
+</tr>
+<tr>
+<td>Fault Tolerance</td>
+<td>অংশবিশেষ ব্যর্থ হলেও কাজ চালিয়ে যাওয়ার ক্ষমতা</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Feature Flag</td>
+<td>Deploy ছাড়াই feature চালু-বন্ধ করার switch</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>Feature Store</td>
+<td>ML-এর জন্য training ও production-এ একই নিয়মে হিসাব করা feature</td>
+<td>১৬</td>
+</tr>
+<tr>
+<td>Fine-tuning</td>
+<td>নির্দিষ্ট data দিয়ে model-কে আরো train করে আচরণ বদলানো</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>GitOps</td>
+<td>Production-এর কাঙ্ক্ষিত অবস্থা git-এ রাখা, tool তা মিলিয়ে রাখে</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>Graceful Degradation</td>
+<td>কিছু feature বন্ধ রেখে মূল কাজ চালু রাখা</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Grounding</td>
+<td>AI-এর উত্তর দেওয়া তথ্যের উপর ভিত্তি করে কি না যাচাই</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>gRPC</td>
+<td>Binary, দ্রুত, strongly typed RPC framework</td>
+<td>৭</td>
+</tr>
+<tr>
+<td>Guardrail</td>
+<td>AI-এর input ও output-এ নিরাপত্তা ও নীতির পাহারা</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Hallucination</td>
+<td>AI-এর আত্মবিশ্বাসী কিন্তু বানানো বা ভুল তথ্য</td>
+<td>১৫, ১৭</td>
+</tr>
+<tr>
+<td>Health Check (Liveness/Readiness)</td>
+<td>Process জীবিত কি না / traffic নিতে প্রস্তুত কি না</td>
+<td>৯, ১৩</td>
+</tr>
+<tr>
+<td>Horizontal Scaling</td>
+<td>Server সংখ্যা বাড়ানো</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Hot Key / Hot Partition / Hot Account</td>
+<td>অস্বাভাবিক বেশি চাপ পড়া একটি key, partition বা account</td>
+<td>৬, ১৯, ২২</td>
+</tr>
+<tr>
+<td>HPA</td>
+<td>Kubernetes-এ load অনুযায়ী pod সংখ্যা বদলানো</td>
+<td>১৩</td>
+</tr>
+<tr>
+<td>Hybrid Search</td>
+<td>Vector ও keyword search একসাথে</td>
+<td>১৫</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="appendix-c-i-o"><a class="anchor" href="#appendix-c-i-o" aria-hidden="true">#</a>I–O</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>শব্দ</th>
+<th>সহজ ব্যাখ্যা</th>
+<th>অধ্যায়</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Idempotency</td>
+<td>একই অনুরোধ বহুবার এলেও ফলাফল একবারের মতো</td>
+<td>৭, ১১, ১৯</td>
+</tr>
+<tr>
+<td>IDOR / BOLA</td>
+<td>ID বদলে অন্যের data পেয়ে যাওয়ার দুর্বলতা</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>Index (B-Tree)</td>
+<td>দ্রুত খোঁজার জন্য database-এর সাজানো কাঠামো</td>
+<td>৪</td>
+</tr>
+<tr>
+<td>Infrastructure as Code</td>
+<td>Server, network ইত্যাদি code দিয়ে তৈরি ও পরিচালনা</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>Isolation Level</td>
+<td>একসাথে চলা transaction একে অপরকে কতটা দেখতে পায়</td>
+<td>৪</td>
+</tr>
+<tr>
+<td>JWT</td>
+<td>Signed token, যার ভেতরে user-এর তথ্য থাকে</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>Kafka</td>
+<td>Partitioned, সংরক্ষিত event log-ভিত্তিক streaming platform</td>
+<td>১১</td>
+</tr>
+<tr>
+<td>Latency (p50/p95/p99)</td>
+<td>Response time; percentile খারাপ দিনের অভিজ্ঞতা দেখায়</td>
+<td>২, ১২</td>
+</tr>
+<tr>
+<td>Little&#39;s Law</td>
+<td>একসাথে চলা request = আগমনের হার × গড় সময়</td>
+<td>২</td>
+</tr>
+<tr>
+<td>LLM</td>
+<td>বিপুল text থেকে শেখা ভাষা model</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Load Balancer</td>
+<td>Traffic একাধিক server-এ ভাগ করে</td>
+<td>৯</td>
+</tr>
+<tr>
+<td>Load Shedding</td>
+<td>Capacity-র বাইরে কিছু request ভদ্রভাবে ফিরিয়ে দেওয়া</td>
+<td>৯</td>
+</tr>
+<tr>
+<td>Maker-Checker</td>
+<td>একজন তৈরি করেন, আরেকজন অনুমোদন দেন</td>
+<td>১৮, ১৯, ২৪</td>
+</tr>
+<tr>
+<td>MCP</td>
+<td>AI application-এর সাথে tool ও data যুক্ত করার open standard</td>
+<td>১৬</td>
+</tr>
+<tr>
+<td>Microservices</td>
+<td>ছোট, স্বাধীনভাবে deploy করা যায় এমন service-এ ভাগ করা system</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>MLOps</td>
+<td>ML model-এর পুরো জীবনচক্র নির্ভরযোগ্যভাবে পরিচালনা</td>
+<td>১৬</td>
+</tr>
+<tr>
+<td>Modular Monolith</td>
+<td>এক deploy, কিন্তু ভেতরে কঠোর module-সীমানা</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>Multi-tenancy</td>
+<td>একটি system একাধিক client (tenant)-কে আলাদাভাবে সেবা দেয়</td>
+<td>১৮</td>
+</tr>
+<tr>
+<td>mTLS</td>
+<td>দুই পক্ষই certificate দিয়ে নিজের পরিচয় প্রমাণ করে</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>N+1 Query</td>
+<td>Loop-এর ভেতরে প্রতিটি item-এর জন্য আলাদা query</td>
+<td>৪, ৭</td>
+</tr>
+<tr>
+<td>Noisy Neighbor</td>
+<td>Shared resource-এ একজনের ভারী কাজ অন্যদের ধীর করা</td>
+<td>১৮</td>
+</tr>
+<tr>
+<td>Normalization</td>
+<td>একই তথ্য একাধিক জায়গায় না রাখার নিয়ম</td>
+<td>৪</td>
+</tr>
+<tr>
+<td>OAuth2 / OIDC</td>
+<td>Authorization delegation / তার উপর login-এর স্তর</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>Observability</td>
+<td>System-এর ভেতরের অবস্থা বাইরের signal থেকে বোঝার ক্ষমতা</td>
+<td>১২</td>
+</tr>
+<tr>
+<td>OpenTelemetry</td>
+<td>Logs, metrics, traces সংগ্রহের open standard</td>
+<td>১২</td>
+</tr>
+<tr>
+<td>Outbox Pattern</td>
+<td>Data ও event একই transaction-এ লিখে পরে নির্ভরযোগ্যভাবে প্রকাশ</td>
+<td>১০</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="appendix-c-p-s"><a class="anchor" href="#appendix-c-p-s" aria-hidden="true">#</a>P–S</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>শব্দ</th>
+<th>সহজ ব্যাখ্যা</th>
+<th>অধ্যায়</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>PACELC</td>
+<td>স্বাভাবিক সময়েও latency বনাম consistency-র trade-off</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Partitioning</td>
+<td>একটি বড় table একই server-এ ভাগ করা</td>
+<td>৫</td>
+</tr>
+<tr>
+<td>PDB</td>
+<td>Kubernetes-এ একসাথে কতগুলো pod বন্ধ হতে পারবে তার সীমা</td>
+<td>১৩</td>
+</tr>
+<tr>
+<td>Pod</td>
+<td>Kubernetes-এর সবচেয়ে ছোট চলমান একক</td>
+<td>১৩</td>
+</tr>
+<tr>
+<td>Poison Message</td>
+<td>কখনো সফল হবে না এমন message</td>
+<td>১১</td>
+</tr>
+<tr>
+<td>Polyglot Persistence</td>
+<td>কাজভেদে একাধিক ধরনের database ব্যবহার</td>
+<td>৪</td>
+</tr>
+<tr>
+<td>Pre-signed URL</td>
+<td>সাময়িক অনুমতিসহ সরাসরি storage-এ upload/download-এর URL</td>
+<td>২৩</td>
+</tr>
+<tr>
+<td>Prompt Injection</td>
+<td>AI-এর নির্দেশ বদলে দেওয়ার উদ্দেশ্যে লেখা text</td>
+<td>৮, ১৬</td>
+</tr>
+<tr>
+<td>RAG</td>
+<td>খুঁজে আনা তথ্য দিয়ে AI-কে উত্তর লেখানো</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Rate Limiting</td>
+<td>নির্দিষ্ট সময়ে কতগুলো request অনুমোদিত তার সীমা</td>
+<td>৭</td>
+</tr>
+<tr>
+<td>RBAC</td>
+<td>ভূমিকা অনুযায়ী অনুমতি</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>Read Replica</td>
+<td>শুধু পড়ার জন্য primary database-এর copy</td>
+<td>৫</td>
+</tr>
+<tr>
+<td>Read-your-writes</td>
+<td>যে লিখেছে, সে অন্তত নিজের নতুন data দেখবে</td>
+<td>৩, ৫</td>
+</tr>
+<tr>
+<td>Reconciliation</td>
+<td>নিজের হিসাব ও অন্যের হিসাব মিলিয়ে পার্থক্য খোঁজা</td>
+<td>১৯</td>
+</tr>
+<tr>
+<td>Redundancy</td>
+<td>একই component-এর একাধিক copy</td>
+<td>৩, ৯</td>
+</tr>
+<tr>
+<td>Reliability</td>
+<td>System সঠিকভাবে ও ধারাবাহিকভাবে কাজ করে কি না</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Replication Lag</td>
+<td>Replica কতটা পিছিয়ে আছে</td>
+<td>৫</td>
+</tr>
+<tr>
+<td>Reranker</td>
+<td>খোঁজার ফলাফল আরো নিখুঁতভাবে সাজানোর model</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>RPO / RTO</td>
+<td>কতটুকু data হারানো চলবে / কত দ্রুত ফিরতে হবে</td>
+<td>২, ৯</td>
+</tr>
+<tr>
+<td>RPS / QPS</td>
+<td>প্রতি সেকেন্ডে request / query</td>
+<td>২</td>
+</tr>
+<tr>
+<td>Saga</td>
+<td>ছোট local transaction-এর ধারা, ব্যর্থতায় compensation</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>SBOM</td>
+<td>Software-এ কোন কোন library কোন version-এ আছে তার তালিকা</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>Semantic Cache</td>
+<td>অর্থের মিল দেখে আগের AI উত্তর পুনর্ব্যবহার</td>
+<td>৬, ১৫</td>
+</tr>
+<tr>
+<td>Service Mesh</td>
+<td>প্রতিটি service-এর পাশে proxy দিয়ে network-এর দায়িত্ব নেওয়া</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>Sharding</td>
+<td>Data আলাদা physical database-এ ভাগ করা</td>
+<td>৫</td>
+</tr>
+<tr>
+<td>SLI / SLO / SLA</td>
+<td>মাপা সূচক / অভ্যন্তরীণ লক্ষ্য / চুক্তিভিত্তিক প্রতিশ্রুতি</td>
+<td>১২</td>
+</tr>
+<tr>
+<td>SPOF</td>
+<td>যে একটি অংশ ব্যর্থ হলে পুরো system বন্ধ</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Split Brain</td>
+<td>দুটি node দুজনেই নিজেকে primary ভাবা</td>
+<td>৯</td>
+</tr>
+<tr>
+<td>SQL Injection</td>
+<td>User input দিয়ে database query বদলে দেওয়ার আক্রমণ</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>SSRF</td>
+<td>Server-কে দিয়ে ভেতরের বা নিষিদ্ধ ঠিকানায় request পাঠানো</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>Stateless</td>
+<td>Server আগের request-এর কোনো অবস্থা মনে রাখে না</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Strangler Fig</td>
+<td>পুরনো system চালু রেখে ধীরে ধীরে নতুন দিয়ে প্রতিস্থাপন</td>
+<td>১০</td>
+</tr>
+<tr>
+<td>Structured Logging</td>
+<td>Log-কে field-সহ (যেমন JSON) লেখা</td>
+<td>১২</td>
+</tr>
+</tbody></table>
+</div>
+<h2 id="appendix-c-t-z"><a class="anchor" href="#appendix-c-t-z" aria-hidden="true">#</a>T–Z</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>শব্দ</th>
+<th>সহজ ব্যাখ্যা</th>
+<th>অধ্যায়</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Throughput</td>
+<td>নির্দিষ্ট সময়ে কতগুলো কাজ সম্পন্ন হয়</td>
+<td>২</td>
+</tr>
+<tr>
+<td>Token (LLM)</td>
+<td>AI-এর হিসাবের text-একক; দাম ও সীমা এতে</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Token Bucket</td>
+<td>নির্দিষ্ট হারে token জমে, request token খরচ করে: rate limiting algorithm</td>
+<td>৭</td>
+</tr>
+<tr>
+<td>Trace / Span</td>
+<td>একটি request-এর পুরো যাত্রা / তার একটি ধাপ</td>
+<td>১২</td>
+</tr>
+<tr>
+<td>Transcoding</td>
+<td>Video-কে বিভিন্ন মান ও format-এ রূপান্তর</td>
+<td>২৩</td>
+</tr>
+<tr>
+<td>Trunk-based Development</td>
+<td>ছোট, স্বল্পস্থায়ী branch ও ঘন ঘন মূল branch-এ merge</td>
+<td>১৪</td>
+</tr>
+<tr>
+<td>TTL</td>
+<td>Cache বা data-র মেয়াদ</td>
+<td>৬</td>
+</tr>
+<tr>
+<td>Vector Database</td>
+<td>Embedding সংরক্ষণ ও অর্থের দিক থেকে কাছের item খোঁজার database</td>
+<td>১৫</td>
+</tr>
+<tr>
+<td>Vertical Scaling</td>
+<td>একটি server-এর ক্ষমতা বাড়ানো</td>
+<td>৩</td>
+</tr>
+<tr>
+<td>Virtual Waiting Room</td>
+<td>ভিড়ের সময় user-দের সারিতে রেখে নির্দিষ্ট হারে প্রবেশ</td>
+<td>৯, ২৪</td>
+</tr>
+<tr>
+<td>WAF</td>
+<td>ক্ষতিকর HTTP request আটকানোর firewall</td>
+<td>৮, ৯</td>
+</tr>
+<tr>
+<td>WebSocket</td>
+<td>Client ও server-এর মধ্যে স্থায়ী, দ্বিমুখী connection</td>
+<td>২২</td>
+</tr>
+<tr>
+<td>Write-behind</td>
+<td>আগে cache-এ লিখে পরে batch-এ database-এ</td>
+<td>৬</td>
+</tr>
+<tr>
+<td>XSS</td>
+<td>User-এর দেওয়া script অন্যের browser-এ চালানোর আক্রমণ</td>
+<td>৮</td>
+</tr>
+<tr>
+<td>Zero Trust</td>
+<td>ভেতরের network-কেও বিশ্বাস না করে প্রতিটি অনুরোধ যাচাই</td>
+<td>৮</td>
+</tr>
+</tbody></table>
+</div>
+</article><nav class="pager" aria-label="পরবর্তী ও পূর্ববর্তী"><a class="prev" href="appendix-b.html"><div class="lbl">← আগের অংশ</div><div class="ttl">Architect-এর Toolkit</div></a><a class="next" href="appendix-d.html"><div class="lbl">পরের অংশ →</div><div class="ttl">তথ্যসূত্র ও আরো পড়ুন</div></a></nav></main><aside class="onpage" aria-label="এই পৃষ্ঠায়"><div class="onpage-title">এই অধ্যায়ে</div><a href="#appendix-c-a-c">A–C</a><a href="#appendix-c-d-h">D–H</a><a href="#appendix-c-i-o">I–O</a><a href="#appendix-c-p-s">P–S</a><a href="#appendix-c-t-z">T–Z</a></aside></div>
+<footer class="site-foot">© 2026 Md. Sajidur Rahman · Practical System Design in Bangla · <a href="copyright.html">কপিরাইট</a></footer>
+</div>
+<script src="assets/js/book.js" defer></script>
+</body>
+</html>

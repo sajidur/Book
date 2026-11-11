@@ -1,3 +1,6 @@
 node_modules/pdf-parse/dist/node/esm/index.d.ts
 node_modules/.*
 node_modules/*
+
+# Rendered-diagram cache (regenerated automatically by the build)
+build/.cache/
